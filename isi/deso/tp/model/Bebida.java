@@ -22,10 +22,6 @@ public abstract class Bebida extends ItemMenu {
     protected int tamano;
     protected double volumen;
 
-    public abstract boolean esBebidaAlcoholica();
-
-
-
     // getters\setters 
 
     public int getTamano() {

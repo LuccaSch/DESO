@@ -22,7 +22,7 @@ public abstract class ItemMenu {
     public abstract boolean aptoVegano();
 
 
-     // getters\setters  
+    // getters\setters  
     public int getId() {
         return id;
     }

@@ -40,10 +40,4 @@ public class BebidaSinAlcohol extends Bebida {
     public double peso() {
         return peso * 1.2;
     }
-
-    @Override
-    public boolean esBebidaAlcoholica() {
-        return false;
-    }
-
 }

@@ -77,8 +77,43 @@ public class Vendedor {
         menu.add(item);
     }
 
+    // Calculo de distancia, con lat y long en radianes
+    public double distancia(Cliente cliente) {
+        double radio = 6378;
+        double latV = this.coordenada.getLat();
+        double lonV = this.coordenada.getLgn();
+        double latC = cliente.getCoordenada().getLat();
+        double lonC = cliente.getCoordenada().getLgn();
+        double dentroRaiz;
+        dentroRaiz = ((Math.pow(Math.sin((latC - latV) / 2), 2)) + Math.cos(latV) * Math.cos(latC) * (Math.pow(Math.sin((lonC - lonV) / 2), 2)));
 
+        return 2 * radio * Math.asin(Math.sqrt(dentroRaiz));
+    }
 
+    public List<ItemMenu> getItemsBebidas(){
+        return this.menu.stream()
+                        .filter(item -> item.esBebida())
+                        .toList();
+                        
+    }
+
+    public List<ItemMenu> getItemsComidas(){
+        return this.menu.stream()
+                        .filter(item -> item.esComida())
+                        .toList();
+    } 
+
+    public List<ItemMenu> getItemsComidasVeganas() {
+        return this.menu.stream()
+                        .filter(item -> item.aptoVegano())
+                        .toList();
+    } 
+
+    public List<ItemMenu> getItemsBebidasSinAlcohol() {
+        return this.menu.stream()
+                        .filter(item -> item.esBebida() && !(item instanceof BebidaAlcoholica)) // Asegúrate de que sea bebida y no alcohólica
+                        .toList();
+    }
     //Reescribiendo metodos heredados
 
     @Override
@@ -109,17 +144,4 @@ public class Vendedor {
         return Integer.hashCode(id); 
     }
 
-
-    // Calculo de distancia, con lat y long en radianes
-    public double distancia(Cliente cliente) {
-        double radio = 6378;
-        double latV = this.coordenada.getLat();
-        double lonV = this.coordenada.getLgn();
-        double latC = cliente.getCoordenada().getLat();
-        double lonC = cliente.getCoordenada().getLgn();
-        double dentroRaiz;
-        dentroRaiz = ((Math.pow(Math.sin((latC - latV) / 2), 2)) + Math.cos(latV) * Math.cos(latC) * (Math.pow(Math.sin((lonC - lonV) / 2), 2)));
-
-        return 2 * radio * Math.asin(Math.sqrt(dentroRaiz));
-    }
 }

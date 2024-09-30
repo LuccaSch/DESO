@@ -3,9 +3,7 @@ package isi.deso.tp.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import isi.deso.tp.model.Bebida;
 import isi.deso.tp.model.Coordenada;
-import isi.deso.tp.model.ItemMenu;
 import isi.deso.tp.model.Vendedor;
 
 public class GestorVendedor {
@@ -59,59 +57,5 @@ public class GestorVendedor {
     // Eliminacion de vendedores pasando la posicion del arreglo de vendedores que se quiere eliminar
     public void deleteVendedoresPosicion(List<Vendedor> vendedores, int posicion) {
         vendedores.remove(posicion);
-    }
-
-    public List<ItemMenu> getItemBebidas(Vendedor vend) {
-        List<ItemMenu> menuVendedor = vend.getMenu();
-        List<ItemMenu> aux = new ArrayList<>();
-
-        for (ItemMenu item : menuVendedor) {
-            if (item.esBebida()) {
-                aux.add(item);
-            }
-        }
-
-        return aux;
-    }
-
-    public List<ItemMenu> getItemComidas(Vendedor vend) {
-        List<ItemMenu> menuVendedor = vend.getMenu();
-        List<ItemMenu> aux = new ArrayList<>();
-
-        for (ItemMenu item : menuVendedor) {
-            if (item.esComida()) {
-                aux.add(item);
-            }
-        }
-
-        return aux;
-
-    }
-
-    public List<ItemMenu> getItemComidasVeganas(Vendedor vend) {
-        List<ItemMenu> menuVendedor = vend.getMenu();
-        List<ItemMenu> aux = new ArrayList<>();
-
-        for (ItemMenu item : menuVendedor) {
-            if (item.esComida() && item.aptoVegano()) {
-                aux.add(item);
-            }
-        }
-
-        return aux;
-
-    }
-
-    public List<ItemMenu> getItemBebidasSinAlcohol(Vendedor vend) {
-        List<ItemMenu> menuVendedor = vend.getMenu();
-        List<ItemMenu> aux = new ArrayList<>();
-
-        for (ItemMenu item : menuVendedor) {
-            if (item.esBebida() && ((Bebida) item).esBebidaAlcoholica()) {
-                aux.add(item);
-            }
-        }
-
-        return aux;
     }
 }
