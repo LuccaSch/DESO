@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package isi.deso.tp.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Vendedor {
 
@@ -14,6 +11,8 @@ public class Vendedor {
     private String direccion;
     private Coordenada coordenada;
     private List<ItemMenu> menu;
+
+    
 
     // Constructores
     public Vendedor() {
@@ -28,7 +27,9 @@ public class Vendedor {
         this.menu = new ArrayList<>();
     }
 
-    // getters\setters
+
+
+    // getters\setters    
     public int getId() {
         return id;
     }
@@ -36,6 +37,7 @@ public class Vendedor {
     public void setId(int id) {
         this.id = id;
     }
+
 
     public String getNombre() {
         return nombre;
@@ -45,6 +47,7 @@ public class Vendedor {
         this.nombre = nombre;
     }
 
+
     public String getDireccion() {
         return direccion;
     }
@@ -53,6 +56,7 @@ public class Vendedor {
         this.direccion = direccion;
     }
 
+
     public Coordenada getCoordenada() {
         return coordenada;
     }
@@ -60,6 +64,51 @@ public class Vendedor {
     public void setCoordenada(Coordenada coordenada) {
         this.coordenada = coordenada;
     }
+
+
+    public void setMenu(List<ItemMenu> newMenu){
+        this.menu=newMenu;
+    }
+    public List<ItemMenu> getMenu() {
+        return this.menu;
+    }
+
+    public void addPlato(ItemMenu item) {
+        menu.add(item);
+    }
+
+
+
+    //Reescribiendo metodos heredados
+
+    @Override
+    public String toString() {
+        return "Vendedor{id=" + this.id + ", nombre='" + this.nombre + "'}";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        //Comparaciones preliminares
+
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+
+        // Dos vendedores son iguales si su id es el mismo
+
+        Vendedor otherVendedor = (Vendedor) obj;
+        return this.id == otherVendedor.getId(); 
+    }
+
+    @Override
+    public int hashCode() {
+        // Genera un hash code basado en el id
+        return Integer.hashCode(id); 
+    }
+
 
     // Calculo de distancia, con lat y long en radianes
     public double distancia(Cliente cliente) {
@@ -73,18 +122,4 @@ public class Vendedor {
 
         return 2 * radio * Math.asin(Math.sqrt(dentroRaiz));
     }
-
-    @Override
-    public String toString() {
-        return "Vendedor{id=" + this.id + ", nombre='" + this.nombre + "'}";
-    }
-
-    public List<ItemMenu> getMenu() {
-        return this.menu;
-    }
-
-    public void agregarPlato(ItemMenu item) {
-        menu.add(item);
-    }
-
 }

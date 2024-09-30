@@ -1,26 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package isi.deso.tp.model;
 
 public abstract class ItemMenu {
-    protected Vendedor vendedor;
+    
+    // Atributos
     protected int id;
+    protected Vendedor vendedor;
     protected String nombre;
     protected String descripcion;
     protected double precio;
     protected Categoria categoria;
     protected double peso;
 
-    public Vendedor getVendedor() {
-        return vendedor;
-    }
 
-    public void setVendedor(Vendedor vendedor) {
-        this.vendedor = vendedor;
-    }
-
+    //Metodos abstractos para implementar en los hijos
     public abstract double peso();
 
     public abstract boolean esBebida();
@@ -29,52 +21,68 @@ public abstract class ItemMenu {
 
     public abstract boolean aptoVegano();
 
+
+     // getters\setters  
     public int getId() {
         return id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public double getPeso() {
-        return peso;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+
+    public String getNombre() {
+        return nombre;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+
+    public String getDescripcion() {
+        return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
+    
+    public double getPrecio() {
+        return precio;
+    }
+
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+
+    public Categoria getCategoria() {
+        return categoria;
     }
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
+
+    public double getPeso() {
+        return peso;
+    }
+
     public void setPeso(double peso) {
         this.peso = peso;
+    }
+
+
+    public Vendedor getVendedor(){
+        return this.vendedor;
+    }
+
+    public void setVendedor(Vendedor newVendedor){
+        this.vendedor=newVendedor;        
     }
 
 }

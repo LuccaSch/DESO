@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package isi.deso.tp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente {
@@ -16,8 +13,10 @@ public class Cliente {
     private String direccion;
     private Coordenada coordenada;
     private List<Pedido> listaPedidos;
+    
     // Constructores
     public Cliente() {
+        listaPedidos=new ArrayList<>();
     }
 
     public Cliente(int id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
@@ -27,6 +26,7 @@ public class Cliente {
         this.email = email;
         this.direccion = direccion;
         this.coordenada = coordenada;
+        listaPedidos=new ArrayList<>();
     }
 
     public List<Pedido> getListaPedidos() {

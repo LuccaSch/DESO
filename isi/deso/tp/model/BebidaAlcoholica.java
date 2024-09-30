@@ -1,28 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package isi.deso.tp.model;
 
 public class BebidaAlcoholica extends Bebida {
 
+    /* 
+    @Override
+    Atributos heredados de itemMenu:
+    
+    protected int id;
+    protected Vendedor vendedor;
+    protected String nombre;
+    protected String descripcion;
+    protected double precio;
+    protected Categoria categoria;
+    protected double peso;
+    
+
+    Atributos heredados de bebida:
+
+    protected int tamano;
+    protected double volumen;
+    */
+
+
+    
+    // Atributos
     private int graduacionAlcoholica;
 
-    public BebidaAlcoholica(int tamano, double volumen,int id, String nombre, String descripcion, double precio, Categoria categoria) {
+
+
+    // Constructores
+
+    public BebidaAlcoholica(){}
+
+    public BebidaAlcoholica(int id,String nombre,String descripcion,double precio,Categoria categoria,double volumen,int tamano,int graduacionAlcoholica){
         this.volumen = volumen;
         this.tamano = tamano;
         this.peso = volumen * 0.99;
-         this.id=id;
+        this.id=id;
         this.nombre=nombre;
         this.descripcion=descripcion;
         this.precio=precio;
         this.categoria=categoria;
+        this.graduacionAlcoholica=graduacionAlcoholica;
     }
 
-    public BebidaAlcoholica(int graduacionAlcoholica) {
-        this.graduacionAlcoholica = graduacionAlcoholica;
-    }
-
+    // getters\setters
     public int getGraduacionAlcoholica() {
         return graduacionAlcoholica;
     }
@@ -30,6 +52,8 @@ public class BebidaAlcoholica extends Bebida {
     public void setGraduacionAlcoholica(int graduacionAlcoholica) {
         this.graduacionAlcoholica = graduacionAlcoholica;
     }
+
+    //Reescribiendo metodos heredados
 
     @Override
     public double peso() {

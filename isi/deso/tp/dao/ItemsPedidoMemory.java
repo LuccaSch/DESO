@@ -1,16 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package isi.deso.tp.dao;
 
-import isi.deso.tp.exception.ItemNoEncontradoException;
-import isi.deso.tp.model.*;
 import java.util.List;
+
+import isi.deso.tp.exception.ItemNoEncontradoException;
+import isi.deso.tp.model.ItemPedido;
 
 public class ItemsPedidoMemory implements ItemsPedidoDao {
 
+    // Atributos que simulan la base de datos
     private List<ItemPedido> listaItemPedidos;
+
+
+    // getters\setters 
 
     public List<ItemPedido> getLista() {
         return listaItemPedidos;
@@ -20,6 +21,8 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
         this.listaItemPedidos = listaItemPedidos;
     }
 
+    
+    //Reescribiendo metodos heredados
     @Override
     public List<ItemPedido> filtrarPorVendedor(int idVendedor) throws ItemNoEncontradoException {
 
@@ -33,19 +36,6 @@ public class ItemsPedidoMemory implements ItemsPedidoDao {
 
         return listaFiltrada;
 
-    }
-
-    @Override
-    public List<ItemPedido> filtrarPorCliente(int idCliente) throws ItemNoEncontradoException {
-        List<ItemPedido> listaFiltrada = this.getLista().stream()
-                .filter(i -> i.getCliente().getId() == idCliente)
-                .toList();
-
-        if (listaFiltrada.isEmpty()) {
-            throw new ItemNoEncontradoException("ItemsPedido vacio para filtrar por Cliente con id: " + idCliente);
-        }
-
-        return listaFiltrada;
     }
 
     @Override

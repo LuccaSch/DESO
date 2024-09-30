@@ -1,13 +1,52 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package isi.deso.tp.model;
 
 public abstract class Bebida extends ItemMenu {
+    
+    /* 
+    
+    @Override
+    Atributos heredados de itemMenu
+    
+    protected int id;
+    protected Vendedor vendedor;
+    protected String nombre;
+    protected String descripcion;
+    protected double precio;
+    protected Categoria categoria;
+    protected double peso;
+    
+    */
+
+    // Atributos
 
     protected int tamano;
     protected double volumen;
+
+    public abstract boolean esBebidaAlcoholica();
+
+
+
+    // getters\setters 
+
+    public int getTamano() {
+        return tamano;
+    }
+
+    public void setTamano(int tamano) {
+        this.tamano = tamano;
+    }
+
+    public double getVolumen() {
+        return volumen;
+    }
+
+    public void setVolumen(double volumen) {
+        this.volumen = volumen;
+    }
+
+    
+    
+    //Reescribiendo metodos heredados
 
     @Override
     public boolean esBebida() {
@@ -22,24 +61,6 @@ public abstract class Bebida extends ItemMenu {
     @Override
     public boolean aptoVegano() {
         return false;
-    }
-
-    public abstract boolean esBebidaAlcoholica();
-
-    public int getTamano() {
-        return tamano;
-    }
-
-    public double getVolumen() {
-        return volumen;
-    }
-
-    public void setTamano(int tamano) {
-        this.tamano = tamano;
-    }
-
-    public void setVolumen(double volumen) {
-        this.volumen = volumen;
     }
 
 }

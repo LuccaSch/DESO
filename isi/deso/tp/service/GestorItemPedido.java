@@ -1,40 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package isi.deso.tp.service;
+
+import java.util.List;
 
 import isi.deso.tp.dao.ItemsPedidoDao;
 import isi.deso.tp.dao.ItemsPedidoMemory;
 import isi.deso.tp.exception.ItemNoEncontradoException;
 import isi.deso.tp.model.ItemPedido;
 import isi.deso.tp.model.Pedido;
-import java.util.List;
 
-/**
- *
- * @author franciscokuchen
- */
-public class GestorPedido {
 
-    private ItemsPedidoDao itemsPedidoDao = new ItemsPedidoMemory();
+public class GestorItemPedido {
+
+    private final ItemsPedidoDao itemsPedidoDao = new ItemsPedidoMemory();
 
     public List<ItemPedido> filtrarPorVendedor(int idVendedor) {
         List<ItemPedido> listaFiltrada = null;
         try {
             listaFiltrada = itemsPedidoDao.filtrarPorVendedor(idVendedor);
-        } catch (ItemNoEncontradoException excep) {
-            System.err.println(excep.getMessage());
-
-        }
-
-        return listaFiltrada;
-    }
-
-    public List<ItemPedido> filtrarPorCliente(int idCliente) {
-        List<ItemPedido> listaFiltrada=null;
-        try {
-            listaFiltrada = itemsPedidoDao.filtrarPorCliente(idCliente);
         } catch (ItemNoEncontradoException excep) {
             System.err.println(excep.getMessage());
 

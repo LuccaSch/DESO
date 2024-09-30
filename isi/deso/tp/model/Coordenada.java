@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package isi.deso.tp.model;
 
 public class Coordenada {
@@ -36,15 +32,34 @@ public class Coordenada {
         this.lgn = lgn;
     }
 
+    //Reescribiendo metodos heredados
+
     @Override
     public String toString() {
-        return "Coordenada{" + "lat=" + lat + ", lgn=" + lgn + '}';
+        return "Coordenada{" + "lat=" + this.lat + ", lgn=" + this.lgn + '}';
     }
 
-    public boolean equals(Coordenada c) {
-        if (c == null) {
+    @Override
+    public boolean equals(Object obj) {
+        //Comparaciones preliminares
+
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        return (c == this || (this.lat == c.lat && this.lgn == c.lgn));
+
+        // Dos vendedores son iguales si su lat y long son los mismos
+
+        Coordenada otherCoordenada = (Coordenada) obj;
+        
+        return (this.lat==otherCoordenada.lat && this.lgn==otherCoordenada.lgn);
+    }
+
+    @Override
+    public int hashCode() {
+        // Usar hashCode basado en latitud y longitud
+        return Double.hashCode(this.lat) + Double.hashCode(this.lgn);
     }
 }
