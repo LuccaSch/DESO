@@ -1,0 +1,123 @@
+package isi.deso.tp.service;
+
+import isi.deso.tp.exception.VendedorNoUnicoException;
+import isi.deso.tp.model.Cliente;
+import isi.deso.tp.model.ContextoPago;
+import isi.deso.tp.model.DTO.PedidoDTO;
+import isi.deso.tp.model.EfectivoStrategy;
+import isi.deso.tp.model.EstadoPedidoEnum;
+import isi.deso.tp.model.ItemPedido;
+import isi.deso.tp.model.MercadoPagoStrategy;
+import isi.deso.tp.model.Pedido;
+import isi.deso.tp.model.TransferenciaStrategy;
+import isi.deso.tp.model.Vendedor;
+import java.util.List;
+
+public class GestorPedido {
+
+    public Pedido crearPedido() {
+        return new Pedido();
+    }
+
+    public Pedido crearPedido(int id, Cliente cliente, List<ItemPedido> pedidoDetalle) {
+        Pedido pedido = null;
+        try {
+            vendedorEsUnico(pedidoDetalle);
+            pedido = new Pedido(id, cliente, pedidoDetalle);
+        } catch (VendedorNoUnicoException excep) {
+            System.err.println(excep.getMessage());
+        }
+        return pedido;
+    }
+
+    public Pedido crearPedido(int id, Cliente cliente, EstadoPedidoEnum estadoPedido, List<ItemPedido> pedidoDetalle, double precioTotal) {
+        Pedido pedido = null;
+        try {
+            vendedorEsUnico(pedidoDetalle);
+            pedido = new Pedido(id, cliente, estadoPedido, pedidoDetalle, precioTotal);
+        } catch (VendedorNoUnicoException excep) {
+            System.err.println(excep.getMessage());
+        }
+        return pedido;
+
+    }
+
+    public void vendedorEsUnico(List<ItemPedido> pedidoDetalle) throws VendedorNoUnicoException {
+        if (!(pedidoDetalle.isEmpty())) {
+            Vendedor vendedor = pedidoDetalle.getFirst().getVendedor();
+            boolean vendedorEsUnico = pedidoDetalle.stream().allMatch(item -> item.getVendedor().equals(vendedor));
+
+            if (!vendedorEsUnico) {
+                throw new VendedorNoUnicoException("Vendedor no es unico para pedidoDetalle");
+            }
+        }
+    }
+
+    public void agregarItemPedido(Pedido pedido, ItemPedido itemPedido) {
+        try {
+            pedido.addPedidoDetalle(itemPedido);
+            vendedorEsUnico(pedido.getPedidoDetalle());
+        } catch (VendedorNoUnicoException excep) {
+            System.err.println(excep.getMessage());
+        }
+
+    }
+
+    public double calcularParcial(Pedido pedido) {
+        return pedido.getPedidoDetalle().stream().mapToDouble(ItemPedido::getPrecio).sum();
+    }
+
+    public Pedido convertirPedidoDesdeDTO(PedidoDTO pedidoDTO, GestorItemPedido gestorItemPedido) {
+        Pedido pedidoNuevo = null;
+        List<ItemPedido> pedidoDetalle = gestorItemPedido.convertirDesdeListaDTO(pedidoDTO.getListaItemPedidoDTO());
+        try {
+            vendedorEsUnico(pedidoDetalle);
+            pedidoNuevo = new Pedido(pedidoDTO.getId(), pedidoDetalle, pedidoDTO.getPrecioTotal());
+        } catch (VendedorNoUnicoException excep) {
+            System.err.println(excep.getMessage());
+        }
+        return pedidoNuevo;
+    }
+
+    public void actualizarEstadoPedido(Pedido pedido, EstadoPedidoEnum estadoNuevo) {
+        pedido.setEstadoPedido(estadoNuevo);
+    }
+
+    public double aplicarRecargo(Pedido pedido, String... datosCliente) {
+        double precioTotal = pedido.getContextoPago().agregarRecargo(calcularParcial(pedido));
+        String datos = "";
+        for (String d : datosCliente) {
+            datos += d;
+            datos += " ";
+        }
+
+        System.out.println("El cliente realiza el pago de $" + precioTotal + " por " + pedido.getContextoPago().getEstrategiaPago().nombreEstrategia() + " con sus datos: " + datos);
+
+        return precioTotal;
+    }
+
+    public double aplicarRecargoPorDTO(PedidoDTO pedidoDTO) {
+        ContextoPago contextoPago;
+
+        switch (pedidoDTO.getMetodoPago()) {
+            case 1:
+                contextoPago = new ContextoPago(new EfectivoStrategy());
+                break;
+            case 2:
+                contextoPago = new ContextoPago(new TransferenciaStrategy());
+                break;
+            case 3:
+                contextoPago = new ContextoPago(new MercadoPagoStrategy());
+                break;
+            default:
+                return -1;
+        }
+
+        double precioTotal = contextoPago.agregarRecargo(pedidoDTO.getPrecioTotal());
+
+        System.out.println("El cliente realiza el pago de $" + precioTotal + " por " + contextoPago.getEstrategiaPago().nombreEstrategia());
+
+        return precioTotal;
+    }
+
+}
