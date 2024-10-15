@@ -54,7 +54,7 @@ public class GestorVendedor {
     }
 
     public List<Pedido> buscarPedidosPorEstado(int idVendedor, EstadoPedidoEnum estadoPedido) {
-        GestorPedido gestorPedido;
+        GestorPedido gestorPedido = new GestorPedido();
         return gestorPedido.filtrarPorEstado(gestorPedido.buscarPorRestaurante(idVendedor), estadoPedido);
 
     }

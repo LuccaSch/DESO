@@ -1,6 +1,7 @@
 package isi.deso.tp.service;
 
 import isi.deso.tp.dao.PedidoDAO;
+import isi.deso.tp.exception.MetodoPagoNoEncontradoException;
 import isi.deso.tp.exception.VendedorNoUnicoException;
 import isi.deso.tp.model.Cliente;
 import isi.deso.tp.model.ContextoPago;
@@ -13,6 +14,7 @@ import isi.deso.tp.model.Pedido;
 import isi.deso.tp.model.TransferenciaStrategy;
 import isi.deso.tp.model.Vendedor;
 import java.util.List;
+
 
 public class GestorPedido {
 
@@ -98,29 +100,33 @@ public class GestorPedido {
 
         return precioTotal;
     }
+    
+    public void metodoPagoNoEncontrado() throws MetodoPagoNoEncontradoException{
+        throw new MetodoPagoNoEncontradoException();
+    }
 
-    public double aplicarRecargoPorDTO(PedidoDTO pedidoDTO) {
-        ContextoPago contextoPago;
-
-        switch (pedidoDTO.getMetodoPago()) {
-            case 1:
-                contextoPago = new ContextoPago(new EfectivoStrategy());
-                break;
-            case 2:
-                contextoPago = new ContextoPago(new TransferenciaStrategy());
-                break;
-            case 3:
-                contextoPago = new ContextoPago(new MercadoPagoStrategy());
-                break;
-            default:
-                return -1;
+    public double aplicarRecargoPorDTO(PedidoDTO pedidoDTO){
+        ContextoPago contextoPago=null;
+        try{
+            switch (pedidoDTO.getMetodoPago()){
+            case 1 -> contextoPago = new ContextoPago(new EfectivoStrategy());
+            case 2 -> contextoPago = new ContextoPago(new TransferenciaStrategy());
+            case 3 -> contextoPago = new ContextoPago(new MercadoPagoStrategy());
+                default -> {
+                    metodoPagoNoEncontrado();
+                }
+            }
+        }catch(MetodoPagoNoEncontradoException e1){
+            System.out.println(e1.getMessage());
         }
 
-        double precioTotal = contextoPago.agregarRecargo(pedidoDTO.getPrecioTotal());
-
-        System.out.println("El cliente realiza el pago de $" + precioTotal + " por " + contextoPago.getEstrategiaPago().nombreEstrategia());
-
-        return precioTotal;
+        if(contextoPago != null){
+            double precioTotal = contextoPago.agregarRecargo(pedidoDTO.getPrecioTotal());
+            System.out.println("El cliente realiza el pago de $" + precioTotal + " por " + contextoPago.getEstrategiaPago().nombreEstrategia());
+            return precioTotal;
+        }else{
+            return -1;
+        }
     }
 
     public List<Pedido> filtrarPorEstado(List<Pedido> listaPedidos, EstadoPedidoEnum estadoPedido) {

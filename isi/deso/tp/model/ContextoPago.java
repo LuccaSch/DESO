@@ -22,5 +22,9 @@ public class ContextoPago {
     public void setEstrategiaPago(PagoStrategy estrategiaPago) {
         this.estrategiaPago = estrategiaPago;
     }
-
+    
+    public boolean vacio(){
+        return(this.estrategiaPago == null);
+    }
+    
 }
