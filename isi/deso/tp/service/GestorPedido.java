@@ -135,7 +135,6 @@ public class GestorPedido {
 
     public List<Pedido> buscarPorRestaurante(int idVendedor) {
         return pedidoDAO.buscarPorRestaurante(idVendedor);
-
     }
-
+    
 }

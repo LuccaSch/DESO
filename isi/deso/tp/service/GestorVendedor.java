@@ -4,6 +4,7 @@ import isi.deso.tp.model.Coordenada;
 import isi.deso.tp.model.EstadoPedidoEnum;
 import isi.deso.tp.model.Pedido;
 import isi.deso.tp.model.Vendedor;
+import isi.deso.tp.observer.Observable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,9 +54,15 @@ public class GestorVendedor {
         vendedores.remove(posicion);
     }
 
+    //Cambiar a pedidoObservable porque estadopedido ahora esta en pedidoobservable
     public List<Pedido> buscarPedidosPorEstado(int idVendedor, EstadoPedidoEnum estadoPedido) {
         GestorPedido gestorPedido = new GestorPedido();
         return gestorPedido.filtrarPorEstado(gestorPedido.buscarPorRestaurante(idVendedor), estadoPedido);
-
+    }
+    
+    public void actualizarEstado(EstadoPedidoEnum estadoNuevo, List<Pedido> pedidosPorEstado){
+        for(Pedido pedidos : pedidosPorEstado){
+            pedidos.setChange(estadoNuevo);
+        }
     }
 }

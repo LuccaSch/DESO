@@ -1,9 +1,10 @@
 package isi.deso.tp.model;
 
+import isi.deso.tp.observer.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cliente {
+public class Cliente implements Observer{
 
     // Atributos
     private int id;
@@ -93,10 +94,36 @@ public class Cliente {
     public void setCoordenada(Coordenada coordenada) {
         this.coordenada = coordenada;
     }
+    
+    public void generarPago(Pedido pedido){
+        ContextoPago contextoPago = new ContextoPago();
+        System.out.println("generar el pago"); //nose como genramos el pago anteriormente
+    }
 
     @Override
     public String toString() {
         return "Cliente{id=" + this.id + ", nombre='" + this.nombre + "'}";
+    }
+
+    @Override
+    public void setChange(EstadoPedidoEnum estadoNuevo, int idPedido) {
+        for(Pedido ped : listaPedidos){
+            if(ped.getId() == idPedido){
+                ped.setEstadoPedido(estadoNuevo);
+            }
+        }
+    }
+
+    @Override
+    public void update(EstadoPedidoEnum estadoPedido, int idPedido) {
+        setChange(estadoPedido, idPedido);
+        if(estadoPedido == EstadoPedidoEnum.ENVIADO){
+            for(Pedido pedido : this.listaPedidos){
+                if(pedido.getId() == idPedido){
+                    generarPago(pedido);
+                }
+            }
+        }
     }
 
 }

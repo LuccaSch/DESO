@@ -23,8 +23,4 @@ public class ContextoPago {
         this.estrategiaPago = estrategiaPago;
     }
     
-    public boolean vacio(){
-        return(this.estrategiaPago == null);
-    }
-    
 }

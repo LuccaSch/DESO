@@ -135,5 +135,8 @@ public class Vendedor {
         // Genera un hash code basado en el id
         return Integer.hashCode(id);
     }
+    
+    
+    
 
 }

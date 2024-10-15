@@ -1,9 +1,11 @@
 package isi.deso.tp.model;
 
+import isi.deso.tp.observer.Observable;
+import isi.deso.tp.observer.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pedido {
+public class Pedido implements Observable{
 
     // Atributos
     private int id;
@@ -12,6 +14,8 @@ public class Pedido {
     private List<ItemPedido> pedidoDetalle;
     private double precioTotal;
     private ContextoPago contextoPago;
+    private List<Observer> observadores;
+    
 
     // Constructores
     public Pedido() {
@@ -60,6 +64,7 @@ public class Pedido {
         this.precioTotal = precioTotal;
         this.pedidoDetalle = pedidoDetalle;
         this.contextoPago = new ContextoPago();
+        this.estadoPedido = EstadoPedidoEnum.RECIBIDO;
     }
 
     // getters\setters
@@ -118,5 +123,37 @@ public class Pedido {
     public List<Integer> getIdVendedores() {
         return this.pedidoDetalle.stream().map(ItemPedido::getVendedor).map(Vendedor::getId).toList();
     }
+    
+    @Override
+    public void addObserver(Observer observer) { 
+        observadores.add(observer);
+    }
+    
+    @Override
+    public void removeObserver(Observer observer) {
+        for(Observer o: observadores){
+            if(o.equals(observer)){
+                observadores.remove(o);
+                return;
+            }
+        }
+    }
+    
+    @Override
+    public void setChange(EstadoPedidoEnum estadoPedidoNuevo){
+        this.estadoPedido=estadoPedidoNuevo;
+        notifyChange(this.getId());
+    }
+    
+    @Override
+    public void notifyChange(int idPedido) {
+        for(Observer observador : observadores){
+            observador.update(this.getEstadoPedido(), idPedido);
+        }
+    }
 
+    @Override
+    public String get() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
