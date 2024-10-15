@@ -12,6 +12,8 @@ public class Vendedor {
     private Coordenada coordenada;
     private List<ItemMenu> menu;
 
+    
+
     // Constructores
     public Vendedor() {
         this.menu = new ArrayList<>();
@@ -25,7 +27,9 @@ public class Vendedor {
         this.menu = new ArrayList<>();
     }
 
-    // getters\setters
+
+
+    // getters\setters    
     public int getId() {
         return id;
     }
@@ -33,6 +37,7 @@ public class Vendedor {
     public void setId(int id) {
         this.id = id;
     }
+
 
     public String getNombre() {
         return nombre;
@@ -42,6 +47,7 @@ public class Vendedor {
         this.nombre = nombre;
     }
 
+
     public String getDireccion() {
         return direccion;
     }
@@ -49,6 +55,7 @@ public class Vendedor {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
 
     public Coordenada getCoordenada() {
         return coordenada;
@@ -58,15 +65,15 @@ public class Vendedor {
         this.coordenada = coordenada;
     }
 
-    public void setMenu(List<ItemMenu> newMenu) {
-        this.menu = newMenu;
-    }
 
+    public void setMenu(List<ItemMenu> newMenu){
+        this.menu=newMenu;
+    }
     public List<ItemMenu> getMenu() {
         return this.menu;
     }
 
-    public void addItemMenu(ItemMenu item) {
+    public void addPlato(ItemMenu item) {
         menu.add(item);
     }
 
@@ -83,29 +90,29 @@ public class Vendedor {
         return 2 * radio * Math.asin(Math.sqrt(dentroRaiz));
     }
 
-    public List<ItemMenu> getItemsBebidas() {
+    public List<ItemMenu> getItemsBebidas(){
         return this.menu.stream()
-                .filter(item -> item.esBebida())
-                .toList();
-
+                        .filter(item -> item.esBebida())
+                        .toList();
+                        
     }
 
-    public List<ItemMenu> getItemsComidas() {
+    public List<ItemMenu> getItemsComidas(){
         return this.menu.stream()
-                .filter(item -> item.esComida())
-                .toList();
-    }
+                        .filter(item -> item.esComida())
+                        .toList();
+    } 
 
     public List<ItemMenu> getItemsComidasVeganas() {
         return this.menu.stream()
-                .filter(item -> item.aptoVegano())
-                .toList();
-    }
+                        .filter(item -> item.aptoVegano())
+                        .toList();
+    } 
 
     public List<ItemMenu> getItemsBebidasSinAlcohol() {
         return this.menu.stream()
-                .filter(item -> item.esBebida() && !(item instanceof BebidaAlcoholica)) // Asegúrate de que sea bebida y no alcohólica
-                .toList();
+                        .filter(item -> item.esBebida() && !(item instanceof BebidaAlcoholica)) // Asegúrate de que sea bebida y no alcohólica
+                        .toList();
     }
     //Reescribiendo metodos heredados
 
@@ -126,14 +133,15 @@ public class Vendedor {
         }
 
         // Dos vendedores son iguales si su id es el mismo
+
         Vendedor otherVendedor = (Vendedor) obj;
-        return this.id == otherVendedor.getId();
+        return this.id == otherVendedor.getId(); 
     }
 
     @Override
     public int hashCode() {
         // Genera un hash code basado en el id
-        return Integer.hashCode(id);
+        return Integer.hashCode(id); 
     }
 
 }

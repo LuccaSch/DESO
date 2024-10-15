@@ -1,15 +1,16 @@
 package isi.deso.tp.model;
 
 public abstract class ItemMenu {
-
+    
     // Atributos
     protected int id;
+    protected Vendedor vendedor;
     protected String nombre;
     protected String descripcion;
     protected double precio;
     protected Categoria categoria;
-    protected double peso; // En kg
-    protected Vendedor vendedor;
+    protected double peso;
+
 
     //Metodos abstractos para implementar en los hijos
     public abstract double peso();
@@ -20,7 +21,8 @@ public abstract class ItemMenu {
 
     public abstract boolean aptoVegano();
 
-    // getters\setters
+
+    // getters\setters  
     public int getId() {
         return id;
     }
@@ -28,6 +30,7 @@ public abstract class ItemMenu {
     public void setId(int id) {
         this.id = id;
     }
+
 
     public String getNombre() {
         return nombre;
@@ -37,6 +40,7 @@ public abstract class ItemMenu {
         this.nombre = nombre;
     }
 
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -45,6 +49,7 @@ public abstract class ItemMenu {
         this.descripcion = descripcion;
     }
 
+    
     public double getPrecio() {
         return precio;
     }
@@ -52,6 +57,7 @@ public abstract class ItemMenu {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
 
     public Categoria getCategoria() {
         return categoria;
@@ -61,6 +67,7 @@ public abstract class ItemMenu {
         this.categoria = categoria;
     }
 
+
     public double getPeso() {
         return peso;
     }
@@ -69,12 +76,13 @@ public abstract class ItemMenu {
         this.peso = peso;
     }
 
-    public Vendedor getVendedor() {
+
+    public Vendedor getVendedor(){
         return this.vendedor;
     }
 
-    public void setVendedor(Vendedor newVendedor) {
-        this.vendedor = newVendedor;
+    public void setVendedor(Vendedor newVendedor){
+        this.vendedor=newVendedor;        
     }
 
 }

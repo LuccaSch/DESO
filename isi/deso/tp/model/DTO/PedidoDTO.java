@@ -2,92 +2,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package isi.deso.tp.model.DTO;
-
 import java.util.*;
-
+/**
+ *
+ * @author Franco Ocampo
+ */
 public class PedidoDTO {
-
-    private int idCliente;
+    
+    private double saldo;
+    private String alias, CBU, cuit;
     private List<ItemPedidoDTO> listaItemPedidoDTO;
-    private int metodoPago;
-    private double precioTotal;
-    private String cbu;
-    private String cuit;
-    private String alias;
-    private int idPedido;
 
-    public PedidoDTO(int idCliente, List<ItemPedidoDTO> listaItemPedidoDTO, int metodoPago, double saldo) {
-        this.idCliente = idCliente;
-        this.listaItemPedidoDTO = listaItemPedidoDTO;
-        this.metodoPago = metodoPago;
-        this.precioTotal = saldo;
-        this.cbu=null;
-        this.alias=null;
-        this.cuit=null;
+    public PedidoDTO(double saldo, String alias, String CBU, String cuit) {
+        this.saldo = saldo;
+        this.alias = alias;
+        this.CBU = CBU;
+        this.cuit = cuit;
+        this.listaItemPedidoDTO=null;
     }
 
     public PedidoDTO() {
     }
-    
-    public int getIdPedido() {
-        return idPedido;
+
+    public double getSaldo() {
+        return saldo;
     }
 
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
-    }
-    
-    public int getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public List<ItemPedidoDTO> getListaItemPedidoDTO() {
-        return listaItemPedidoDTO;
-    }
-
-    public void setListaItemPedidoDTO(List<ItemPedidoDTO> listaItemPedidoDTO) {
-        this.listaItemPedidoDTO = listaItemPedidoDTO;
-    }
-
-    public int getMetodoPago() {
-        return metodoPago;
-    }
-
-    public void setMetodoPago(int metodoPago) {
-        this.metodoPago = metodoPago;
-    }
-
-    public double getPrecioTotal() {
-        return precioTotal;
-    }
-
-    public void setPrecioTotal(double saldo) {
-        this.precioTotal = saldo;
-    }
-    
-    public void addItemPedidoDTO(ItemPedidoDTO... itemsPedidoDTO) {
-        this.listaItemPedidoDTO.addAll(Arrays.asList(itemsPedidoDTO));
-    }
-    
-    public String getCbu() {
-        return cbu;
-    }
-
-    public void setCbu(String cbu) {
-        this.cbu = cbu;
-    }
-
-    public String getCuit() {
-        return cuit;
-    }
-
-    public void setCuit(String cuit) {
-        this.cuit = cuit;
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
 
     public String getAlias() {
@@ -96,6 +40,22 @@ public class PedidoDTO {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public String getCBU() {
+        return CBU;
+    }
+
+    public void setCBU(String CBU) {
+        this.CBU = CBU;
+    }
+
+    public String getCuit() {
+        return cuit;
+    }
+
+    public void setCuit(String cuit) {
+        this.cuit = cuit;
     }
     
     

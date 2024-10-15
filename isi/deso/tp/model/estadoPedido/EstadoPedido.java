@@ -1,6 +1,6 @@
 package isi.deso.tp.model.estadoPedido;
 
-import isi.deso.tp.exception.EstadoPedidoNoDisponibleException;
+import isi.deso.tp.exception.EstadoPedidoNoDisponibleExeption;
 import isi.deso.tp.model.Pedido;
 
 public abstract class EstadoPedido{
@@ -11,11 +11,11 @@ public abstract class EstadoPedido{
         return this.nombreEstado;
     }
 
-    public abstract void prepararPedido(Pedido pedido) throws EstadoPedidoNoDisponibleException;
+    public abstract void prepararPedido(Pedido pedido) throws EstadoPedidoNoDisponibleExeption;
 
-    public abstract void enviarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleException;
+    public abstract void enviarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleExeption;
 
-    public abstract void entregarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleException;
+    public abstract void entregarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleExeption;
 
-    public abstract void cancelarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleException;
+    public abstract void cancelarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleExeption;
 }

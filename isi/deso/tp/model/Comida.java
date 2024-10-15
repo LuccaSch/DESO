@@ -1,6 +1,6 @@
 package isi.deso.tp.model;
 
-public class Plato extends ItemMenu {
+public class Comida extends ItemMenu {
 
     /* 
     @Override
@@ -23,9 +23,9 @@ public class Plato extends ItemMenu {
     private boolean aptoVegano;
 
     // Constructores
-    public Plato(){}
+    public Comida(){}
 
-    public Plato(int calorias, boolean aptoCeliaco, boolean aptoVegano, double peso,int id, String nombre, String descripcion, double precio, Categoria categoria) {
+    public Comida(int calorias, boolean aptoCeliaco, boolean aptoVegano, double peso,int id, String nombre, String descripcion, double precio, Categoria categoria) {
         this.calorias = calorias;
         this.aptoCeliaco = aptoCeliaco;
         this.aptoVegano = aptoVegano;

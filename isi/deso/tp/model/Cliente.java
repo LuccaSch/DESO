@@ -90,7 +90,5 @@ public class Cliente {
     public String toString() {
         return "Cliente{id=" + this.id + ", nombre='" + this.nombre + "'}";
     }
-    public void agregarPedido(Pedido pedidoNuevo){
-        this.listaPedidos.add(pedidoNuevo);
-    }
+
 }

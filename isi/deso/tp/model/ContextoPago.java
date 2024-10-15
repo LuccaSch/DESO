@@ -4,16 +4,19 @@
  */
 package isi.deso.tp.model;
 
+/**
+ *
+ * @author Franco Ocampo
+ */
 public class ContextoPago {
-
+    
     PagoStrategy estrategiaPago;
-
-    public ContextoPago(PagoStrategy estrategiaPago) {
+    
+    public ContextoPago(PagoStrategy estrategiaPago){
         this.estrategiaPago = estrategiaPago;
     }
     
-    public double agregarRecargo(double saldo) {
+    public double agregarRecargo(double saldo){
         return estrategiaPago.agregarRecargo(saldo);
     }
-
 }

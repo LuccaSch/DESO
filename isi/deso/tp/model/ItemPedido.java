@@ -11,23 +11,12 @@ public class ItemPedido {
     // Constructores
     public ItemPedido() {
     }
-    public ItemPedido(int id, ItemMenu itemMenu, int cantidad) {
-        this.id = id;
-        this.itemMenu = itemMenu;
-        this.cantidad = cantidad;
-        this.precio = cantidad * itemMenu.getPrecio();
-    }
-    
-    public ItemPedido(int id, int cantidad){
-        this.id=id;
-        this.cantidad = cantidad;
-    }
 
     public ItemPedido(int id, ItemMenu itemMenu, int cantidad, double precio) {
         this.id = id;
         this.itemMenu = itemMenu;
         this.cantidad = cantidad;
-        this.precio = precio;
+        this.precio = cantidad * itemMenu.getPrecio();
     }
 
     // getters\setters

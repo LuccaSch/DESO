@@ -1,6 +1,6 @@
 package isi.deso.tp.model.estadoPedido;
 
-import isi.deso.tp.exception.EstadoPedidoNoDisponibleException;
+import isi.deso.tp.exception.EstadoPedidoNoDisponibleExeption;
 import isi.deso.tp.model.Pedido;
 
 public class Enviado extends EstadoPedido{
@@ -10,19 +10,19 @@ public class Enviado extends EstadoPedido{
     }
 
     @Override
-    public void prepararPedido(Pedido pedido) throws EstadoPedidoNoDisponibleException {}
+    public void prepararPedido(Pedido pedido) throws EstadoPedidoNoDisponibleExeption {}
 
     @Override
-    public void enviarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleException {}
+    public void enviarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleExeption {}
 
     @Override
-    public void entregarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleException {
-        //pedido.setEstadoPedido(new Entregado());
+    public void entregarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleExeption {
+        pedido.setEstadoPedido(new Entregado());
     }
 
     @Override
-    public void cancelarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleException {
-        throw new EstadoPedidoNoDisponibleException("No se puede cancelar un pedido enviado");
+    public void cancelarPedido(Pedido pedido) throws EstadoPedidoNoDisponibleExeption {
+        throw new EstadoPedidoNoDisponibleExeption("No se puede cancelar un pedido enviado");
     }
     
 }

@@ -4,10 +4,13 @@
  */
 package isi.deso.tp.model;
 
+/**
+ *
+ * @author Franco Ocampo
+ */
 public class TransferenciaStrategy implements PagoStrategy {
-
     @Override
-    public double agregarRecargo(double saldo) {
-        return saldo * 1.02;
+    public double agregarRecargo(double saldo){
+        return saldo*1.02; 
     }
 }

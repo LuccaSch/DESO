@@ -1,6 +1,8 @@
 package isi.deso.tp.model;
 
-import isi.deso.tp.exception.VendedorNoUnicoException;
+import isi.deso.tp.exception.EstadoPedidoNoDisponibleExeption;
+import isi.deso.tp.model.estadoPedido.EstadoPedido;
+import isi.deso.tp.model.estadoPedido.Inicializado;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,56 +11,66 @@ public class Pedido {
     // Atributos
     private int id;
     private Cliente cliente;
-    private EstadoPedidoEnum estadoPedido;
+    private EstadoPedido estadoPedido;
     private List<ItemPedido> pedidoDetalle;
     private double precioTotal;
-    private ContextoPago contextoPago;
 
     // Constructores
     public Pedido() {
         pedidoDetalle = new ArrayList<>();
-        estadoPedido = EstadoPedidoEnum.RECIBIDO;
+        estadoPedido = new Inicializado();
     }
 
     public Pedido(int id, Cliente cliente) {
         this.cliente = cliente;
         this.id = id;
         pedidoDetalle = new ArrayList<>();
-        estadoPedido = EstadoPedidoEnum.RECIBIDO;
+        estadoPedido = new Inicializado();
     }
 
-    public Pedido(int id, Cliente cliente, List<ItemPedido> pedidoDetalle) throws VendedorNoUnicoException {
-        this.id = id;
-        this.cliente = cliente;
-        this.estadoPedido = null;
-        vendedorEsUnico(pedidoDetalle);
-        this.pedidoDetalle = pedidoDetalle;
-        this.precioTotal = pedidoDetalle.stream().mapToDouble(ItemPedido::getPrecio).sum();
+    //Gestion de estadosPedidos
+    public String getEstado() {
+        return estadoPedido.getEstado();
     }
 
-    public Pedido(int id, Cliente cliente, List<ItemPedido> pedidoDetalle, double precioTotal) throws VendedorNoUnicoException {
-        this.id = id;
-        this.cliente = cliente;
-        this.estadoPedido = null;
-        this.precioTotal = precioTotal;
-        vendedorEsUnico(pedidoDetalle);
-        this.pedidoDetalle = pedidoDetalle;
+    public boolean prepararPedido() {
+        try {
+            estadoPedido.prepararPedido(this);
+            return true;
+        } catch (EstadoPedidoNoDisponibleExeption e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
     }
 
-    public Pedido(int id, Cliente cliente, EstadoPedidoEnum estadoPedido, List<ItemPedido> pedidoDetalle, double precioTotal) throws VendedorNoUnicoException {
-        this.id = id;
-        this.cliente = cliente;
-        this.estadoPedido = estadoPedido;
-        this.precioTotal = precioTotal;
-        vendedorEsUnico(pedidoDetalle);
-        this.pedidoDetalle = pedidoDetalle;
+    public boolean enviarPedido() {
+        try {
+            estadoPedido.enviarPedido(this);
+            return true;
+        } catch (EstadoPedidoNoDisponibleExeption e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
     }
-    
-    public Pedido(int id, List<ItemPedido> pedidoDetalle, double precioTotal) throws VendedorNoUnicoException {
-        this.id = id;
-        this.precioTotal = precioTotal;
-        vendedorEsUnico(pedidoDetalle);
-        this.pedidoDetalle = pedidoDetalle;
+
+    public boolean entregarPedido() {
+        try {
+            estadoPedido.entregarPedido(this);
+            return true;
+        } catch (EstadoPedidoNoDisponibleExeption e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean cancelarPedido() {
+        try {
+            estadoPedido.cancelarPedido(this);
+            return true;
+        } catch (EstadoPedidoNoDisponibleExeption e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
     }
 
     // getters\setters
@@ -70,12 +82,12 @@ public class Pedido {
         this.id = id;
     }
 
-    public EstadoPedidoEnum getEstadoPedido() {
-        return estadoPedido;
+    public String getEstadoPedido() {
+        return estadoPedido.getEstado();
     }
 
-    public void setEstadoPedido(EstadoPedidoEnum estadoPedido) {
-        this.estadoPedido = estadoPedido;
+    public void setEstadoPedido(EstadoPedido newEstadoPedido) {
+        this.estadoPedido = newEstadoPedido;
     }
 
     public Cliente getCliente() {
@@ -90,25 +102,8 @@ public class Pedido {
         return this.pedidoDetalle;
     }
 
-    public void setPedidoDetalle(List<ItemPedido> pedidoDetalle) throws VendedorNoUnicoException {
-        vendedorEsUnico(pedidoDetalle);
-        this.pedidoDetalle = pedidoDetalle;
-    }
-
-    public double getPrecioTotal() {
-        return precioTotal;
-    }
-
-    public void setPrecioTotal(double precioTotal) {
-        this.precioTotal = precioTotal;
-    }
-
-    public ContextoPago getContextoPago() {
-        return contextoPago;
-    }
-
-    public void setContextoPago(ContextoPago contextoPago) {
-        this.contextoPago = contextoPago;
+    public void setPedidoDetalle(List<ItemPedido> newPedidoDetalle) {
+        this.pedidoDetalle = newPedidoDetalle;
     }
 
     public void addPedidoDetalle(ItemPedido newItemPedido) {
@@ -121,15 +116,6 @@ public class Pedido {
 
     public double realizarPago(PagoStrategy metodoPago) {
         return metodoPago.agregarRecargo(calcularParcial());
-    }
-
-    public final void vendedorEsUnico(List<ItemPedido> pedidoDetalle) throws VendedorNoUnicoException {
-        Vendedor vendedor = pedidoDetalle.getFirst().getVendedor();
-        boolean vendedorEsUnico = pedidoDetalle.stream().allMatch(item -> item.getVendedor().equals(vendedor));
-
-        if (!vendedorEsUnico) {
-            throw new VendedorNoUnicoException("Vendedor no es unico para pedidoDetalle");
-        }
     }
 
 }

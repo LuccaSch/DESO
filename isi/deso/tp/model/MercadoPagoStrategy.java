@@ -4,10 +4,14 @@
  */
 package isi.deso.tp.model;
 
+/**
+ *
+ * @author Franco Ocampo
+ */
 public class MercadoPagoStrategy implements PagoStrategy {
-
+    
     @Override
-    public double agregarRecargo(double saldo) {
-        return saldo * 1.04;
+    public double agregarRecargo(double saldo){
+        return saldo*1.04; 
     }
 }
