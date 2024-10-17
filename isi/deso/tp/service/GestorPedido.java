@@ -149,5 +149,9 @@ public class GestorPedido {
     public List<Pedido> buscarPorIdPedido(int idPedido) {
         return pedidoDAO.buscarPorIdPedido(idPedido);
     }
+    
+    public void actualizarEstado(EstadoPedidoEnum estadoPedidoNuevo, Pedido pedido){
+        pedido.setChange(estadoPedidoNuevo);
+    }
 
 }

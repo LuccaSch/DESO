@@ -19,6 +19,7 @@ public class Pedido implements Observable {
     // Constructores
     public Pedido() {
         this.pedidoDetalle = new ArrayList<>();
+        this.observadores = new ArrayList<>();
         this.estadoPedido = EstadoPedidoEnum.RECIBIDO;
         this.contextoPago = new ContextoPago();
     }
@@ -29,6 +30,7 @@ public class Pedido implements Observable {
         this.pedidoDetalle = new ArrayList<>();
         this.estadoPedido = EstadoPedidoEnum.RECIBIDO;
         this.contextoPago = new ContextoPago();
+        this.observadores = new ArrayList<>();
     }
 
     public Pedido(int id, Cliente cliente, List<ItemPedido> pedidoDetalle) {
@@ -38,6 +40,7 @@ public class Pedido implements Observable {
         this.pedidoDetalle = pedidoDetalle;
         this.precioTotal = pedidoDetalle.stream().mapToDouble(ItemPedido::getPrecio).sum();
         this.contextoPago = new ContextoPago();
+        this.observadores = new ArrayList<>();
     }
 
     public Pedido(int id, Cliente cliente, List<ItemPedido> pedidoDetalle, double precioTotal) {
@@ -56,6 +59,7 @@ public class Pedido implements Observable {
         this.precioTotal = precioTotal;
         this.pedidoDetalle = pedidoDetalle;
         this.contextoPago = new ContextoPago();
+        this.observadores = new ArrayList<>();
     }
 
     public Pedido(int id, List<ItemPedido> pedidoDetalle, double precioTotal) {
@@ -64,6 +68,7 @@ public class Pedido implements Observable {
         this.pedidoDetalle = pedidoDetalle;
         this.contextoPago = new ContextoPago();
         this.estadoPedido = EstadoPedidoEnum.RECIBIDO;
+        this.observadores = new ArrayList<>();
     }
 
     // getters\setters
@@ -155,4 +160,9 @@ public class Pedido implements Observable {
     public String get() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    public List<Observer> getListaObservadores(){
+        return this.observadores;
+    }
+    
 }

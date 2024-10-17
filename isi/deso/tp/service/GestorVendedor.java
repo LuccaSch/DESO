@@ -64,8 +64,9 @@ public class GestorVendedor {
     }
 
     public void actualizarEstado(EstadoPedidoEnum estadoNuevo, List<Pedido> pedidosPorEstado) {
+        GestorPedido gestorPedido =  new GestorPedido(PedidoMemoryDAO.getInstance());
         for (Pedido pedidos : pedidosPorEstado) {
-            pedidos.setChange(estadoNuevo);
+            gestorPedido.actualizarEstado(estadoNuevo, pedidos);
         }
     }
 }

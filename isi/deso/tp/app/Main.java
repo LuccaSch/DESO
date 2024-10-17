@@ -4,6 +4,7 @@ import isi.deso.tp.dao.ClienteMemoryDAO;
 import isi.deso.tp.dao.PedidoMemoryDAO;
 import isi.deso.tp.exception.ItemNoEncontradoException;
 import isi.deso.tp.model.*;
+import isi.deso.tp.observer.Observer;
 import isi.deso.tp.service.GestorCliente;
 import isi.deso.tp.service.GestorItemPedido;
 import isi.deso.tp.service.GestorPedido;
@@ -96,6 +97,46 @@ public class Main {
         //
         // --------------------------------
         //
+        
+         System.out.println("\nINICIO App TP Etapa 5:");
+        
+        //Etapa 5 prueba
+        /*orden de los enum de estado pedido
+        1-RECIBIDO
+        2-CANCELADO
+        3-PREPARANDO
+        4-ENVIADO
+        5-ENTREGADO
+        */
+        pedido1.setEstadoPedido(EstadoPedidoEnum.RECIBIDO);
+        pedido1.addObserver(pedido1.getCliente());
+        List<Pedido> filtroPorEstado = gestorVendedor.buscarPedidosPorEstado(pedido1.getId(), EstadoPedidoEnum.RECIBIDO);
+        
+        gestorVendedor.actualizarEstado(EstadoPedidoEnum.PREPARANDO, filtroPorEstado);
+        
+        //gestorVendedor.actualizarEstado(EstadoPedidoEnum.ENVIADO, filtroPorEstado);
+        System.out.println("\n");
+        System.out.println(pedido1.getEstadoPedido());
+        
+        pedido1.setChange(EstadoPedidoEnum.PREPARANDO);
+        System.out.println(pedido1.getEstadoPedido());
+        System.out.println("\n");
+        
+        pedido1.setChange(EstadoPedidoEnum.ENVIADO);
+        System.out.println(pedido1.getEstadoPedido());
+        System.out.println("\n");
+        
+        /*for(Pedido p : filtroPorEstado){
+            System.out.println(p.getId());
+            System.out.println("\n");
+        }*/
+        
+        for(Observer c : pedido1.getListaObservadores()){
+            System.out.println(c.getEstadoPedido(pedido1.getId()));
+            System.out.println("\n");
+        }
+        System.out.println("\nFIN App TP Etapa 5");
+        
     }
 
 }

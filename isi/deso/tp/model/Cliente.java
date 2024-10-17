@@ -100,7 +100,7 @@ public class Cliente implements Observer {
         return "Cliente{id=" + this.id + ", nombre='" + this.nombre + "'}";
     }
 
-    @Override
+    /*@Override
     public void setChange(EstadoPedidoEnum estadoNuevo, int idPedido) {
         for (Pedido ped : listaPedidos) {
             if (ped.getId() == idPedido) {
@@ -108,10 +108,10 @@ public class Cliente implements Observer {
             }
         }
     }
-
+*/
     @Override
     public void update(EstadoPedidoEnum estadoPedido, int idPedido) {
-        setChange(estadoPedido, idPedido);
+        //setChange(estadoPedido, idPedido);
         if (estadoPedido == EstadoPedidoEnum.ENVIADO) {
             for (Pedido pedido : this.listaPedidos) {
                 if (pedido.getId() == idPedido) {
@@ -120,5 +120,15 @@ public class Cliente implements Observer {
             }
         }
     }
-
+    
+    @Override 
+    public EstadoPedidoEnum getEstadoPedido(int idPedido){
+        for(Pedido pedido : this.listaPedidos){
+            if(pedido.getId() == idPedido){
+                return pedido.getEstadoPedido();
+            }
+        }
+        return EstadoPedidoEnum.CANCELADO;
+    }
+    
 }
