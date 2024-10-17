@@ -96,7 +96,7 @@ public class Cliente implements Observer{
     }
     
     public void generarPago(Pedido pedido){
-        ContextoPago contextoPago = new ContextoPago();
+        //ContextoPago contextoPago = new ContextoPago();
         System.out.println("generar el pago"); //nose como genramos el pago anteriormente
     }
 
