@@ -1,49 +1,44 @@
 package isi.deso.tp.model;
 
 public abstract class Bebida extends ItemMenu {
-    
-    /* 
-    
+
+    /*
+
     @Override
     Atributos heredados de itemMenu
-    
+
     protected int id;
-    protected Vendedor vendedor;
     protected String nombre;
     protected String descripcion;
     protected double precio;
     protected Categoria categoria;
-    protected double peso;
-    
-    */
+    protected double peso; // En kilogramos
+    protected Vendedor vendedor;
 
+
+     */
     // Atributos
+    protected Tamano tamano;
+    protected double volumen; // En litros
 
-    protected int tamano;
-    protected double volumen;
-
-    // getters\setters 
-
-    public int getTamano() {
-        return tamano;
+    // getters\setters
+    public Tamano getTamano() {
+        return this.tamano;
     }
 
-    public void setTamano(int tamano) {
+    public void setTamano(Tamano tamano) {
         this.tamano = tamano;
     }
 
     public double getVolumen() {
-        return volumen;
+        return this.volumen;
     }
 
     public void setVolumen(double volumen) {
         this.volumen = volumen;
     }
 
-    
-    
     //Reescribiendo metodos heredados
-
     @Override
     public boolean esBebida() {
         return true;

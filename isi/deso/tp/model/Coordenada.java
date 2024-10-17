@@ -33,7 +33,6 @@ public class Coordenada {
     }
 
     //Reescribiendo metodos heredados
-
     @Override
     public String toString() {
         return "Coordenada{" + "lat=" + this.lat + ", lgn=" + this.lgn + '}';
@@ -51,10 +50,9 @@ public class Coordenada {
         }
 
         // Dos vendedores son iguales si su lat y long son los mismos
-
         Coordenada otherCoordenada = (Coordenada) obj;
-        
-        return (this.lat==otherCoordenada.lat && this.lgn==otherCoordenada.lgn);
+
+        return (this.lat == otherCoordenada.lat && this.lgn == otherCoordenada.lgn);
     }
 
     @Override

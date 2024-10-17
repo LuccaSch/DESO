@@ -1,9 +1,10 @@
 package isi.deso.tp.model;
 
+import isi.deso.tp.observer.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cliente {
+public class Cliente implements Observer {
 
     // Atributos
     private int id;
@@ -13,10 +14,10 @@ public class Cliente {
     private String direccion;
     private Coordenada coordenada;
     private List<Pedido> listaPedidos;
-    
+
     // Constructores
     public Cliente() {
-        listaPedidos=new ArrayList<>();
+        this.listaPedidos = new ArrayList<>();
     }
 
     public Cliente(int id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
@@ -26,7 +27,15 @@ public class Cliente {
         this.email = email;
         this.direccion = direccion;
         this.coordenada = coordenada;
-        listaPedidos=new ArrayList<>();
+        this.listaPedidos = new ArrayList<>();
+    }
+
+    public Cliente(String nombre, String cuit, String email, String direccion) {
+        this.nombre = nombre;
+        this.cuit = cuit;
+        this.email = email;
+        this.direccion = direccion;
+        this.listaPedidos = new ArrayList<>();
     }
 
     public List<Pedido> getListaPedidos() {
@@ -89,6 +98,37 @@ public class Cliente {
     @Override
     public String toString() {
         return "Cliente{id=" + this.id + ", nombre='" + this.nombre + "'}";
+    }
+
+    @Override
+    public void setChange(EstadoPedidoEnum estadoNuevo, int idPedido) {
+        for (Pedido ped : listaPedidos) {
+            if (ped.getId() == idPedido) {
+                ped.setEstadoPedido(estadoNuevo);
+            }
+        }
+    }
+
+    @Override
+    public void update(EstadoPedidoEnum estadoPedido, int idPedido) {
+        setChange(estadoPedido, idPedido);
+        if (estadoPedido == EstadoPedidoEnum.ENVIADO) {
+            for (Pedido pedido : this.listaPedidos) {
+                if (pedido.getId() == idPedido) {
+                    pedido.getContextoPago().getEstrategiaPago().generarPago(pedido);
+                }
+            }
+        }
+    }
+    
+    @Override
+    public EstadoPedidoEnum getEstadoPedido(int idPedido){
+        for(Pedido p : this.listaPedidos){
+            if(p.getId() == idPedido){
+                return p.getEstadoPedido();
+            }
+        }
+        return EstadoPedidoEnum.CANCELADO;
     }
 
 }

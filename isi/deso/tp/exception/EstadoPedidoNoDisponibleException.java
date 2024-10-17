@@ -1,9 +1,10 @@
 package isi.deso.tp.exception;
 
-public class EstadoPedidoNoDisponibleException extends Exception{
+public class EstadoPedidoNoDisponibleException extends Exception {
+
     // Constructor por defecto
     public EstadoPedidoNoDisponibleException() {
-        super("El pedido no puede ser Inicializado");
+        super("Pedido no puede ser inicializado");
     }
 
     // Constructor que permite personalizar el mensaje de error

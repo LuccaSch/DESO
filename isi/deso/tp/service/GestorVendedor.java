@@ -1,22 +1,26 @@
 package isi.deso.tp.service;
 
+import isi.deso.tp.dao.PedidoMemoryDAO;
+import isi.deso.tp.model.Coordenada;
+import isi.deso.tp.model.EstadoPedidoEnum;
+import isi.deso.tp.model.Pedido;
+import isi.deso.tp.model.Vendedor;
 import java.util.ArrayList;
 import java.util.List;
 
-import isi.deso.tp.model.Coordenada;
-import isi.deso.tp.model.Vendedor;
-
 public class GestorVendedor {
+
+    public GestorVendedor() {
+    }
+
     public Vendedor crearVendedor() {
         return new Vendedor();
     }
+
     public Vendedor crearVendedor(int id, String nombre, String direccion, Coordenada c) {
         return new Vendedor(id, nombre, direccion, c);
     }
 
-    // Filtro de vendedores por parametros
-
-    // Filtro por Id
     public List<Vendedor> filterVendedoresId(List<Vendedor> vendedores, int filtroId) {
         List<Vendedor> vendedoresAux = new ArrayList<>();
 
@@ -29,7 +33,6 @@ public class GestorVendedor {
         return vendedoresAux;
     }
 
-    // Filtro por Nombre
     public List<Vendedor> filterVendedoresNombre(List<Vendedor> vendedores, String filtroNombre) {
         List<Vendedor> vendedoresAux = new ArrayList<>();
 
@@ -42,20 +45,27 @@ public class GestorVendedor {
         return vendedoresAux;
     }
 
-    // Eliminacion de vendedores por parametros
-
-    // Eliminacion de vendedores por Id
     public void deleteVendedoresId(List<Vendedor> vendedores, int filtroId) {
         vendedores.removeIf(vendedor -> vendedor.getId() == filtroId);
     }
 
-    // Eliminacion de vendedores por Nombre
     public void deleteVendedoresNombre(List<Vendedor> vendedores, String filtroString) {
         vendedores.removeIf(vendedor -> vendedor.getNombre().equals(filtroString));
     }
 
-    // Eliminacion de vendedores pasando la posicion del arreglo de vendedores que se quiere eliminar
     public void deleteVendedoresPosicion(List<Vendedor> vendedores, int posicion) {
         vendedores.remove(posicion);
+    }
+
+    //Cambiar a pedidoObservable porque estadopedido ahora esta en pedidoobservable
+    public List<Pedido> buscarPedidosPorEstado(int idVendedor, EstadoPedidoEnum estadoPedido) {
+        GestorPedido gestorPedido = new GestorPedido(PedidoMemoryDAO.getInstance());
+        return gestorPedido.filtrarPorEstado(gestorPedido.buscarPorRestaurante(idVendedor), estadoPedido);
+    }
+
+    public void actualizarEstado(EstadoPedidoEnum estadoNuevo, List<Pedido> pedidosPorEstado) {
+        for (Pedido pedidos : pedidosPorEstado) {
+            pedidos.setChange(estadoNuevo);
+        }
     }
 }

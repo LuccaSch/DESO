@@ -1,18 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package isi.deso.tp.model.DTO;
 
 import java.util.List;
 
-class ClienteDTO {
+public class ClienteDTO {
 
     private String nombre;
     private String cuit;
     private String email;
     private String direccion;
-    private List<PedidoDTO> listaPedidos;
+    private List<PedidoDTO> listaPedidosDTO;
+
+    public ClienteDTO(String nombre, String cuit, String email, String direccion, List<PedidoDTO> listaPedidosDTO) {
+        this.nombre = nombre;
+        this.cuit = cuit;
+        this.email = email;
+        this.direccion = direccion;
+        this.listaPedidosDTO = listaPedidosDTO;
+    }
 
     public String getNombre() {
         return nombre;
@@ -46,12 +50,12 @@ class ClienteDTO {
         this.direccion = direccion;
     }
 
-    public List<PedidoDTO> getListaPedidos() {
-        return listaPedidos;
+    public List<PedidoDTO> getListaPedidosDTO() {
+        return listaPedidosDTO;
     }
 
-    public void setListaPedidos(List<PedidoDTO> listaPedidos) {
-        this.listaPedidos = listaPedidos;
+    public void setListaPedidosDTO(List<PedidoDTO> listaPedidosDTO) {
+        this.listaPedidosDTO = listaPedidosDTO;
     }
 
 }

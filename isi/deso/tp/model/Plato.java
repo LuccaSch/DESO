@@ -2,42 +2,42 @@ package isi.deso.tp.model;
 
 public class Plato extends ItemMenu {
 
-    /* 
+    /*
     @Override
     Atributos heredados de itemMenu
-    
+
     protected int id;
-    protected Vendedor vendedor;
     protected String nombre;
     protected String descripcion;
     protected double precio;
     protected Categoria categoria;
-    protected double peso;
-    
-    */
+    protected double peso; // En kilogramos
+    protected Vendedor vendedor;
 
+     */
     // Atributos
-
     private int calorias;
     private boolean aptoCeliaco;
     private boolean aptoVegano;
 
     // Constructores
-    public Plato(){}
+    public Plato() {
+    }
 
-    public Plato(int calorias, boolean aptoCeliaco, boolean aptoVegano, double peso,int id, String nombre, String descripcion, double precio, Categoria categoria) {
+    public Plato(int id, String nombre, String descripcion, double precio, Categoria categoria, double peso, Vendedor vendedor, int calorias, boolean aptoCeliaco, boolean aptoVegano) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.categoria = categoria;
+        this.peso = peso;
+        this.vendedor = vendedor;
         this.calorias = calorias;
         this.aptoCeliaco = aptoCeliaco;
         this.aptoVegano = aptoVegano;
-        this.peso = peso;
-        this.id=id;
-        this.nombre=nombre;
-        this.descripcion=descripcion;
-        this.precio=precio;
-        this.categoria=categoria;
     }
 
-    // getters\setters 
+    // getters\setters
     public int getCalorias() {
         return calorias;
     }
@@ -46,7 +46,6 @@ public class Plato extends ItemMenu {
         this.calorias = calorias;
     }
 
-
     public boolean getAptoCeliaco() {
         return aptoCeliaco;
     }
@@ -54,16 +53,14 @@ public class Plato extends ItemMenu {
     public void setAptoCeliaco(boolean aptoCeliaco) {
         this.aptoCeliaco = aptoCeliaco;
     }
-    
 
-    public boolean getAptoVegano(){
+    public boolean getAptoVegano() {
         return this.aptoVegano;
     }
 
     public void setAptoVegano(boolean aptoVegano) {
         this.aptoVegano = aptoVegano;
     }
-
 
     //Reescribiendo metodos heredados
     @Override

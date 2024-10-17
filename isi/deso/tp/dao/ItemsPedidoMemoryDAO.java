@@ -1,27 +1,23 @@
 package isi.deso.tp.dao;
 
-import java.util.List;
-
 import isi.deso.tp.exception.ItemNoEncontradoException;
 import isi.deso.tp.model.ItemPedido;
+import java.util.List;
 
 public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
 
     // Atributos que simulan la base de datos
     private List<ItemPedido> listaItemPedidos;
 
-
-    // getters\setters 
-
+    // getters\setters
     public List<ItemPedido> getLista() {
-        return listaItemPedidos;
+        return this.listaItemPedidos;
     }
 
     public void setLista(List<ItemPedido> listaItemPedidos) {
         this.listaItemPedidos = listaItemPedidos;
     }
 
-    
     //Reescribiendo metodos heredados
     @Override
     public List<ItemPedido> filtrarPorVendedor(int idVendedor) throws ItemNoEncontradoException {
@@ -87,7 +83,7 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
                 .toList();
 
         if (listaBusqueda.isEmpty()) {
-            throw new ItemNoEncontradoException("Lista vacia despues de buscar por rango de precio ("+precioMin+","+precioMax);
+            throw new ItemNoEncontradoException("Lista vacia despues de buscar por rango de precio (" + precioMin + "," + precioMax);
         }
 
         return listaBusqueda;

@@ -1,16 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package isi.deso.tp.model;
 
-/**
- *
- * @author Franco Ocampo
- */
+import isi.deso.tp.dao.PedidoMemoryDAO;
+import isi.deso.tp.service.GestorPedido;
+
 public class TransferenciaStrategy implements PagoStrategy {
-    @Override
-    public double agregarRecargo(double saldo){
-        return saldo*1.02; 
+
+    private String cuit;
+    private String cbu;
+
+    public TransferenciaStrategy(String cuit, String cbu) {
+        this.cuit = cuit;
+        this.cbu = cbu;
     }
+
+    @Override
+    public String toString() {
+        return "TransferenciaStrategy{" + "cuit=" + cuit + ", cbu=" + cbu + '}';
+    }
+
+    @Override
+    public double agregarRecargo(double precioTotal) {
+        return precioTotal * 1.02;
+    }
+
+    @Override
+    public String nombreEstrategia() {
+        return "Transferencia";
+    }
+
+    @Override
+    public void generarPago(Pedido pedido) {
+        GestorPedido gestorPedido = new GestorPedido(PedidoMemoryDAO.getInstance());
+
+        double precioFinalPedido = gestorPedido.aplicarRecargo(pedido);
+
+        System.out.println("Precio final del pedido con id " + pedido.getId() + ": " + precioFinalPedido);
+    }
+
 }
