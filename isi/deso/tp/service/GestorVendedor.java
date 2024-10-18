@@ -57,7 +57,6 @@ public class GestorVendedor {
         vendedores.remove(posicion);
     }
 
-    //Cambiar a pedidoObservable porque estadopedido ahora esta en pedidoobservable
     public List<Pedido> buscarPedidosPorEstado(int idVendedor, EstadoPedidoEnum estadoPedido) {
         GestorPedido gestorPedido = new GestorPedido(PedidoMemoryDAO.getInstance());
         return gestorPedido.filtrarPorEstado(gestorPedido.buscarPorRestaurante(idVendedor), estadoPedido);

@@ -32,7 +32,9 @@ public class GestorPedido {
     }
 
     public Pedido crearPedido() {
-        return new Pedido();
+        Pedido pedido = new Pedido();
+        pedidoDAO.agregarPedidoALista(pedido);
+        return pedido;
     }
 
     public Pedido crearPedido(int id, Cliente cliente, List<ItemPedido> pedidoDetalle) {
@@ -40,6 +42,7 @@ public class GestorPedido {
         try {
             vendedorEsUnico(pedidoDetalle);
             pedido = new Pedido(id, cliente, pedidoDetalle);
+            pedidoDAO.agregarPedidoALista(pedido);
         } catch (VendedorNoUnicoException excep) {
             System.err.println(excep.getMessage());
         }
@@ -51,6 +54,7 @@ public class GestorPedido {
         try {
             vendedorEsUnico(pedidoDetalle);
             pedido = new Pedido(id, cliente, estadoPedido, pedidoDetalle, precioTotal);
+            pedidoDAO.agregarPedidoALista(pedido);
         } catch (VendedorNoUnicoException excep) {
             System.err.println(excep.getMessage());
         }
@@ -137,7 +141,7 @@ public class GestorPedido {
             return -1;
         }
     }
-
+    
     public List<Pedido> filtrarPorEstado(List<Pedido> listaPedidos, EstadoPedidoEnum estadoPedido) {
         return listaPedidos.stream().filter(pedido -> pedido.getEstadoPedido() == estadoPedido).toList();
     }
@@ -153,5 +157,9 @@ public class GestorPedido {
     public void actualizarEstado(EstadoPedidoEnum estadoPedidoNuevo, Pedido pedido){
         pedido.setChange(estadoPedidoNuevo);
     }
-
+    
+    public void generarPagoPara(Pedido pedido){
+        pedido.getContextoPago().getEstrategiaPago().generarPago(pedido);
+    }
+    
 }

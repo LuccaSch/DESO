@@ -8,5 +8,8 @@ public interface PedidoDAO {
     public List<Pedido> buscarPorIdVendedor(int idVendedor);
 
     public List<Pedido> buscarPorIdPedido(int idPedido);
-
+    
+    public List<Pedido> getListaPedidos();
+    
+    public void agregarPedidoALista(Pedido pedido);
 }

@@ -108,33 +108,23 @@ public class Main {
         4-ENVIADO
         5-ENTREGADO
         */
+        
         pedido1.setEstadoPedido(EstadoPedidoEnum.RECIBIDO);
         pedido1.addObserver(pedido1.getCliente());
-        List<Pedido> filtroPorEstado = gestorVendedor.buscarPedidosPorEstado(pedido1.getId(), EstadoPedidoEnum.RECIBIDO);
+        List<Pedido> filtroPorEstado = gestorVendedor.buscarPedidosPorEstado(vendedor4.getId(), EstadoPedidoEnum.RECIBIDO);
         
-        gestorVendedor.actualizarEstado(EstadoPedidoEnum.PREPARANDO, filtroPorEstado);
+        //gestorVendedor.actualizarEstado(EstadoPedidoEnum.PREPARANDO, filtroPorEstado);
         
-        //gestorVendedor.actualizarEstado(EstadoPedidoEnum.ENVIADO, filtroPorEstado);
-        System.out.println("\n");
-        System.out.println(pedido1.getEstadoPedido());
+        gestorVendedor.actualizarEstado(EstadoPedidoEnum.ENVIADO, filtroPorEstado);
         
-        pedido1.setChange(EstadoPedidoEnum.PREPARANDO);
-        System.out.println(pedido1.getEstadoPedido());
-        System.out.println("\n");
         
-        pedido1.setChange(EstadoPedidoEnum.ENVIADO);
-        System.out.println(pedido1.getEstadoPedido());
-        System.out.println("\n");
-        
-        /*for(Pedido p : filtroPorEstado){
+        for(Pedido p : filtroPorEstado){
             System.out.println(p.getId());
-            System.out.println("\n");
-        }*/
-        
-        for(Observer c : pedido1.getListaObservadores()){
-            System.out.println(c.getEstadoPedido(pedido1.getId()));
-            System.out.println("\n");
+            System.out.println("\n");   
+            System.out.println(p.getEstadoPedido());
+            System.out.println("\n");   
         }
+        
         System.out.println("\nFIN App TP Etapa 5");
         
     }

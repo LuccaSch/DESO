@@ -21,7 +21,17 @@ public class PedidoMemoryDAO implements PedidoDAO {
         }
         return PedidoMemoryDAO.pedidoMemoryDAO;
     }
-
+    
+    @Override
+    public void agregarPedidoALista(Pedido pedido){
+        this.listaPedidos.add(pedido);
+    }
+    
+    @Override
+    public List<Pedido> getListaPedidos(){
+        return this.listaPedidos;
+    }
+    
     @Override
     public List<Pedido> buscarPorIdVendedor(int idVendedor) {
         List<Pedido> listaBusqueda = new ArrayList<>();
@@ -51,5 +61,5 @@ public class PedidoMemoryDAO implements PedidoDAO {
 
         return listaBusqueda;
     }
-
+    
 }

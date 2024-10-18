@@ -1,6 +1,8 @@
 package isi.deso.tp.model;
 
+import isi.deso.tp.dao.PedidoMemoryDAO;
 import isi.deso.tp.observer.Observer;
+import isi.deso.tp.service.GestorPedido;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,41 +96,27 @@ public class Cliente implements Observer {
     public void setCoordenada(Coordenada coordenada) {
         this.coordenada = coordenada;
     }
-
+    
+    public void display(Pedido pedido){
+        System.out.println("Cliente: estado pedido actualizado: "+pedido.getEstadoPedido());
+    }
+    
     @Override
     public String toString() {
         return "Cliente{id=" + this.id + ", nombre='" + this.nombre + "'}";
     }
 
-    /*@Override
-    public void setChange(EstadoPedidoEnum estadoNuevo, int idPedido) {
-        for (Pedido ped : listaPedidos) {
-            if (ped.getId() == idPedido) {
-                ped.setEstadoPedido(estadoNuevo);
-            }
-        }
-    }
-*/
     @Override
     public void update(EstadoPedidoEnum estadoPedido, int idPedido) {
-        //setChange(estadoPedido, idPedido);
+        GestorPedido gestorPedido = new GestorPedido(PedidoMemoryDAO.getInstance());
         if (estadoPedido == EstadoPedidoEnum.ENVIADO) {
             for (Pedido pedido : this.listaPedidos) {
                 if (pedido.getId() == idPedido) {
-                    pedido.getContextoPago().getEstrategiaPago().generarPago(pedido);
+                    display(pedido);
+                    gestorPedido.generarPagoPara(pedido);
                 }
             }
         }
-    }
-    
-    @Override 
-    public EstadoPedidoEnum getEstadoPedido(int idPedido){
-        for(Pedido pedido : this.listaPedidos){
-            if(pedido.getId() == idPedido){
-                return pedido.getEstadoPedido();
-            }
-        }
-        return EstadoPedidoEnum.CANCELADO;
     }
     
 }
