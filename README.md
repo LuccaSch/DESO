@@ -17,10 +17,10 @@ y la forma de pago. El precio de un pedido se calculará diferente según la for
 - Ver su historial de pedidos.
 
 ## Diagrama de Clases en draw.io
-(Requiere permisos) Para accerder dar a [aquí](https://drive.google.com/file/d/1Nt4zU6iw8lsLZ3smhBiCW-I-se1H7jJk/view?usp=share_link){:target="_blank"}
+(Requiere permisos) Para accerder dar a <a href="https://drive.google.com/file/d/1Nt4zU6iw8lsLZ3smhBiCW-I-se1H7jJk/view?usp=share_link" target="_blank">aquí</a>
 
 ## Diagrama Relacional Tablas
-Para accerder dar a [aquí](https://dbdiagram.io/d/6733e157e9daa85aca3b32b4){:target="_blank"}
+Para accerder dar a <a href="https://dbdiagram.io/d/6733e157e9daa85aca3b32b4" target="_blank">aquí</a>
 
 ## Último Diagrama de Clases en .png
 ![TP Etapa 6 Modelo de Datos](https://github.com/user-attachments/assets/06a291af-769f-4234-91d0-5be9dcc40b9e)
