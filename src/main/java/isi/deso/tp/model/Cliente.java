@@ -22,7 +22,7 @@ public class Cliente implements Observer {
         this.listaPedidos = new ArrayList<>();
     }
 
-    public Cliente(int id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
+    public Cliente(Integer id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         this.id = id;
         this.nombre = nombre;
         this.cuit = cuit;
@@ -40,11 +40,11 @@ public class Cliente implements Observer {
         this.listaPedidos = new ArrayList<>();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,7 +57,7 @@ public class Cliente implements Observer {
     }
 
     public String getCuit() {
-        return this.cuit;
+        return cuit;
     }
 
     public void setCuit(String cuit) {
@@ -106,7 +106,7 @@ public class Cliente implements Observer {
     }
 
     @Override
-    public void update(EstadoPedidoEnum estadoPedido, int idPedido) {
+    public void update(EstadoPedidoEnum estadoPedido, Integer idPedido) {
         switch (estadoPedido) {
             case EstadoPedidoEnum.RECIBIDO:
                 PedidoController pedidoController = new PedidoController(PedidoMemoryDAO.getInstance());

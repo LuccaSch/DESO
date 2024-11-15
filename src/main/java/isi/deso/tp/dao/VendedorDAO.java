@@ -12,9 +12,9 @@ public interface VendedorDAO {
 
     public void actualizarVendedor(Vendedor vendedor);
 
-    public void eliminarVendedor(int idVendedor);
+    public void eliminarVendedor(Integer idVendedor);
 
-    public List<Vendedor> buscarVendedor(int idVendedor);
+    public List<Vendedor> buscarVendedor(Integer idVendedor);
 
     public Vendedor buscarVendedorPorNombre(String nombre) throws VendedorNoEncontradoException;
 

@@ -19,7 +19,7 @@ public class TransferenciaStrategy implements PagoStrategy {
     }
 
     @Override
-    public double agregarRecargo(double precioTotal) {
+    public Double agregarRecargo(Double precioTotal) {
         return precioTotal * 1.02;
     }
 
@@ -32,7 +32,7 @@ public class TransferenciaStrategy implements PagoStrategy {
     public void generarPago(Pedido pedido) {
         PedidoController pedidoController = new PedidoController(PedidoMemoryDAO.getInstance());
 
-        double precioFinalPedido = pedidoController.aplicarRecargo(pedido);
+        Double precioFinalPedido = pedidoController.aplicarRecargo(pedido);
 
         System.out.println("Desde TransferenciaStrategy: Precio final del pedido con id " + pedido.getId() + ": " + precioFinalPedido);
     }

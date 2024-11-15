@@ -1,5 +1,6 @@
 package isi.deso.tp.dao;
 
+import isi.deso.tp.dao.jdbc.DBConnector;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,7 +46,7 @@ public class ClienteJDBC implements ClienteDAO {
     }
 
     @Override
-    public Cliente buscarPorIdCliente(int idCliente) {
+    public Cliente buscarPorIdCliente(Integer idCliente) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

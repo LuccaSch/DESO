@@ -42,7 +42,7 @@ public class ClienteController {
         return cliente;
     }
 
-    public Cliente crearCliente(int id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
+    public Cliente crearCliente(Integer id, String nombre, String cuit, String email, String direccion, Coordenada coordenada) {
         Cliente cliente = new Cliente(id, nombre, cuit, email, direccion, coordenada);
         clienteDAO.agregarClienteALista(cliente);
         return cliente;
@@ -73,7 +73,7 @@ public class ClienteController {
         return clienteNuevo;
     }
 
-    public List<Cliente> filterClientePorId(List<Cliente> clientes, int filtroId) {
+    public List<Cliente> filterClientePorId(List<Cliente> clientes, Integer filtroId) {
         List<Cliente> clientesAux = new ArrayList<>();
 
         for (Cliente i : clientes) {
@@ -97,7 +97,7 @@ public class ClienteController {
         return clientesAux;
     }
 
-    public void deleteClientePorId(List<Cliente> clientes, int filtroId) {
+    public void deleteClientePorId(List<Cliente> clientes, Integer filtroId) {
         clientes.removeIf(cliente -> cliente.getId() == filtroId);
         clienteDAO.eliminarListaClientesALista(clientes);
     }
@@ -107,7 +107,7 @@ public class ClienteController {
         clienteDAO.eliminarListaClientesALista(clientes);
     }
 
-    public void deleteClientePorPosicion(List<Cliente> clientes, int posicion) {
+    public void deleteClientePorPosicion(List<Cliente> clientes, Integer posicion) {
         clientes.remove(posicion);
         clienteDAO.eliminarListaClientesALista(clientes);
     }
@@ -119,7 +119,7 @@ public class ClienteController {
         return mercadoPagoStrategy;
     }
 
-    public void generarPagoPara(int idCliente, int idPedido) {
+    public void generarPagoPara(Integer idCliente, Integer idPedido) {
         Cliente cliente = clienteDAO.buscarPorIdCliente(idCliente);
         for (Pedido pedido : cliente.getListaPedidos()) {
             if (pedido.getId() == idPedido) {

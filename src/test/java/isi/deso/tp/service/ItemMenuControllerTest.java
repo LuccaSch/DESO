@@ -84,7 +84,7 @@ public class ItemMenuControllerTest {
     @Test
     public void testEliminarItemMenu() {
         System.out.println("eliminarItemMenu");
-        int idItemMenu = 0;
+        Integer idItemMenu = 0;
         ItemMenuController instance = new ItemMenuController();
         instance.eliminarItemMenu(idItemMenu);
         // TODO review the generated test code and remove the default call to fail.
@@ -97,7 +97,7 @@ public class ItemMenuControllerTest {
     @Test
     public void testBuscarItemMenu() {
         System.out.println("buscarItemMenu");
-        int idItemMenu = 0;
+        Integer idItemMenu = 0;
         ItemMenuController instance = new ItemMenuController();
         List<ItemMenu> expResult = null;
         List<ItemMenu> result = instance.buscarItemMenu(idItemMenu);

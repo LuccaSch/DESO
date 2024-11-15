@@ -19,7 +19,7 @@ public class ContextoPago {
         this.pagoStrategy = pagoStrategy;
     }
 
-    public double agregarRecargo(double precioTotal) {
+    public Double agregarRecargo(Double precioTotal) {
         return pagoStrategy.agregarRecargo(precioTotal);
     }
 

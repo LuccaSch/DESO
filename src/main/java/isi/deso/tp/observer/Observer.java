@@ -4,6 +4,6 @@ import isi.deso.tp.model.EstadoPedidoEnum;
 
 public interface Observer<T> {
 
-    public void update(EstadoPedidoEnum estadoPedido, int idPedido);
+    public void update(EstadoPedidoEnum estadoPedido, Integer idPedido);
 
 }

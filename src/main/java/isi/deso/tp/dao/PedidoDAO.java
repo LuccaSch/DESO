@@ -9,7 +9,7 @@ public interface PedidoDAO {
 
     public void agregarPedidoALista(Pedido pedido);
 
-    public List<Pedido> buscarPorIdVendedor(int idVendedor);
+    public List<Pedido> buscarPorIdVendedor(Integer idVendedor);
 
-    public List<Pedido> buscarPorIdPedido(int idPedido);
+    public List<Pedido> buscarPorIdPedido(Integer idPedido);
 }

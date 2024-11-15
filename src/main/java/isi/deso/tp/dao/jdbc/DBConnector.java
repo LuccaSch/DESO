@@ -1,4 +1,4 @@
-package isi.deso.tp.dao;
+package isi.deso.tp.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

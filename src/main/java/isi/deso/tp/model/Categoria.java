@@ -18,16 +18,16 @@ public class Categoria {
     @Column
     private String descripcion;
 
-    public Categoria(int id, String descripcion) {
+    public Categoria(Integer id, String descripcion) {
         this.id = id;
         this.descripcion = descripcion;
     }
 
-    public int getId() {
-        return this.id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -36,7 +36,7 @@ public class VendedorController {
         return v;
     }
     
-    public Vendedor crearVendedor(int id, String nombre, String direccion, Coordenada coordenada) {
+    public Vendedor crearVendedor(Integer id, String nombre, String direccion, Coordenada coordenada) {
         return new Vendedor(id, nombre, direccion, coordenada);
     }
 
@@ -44,7 +44,7 @@ public class VendedorController {
         return vendedorDAO.listarVendedor();
     }
 
-    public List<Vendedor> filterVendedoresPorId(List<Vendedor> vendedores, int filtroId) {
+    public List<Vendedor> filterVendedoresPorId(List<Vendedor> vendedores, Integer filtroId) {
         List<Vendedor> vendedoresAux = new ArrayList<>();
 
         for (Vendedor i : vendedores) {
@@ -68,7 +68,7 @@ public class VendedorController {
         return vendedoresAux;
     }
     
-        public void VendedorNoEncontrado(boolean condicion) throws VendedorNoEncontradoException {
+        public void VendedorNoEncontrado(Boolean condicion) throws VendedorNoEncontradoException {
         if (!condicion) {
             throw new VendedorNoEncontradoException();
         }
@@ -88,14 +88,14 @@ public class VendedorController {
     }
     
     
-    public void modificarVendedor(int id, String nombre, String direccion, Coordenada coordenadas) {
+    public void modificarVendedor(Integer id, String nombre, String direccion, Coordenada coordenadas) {
         Vendedor vendedorAModificar = this.vendedorDAO.buscarVendedor(id).getFirst();
         vendedorAModificar.setNombre(nombre);
         vendedorAModificar.setDireccion(direccion);
         vendedorAModificar.setCoordenada(coordenadas);
     }
 
-    public void deleteVendedoresPorId(List<Vendedor> vendedores, int filtroId) {
+    public void deleteVendedoresPorId(List<Vendedor> vendedores, Integer filtroId) {
         vendedores.removeIf(vendedor -> vendedor.getId() == filtroId);
     }
 
@@ -103,11 +103,11 @@ public class VendedorController {
         vendedores.removeIf(vendedor -> vendedor.getNombre().equals(filtroString));
     }
 
-    public void deleteVendedoresPorPosicion(List<Vendedor> vendedores, int posicion) {
+    public void deleteVendedoresPorPosicion(List<Vendedor> vendedores, Integer posicion) {
         vendedores.remove(posicion);
     }
 
-    public List<Pedido> buscarPedidosPorEstado(int idVendedor, EstadoPedidoEnum estadoPedido) {
+    public List<Pedido> buscarPedidosPorEstado(Integer idVendedor, EstadoPedidoEnum estadoPedido) {
         PedidoController pedidoController = new PedidoController(PedidoMemoryDAO.getInstance());
         return pedidoController.filtrarPorEstado(pedidoController.buscarPorRestaurante(idVendedor), estadoPedido);
     }

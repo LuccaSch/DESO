@@ -4,18 +4,18 @@ import java.util.List;
 
 public abstract class ItemMenu {
 
-    protected int id;
+    protected Integer id;
     protected String nombre;
     protected String descripcion;
-    protected double precio;
+    protected Double precio;
     protected Categoria categoria;
-    protected double peso; // En kg
+    protected Double peso; // En kg
     protected Vendedor vendedor;
 
     public ItemMenu() {
     }
 
-    public ItemMenu(int id, String nombre, String descripcion, double precio, Categoria categoria, double peso, Vendedor vendedor) {
+    public ItemMenu(Integer id, String nombre, String descripcion, Double precio, Categoria categoria, Double peso, Vendedor vendedor) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -25,24 +25,19 @@ public abstract class ItemMenu {
         this.vendedor = vendedor;
     }
 
-    public abstract double peso();
+    public abstract Double peso();
 
-    public abstract boolean esBebida();
+    public abstract Boolean esBebida();
 
-    public abstract boolean esComida();
+    public abstract Boolean esComida();
 
-    public abstract boolean aptoVegano();
+    public abstract Boolean aptoVegano();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return nombre;
-    }
-
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,11 +57,11 @@ public abstract class ItemMenu {
         this.descripcion = descripcion;
     }
 
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
@@ -78,20 +73,20 @@ public abstract class ItemMenu {
         this.categoria = categoria;
     }
 
-    public double getPeso() {
+    public Double getPeso() {
         return peso;
     }
 
-    public void setPeso(double peso) {
+    public void setPeso(Double peso) {
         this.peso = peso;
     }
 
     public Vendedor getVendedor() {
-        return this.vendedor;
+        return vendedor;
     }
 
-    public void setVendedor(Vendedor newVendedor) {
-        this.vendedor = newVendedor;
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
     }
 
     public ItemMenu obtenerItem(String n, List<ItemMenu> l) {

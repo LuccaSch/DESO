@@ -2,30 +2,30 @@ package isi.deso.tp.model;
 
 public class Coordenada {
 
-    private double lat;
-    private double lgn;
+    private Double lat;
+    private Double lgn;
 
     public Coordenada() {
     }
 
-    public Coordenada(double lat, double lgn) {
+    public Coordenada(Double lat, Double lgn) {
         this.lat = lat;
         this.lgn = lgn;
     }
 
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public double getLgn() {
+    public Double getLgn() {
         return lgn;
     }
 
-    public void setLgn(double lgn) {
+    public void setLgn(Double lgn) {
         this.lgn = lgn;
     }
 

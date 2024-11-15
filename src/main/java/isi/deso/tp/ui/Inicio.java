@@ -1393,7 +1393,7 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         Vendedor v = new Vendedor();
         List<String> lista = listItems.getSelectedValuesList();
-        Coordenada c = new Coordenada((double) spnLat.getValue(), (double) spnLong.getValue());
+        Coordenada c = new Coordenada((Double) spnLat.getValue(), (Double) spnLong.getValue());
         v.setNombre(txtNombre.getText());
         v.setDireccion(txtDireccion.getText());
         v.setCoordenada(c);
@@ -1444,12 +1444,12 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         BebidaAlcoholica a = new BebidaAlcoholica();
         Categoria ca = new Categoria(1, (String) cmbCategoriaA.getSelectedItem());
-        a.setGraduacionAlcoholica((int) spnnerGraduacion.getValue());
+        a.setGraduacionAlcoholica((Integer) spnnerGraduacion.getValue());
         a.setNombre(txtNombreAlcohol.getText());
-        a.setId((int) spnnerIdAlcohol.getValue());
-        a.setVolumen((double) spnnerVol.getValue());
+        a.setId((Integer) spnnerIdAlcohol.getValue());
+        a.setVolumen((Double) spnnerVol.getValue());
         a.setCategoria(ca);
-        a.setPrecio((double) spnnerPrecioA.getValue());
+        a.setPrecio((Double) spnnerPrecioA.getValue());
         try {
             a.setVendedor(vendedorController.buscarVendedorPorNombre(listVendedorAlcohol.getSelectedValue()));
         } catch (VendedorNoEncontradoException ex) {
@@ -1480,7 +1480,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnCrearClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearClienteActionPerformed
         // TODO add your handling code here:
-        Coordenada co = new Coordenada((double) SpinnerLongCliente.getValue(), (double) SpinnerLatCliente.getValue());
+        Coordenada co = new Coordenada((Double) SpinnerLongCliente.getValue(), (Double) SpinnerLatCliente.getValue());
         Cliente c = new Cliente();
         c.setNombre(txtNombreCliente.getText());
         c.setCuit(txtCuitCliente.getText());
@@ -1511,10 +1511,10 @@ public class Inicio extends javax.swing.JFrame {
         } else if (cmbBoxSinAlcohol.getSelectedItem().equals("GRANDE")) {
             a.setTamano(Tamano.GRANDE);
         }
-        a.setVolumen((double) spnerVolSinAlcohol.getValue());
-        a.setId((int) spnIdSinAlcohol.getValue());
+        a.setVolumen((Double) spnerVolSinAlcohol.getValue());
+        a.setId((Integer) spnIdSinAlcohol.getValue());
         a.setNombre(txtNombreSinAlcohol.getText());
-        a.setPrecio((double) spinnerPrecioSinAlcohol.getValue());
+        a.setPrecio((Double) spinnerPrecioSinAlcohol.getValue());
         try {
             a.setVendedor(vendedorController.buscarVendedorPorNombre(listVendedorSinAlcohol.getSelectedValue()));
         } catch (VendedorNoEncontradoException ex) {
@@ -1535,7 +1535,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnActualizarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarVendedorActionPerformed
         // TODO add your handling code here:
-        int fila = tablaVend.getSelectedRow();
+        Integer fila = tablaVend.getSelectedRow();
         modelo.setValueAt(txtNombre.getText(), fila, 0);
         modelo.setValueAt(txtDireccion.getText(), fila, 1);
         modelo.setValueAt(spinerId.getValue(), fila, 2);
@@ -1548,7 +1548,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnActualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarClienteActionPerformed
         // TODO add your handling code here:
-        int fila = tableCliente.getSelectedRow();
+        Integer fila = tableCliente.getSelectedRow();
         modeloCliente.setValueAt(txtNombreCliente.getText(), fila, 0);
         modeloCliente.setValueAt(txtCuitCliente.getText(), fila, 1);
         modeloCliente.setValueAt(txtEmailCliente.getText(), fila, 2);
@@ -1561,7 +1561,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnActualizarAlcoholActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarAlcoholActionPerformed
         // TODO add your handling code here:
-        int fila = tableAlcohol.getSelectedRow();
+        Integer fila = tableAlcohol.getSelectedRow();
         modeloAlcohol.setValueAt(spnnerGraduacion.getValue(), fila, 0);
         modeloAlcohol.setValueAt(spnnerVol.getValue(), fila, 1);
         modeloAlcohol.setValueAt(spnnerIdAlcohol.getValue(), fila, 2);
@@ -1572,7 +1572,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnActualizarSinAlcoholActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarSinAlcoholActionPerformed
         // TODO add your handling code here:
-        int fila = tableSinAlcohol.getSelectedRow();
+        Integer fila = tableSinAlcohol.getSelectedRow();
         modeloSinAlcohol.setValueAt(cmbBoxSinAlcohol.getSelectedItem(), fila, 0);
         modeloSinAlcohol.setValueAt(spnerVolSinAlcohol.getValue(), fila, 1);
         modeloSinAlcohol.setValueAt(spnIdSinAlcohol.getValue(), fila, 2);
@@ -1583,11 +1583,11 @@ public class Inicio extends javax.swing.JFrame {
     private void btnCrearPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPlatoActionPerformed
         // TODO add your handling code here:
         Plato p = new Plato();
-        p.setCalorias((int) spinnerCalorias.getValue());
+        p.setCalorias((Integer) spinnerCalorias.getValue());
         p.setAptoCeliaco(btnAptoCeliaco.isSelected());
         p.setAptoVegano(btnAptoVegano.isSelected());
         p.setNombre(txtNombrePlato.getText());
-        p.setPrecio((double) SpinnerPrecioPlato.getValue());
+        p.setPrecio((Double) SpinnerPrecioPlato.getValue());
         try {
             p.setVendedor(vendedorController.buscarVendedorPorNombre((String) listVendedorPlato.getSelectedValue()));
         } catch (VendedorNoEncontradoException ex) {
@@ -1675,7 +1675,7 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         listaItemPedido.clear();
         String carrito = listItemsPedido.getSelectedValue();
-        ItemPedido p = new ItemPedido(0, itemMenuController.buscarItemPorNombre(carrito), (int) spinnerCarrito.getValue());
+        ItemPedido p = new ItemPedido(0, itemMenuController.buscarItemPorNombre(carrito), (Integer) spinnerCarrito.getValue());
 
         listaItemPedido.add(p);
 
@@ -1685,7 +1685,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnCrearPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPedidoActionPerformed
         // TODO add your handling code here:
-        double aux = 0;
+        Double aux = 0.0;
         for (ItemPedido i : listaItemPedido) {
             aux = aux + i.getPrecio();
         }
@@ -1772,8 +1772,8 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnActualizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPedidoActionPerformed
         // TODO add your handling code here:
-        int fila = tableCliente.getSelectedRow();
-        double aux = 0;
+        Integer fila = tableCliente.getSelectedRow();
+        Double aux = 0.0;
         for (ItemPedido i : listaItemPedido) {
             aux = aux + i.getPrecio();
         }

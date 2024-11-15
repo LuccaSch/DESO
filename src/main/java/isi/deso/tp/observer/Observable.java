@@ -10,5 +10,5 @@ public interface Observable<T> {
 
     public void setChange(EstadoPedidoEnum estadoPedidoNuevo);
 
-    public void notifyChange(int idPedido);
+    public void notifyChange(Integer idPedido);
 }

@@ -11,8 +11,8 @@ public interface ItemMenuDAO {
 
     public void actualizarItemMenu(ItemMenu itemMenu);
 
-    public void eliminarItemMenu(int idItemMenu);
+    public void eliminarItemMenu(Integer idItemMenu);
 
-    public List<ItemMenu> buscarItemMenu(int idItemMenu);
+    public List<ItemMenu> buscarItemMenu(Integer idItemMenu);
 
 }

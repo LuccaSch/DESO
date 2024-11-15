@@ -2,38 +2,38 @@ package isi.deso.tp.model;
 
 public class ItemPedido {
 
-    private int id;
+    private Integer id;
     private ItemMenu itemMenu;
-    private int cantidad;
-    private double precio;
+    private Integer cantidad;
+    private Double precio;
 
     public ItemPedido() {
     }
 
-    public ItemPedido(int id, ItemMenu itemMenu, int cantidad) {
+    public ItemPedido(Integer id, ItemMenu itemMenu, Integer cantidad) {
         this.id = id;
         this.itemMenu = itemMenu;
         this.cantidad = cantidad;
         this.precio = cantidad * itemMenu.getPrecio();
     }
 
-    public ItemPedido(int id, int cantidad) {
+    public ItemPedido(Integer id, Integer cantidad) {
         this.id = id;
         this.cantidad = cantidad;
     }
 
-    public ItemPedido(int id, ItemMenu itemMenu, int cantidad, double precio) {
+    public ItemPedido(Integer id, ItemMenu itemMenu, Integer cantidad, Double precio) {
         this.id = id;
         this.itemMenu = itemMenu;
         this.cantidad = cantidad;
         this.precio = precio;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -45,19 +45,19 @@ public class ItemPedido {
         this.itemMenu = itemMenu;
     }
 
-    public int getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 

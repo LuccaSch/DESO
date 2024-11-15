@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Bebida` (
-  `id` int NOT NULL,
+  `id` Integer NOT NULL,
   `tamano` enum('CHICA','MEDIANA','GRANDE') DEFAULT NULL,
-  `volumen` double DEFAULT NULL,
-  `graduacion_alcoholica` int DEFAULT NULL,
-  `tipoBebida` int DEFAULT NULL
+  `volumen` Double DEFAULT NULL,
+  `graduacion_alcoholica` Integer DEFAULT NULL,
+  `tipoBebida` Integer DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -42,7 +42,7 @@ CREATE TABLE `Bebida` (
 --
 
 CREATE TABLE `Categoria` (
-  `id` int NOT NULL,
+  `id` Integer NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -53,12 +53,12 @@ CREATE TABLE `Categoria` (
 --
 
 CREATE TABLE `Cliente` (
-  `id` int NOT NULL,
+  `id` Integer NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `cuit` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
-  `coordenada_id` int DEFAULT NULL
+  `coordenada_id` Integer DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -68,8 +68,8 @@ CREATE TABLE `Cliente` (
 --
 
 CREATE TABLE `ContextoPago` (
-  `id` int NOT NULL,
-  `estrategia_pago_id` int DEFAULT NULL
+  `id` Integer NOT NULL,
+  `estrategia_pago_id` Integer DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -79,9 +79,9 @@ CREATE TABLE `ContextoPago` (
 --
 
 CREATE TABLE `Coordenada` (
-  `id` int NOT NULL,
-  `lat` double DEFAULT NULL,
-  `lgn` double DEFAULT NULL
+  `id` Integer NOT NULL,
+  `lat` Double DEFAULT NULL,
+  `lgn` Double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -91,7 +91,7 @@ CREATE TABLE `Coordenada` (
 --
 
 CREATE TABLE `Efectivo` (
-  `id` int NOT NULL
+  `id` Integer NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -101,13 +101,13 @@ CREATE TABLE `Efectivo` (
 --
 
 CREATE TABLE `ItemMenu` (
-  `id` int NOT NULL,
+  `id` Integer NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
-  `precio` double DEFAULT NULL,
-  `categoria_id` int DEFAULT NULL,
-  `peso` double DEFAULT NULL,
-  `vendedor_id` int DEFAULT NULL
+  `precio` Double DEFAULT NULL,
+  `categoria_id` Integer DEFAULT NULL,
+  `peso` Double DEFAULT NULL,
+  `vendedor_id` Integer DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -117,10 +117,10 @@ CREATE TABLE `ItemMenu` (
 --
 
 CREATE TABLE `ItemPedido` (
-  `id` int NOT NULL,
-  `item_menu_id` int DEFAULT NULL,
-  `cantidad` int DEFAULT NULL,
-  `precio` double DEFAULT NULL
+  `id` Integer NOT NULL,
+  `item_menu_id` Integer DEFAULT NULL,
+  `cantidad` Integer DEFAULT NULL,
+  `precio` Double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -130,7 +130,7 @@ CREATE TABLE `ItemPedido` (
 --
 
 CREATE TABLE `MercadoPago` (
-  `id` int NOT NULL,
+  `id` Integer NOT NULL,
   `alias` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -141,7 +141,7 @@ CREATE TABLE `MercadoPago` (
 --
 
 CREATE TABLE `Pago` (
-  `id` int NOT NULL,
+  `id` Integer NOT NULL,
   `tipo_estrategia` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -152,11 +152,11 @@ CREATE TABLE `Pago` (
 --
 
 CREATE TABLE `Pedido` (
-  `id` int NOT NULL,
-  `cliente_id` int DEFAULT NULL,
+  `id` Integer NOT NULL,
+  `cliente_id` Integer DEFAULT NULL,
   `estado_pedido` enum('RECIBIDO','PREPARANDO','CANCELADO','ENVIADO','ENTREGADO') DEFAULT NULL,
-  `precio_total` double DEFAULT NULL,
-  `contexto_pago_id` int DEFAULT NULL
+  `precio_total` Double DEFAULT NULL,
+  `contexto_pago_id` Integer DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -166,8 +166,8 @@ CREATE TABLE `Pedido` (
 --
 
 CREATE TABLE `Plato` (
-  `id` int NOT NULL,
-  `calorias` int DEFAULT NULL,
+  `id` Integer NOT NULL,
+  `calorias` Integer DEFAULT NULL,
   `apto_celiaco` tinyint(1) DEFAULT NULL,
   `apto_vegano` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -179,7 +179,7 @@ CREATE TABLE `Plato` (
 --
 
 CREATE TABLE `Transferencia` (
-  `id` int NOT NULL,
+  `id` Integer NOT NULL,
   `cuit` varchar(255) DEFAULT NULL,
   `cbu` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -191,10 +191,10 @@ CREATE TABLE `Transferencia` (
 --
 
 CREATE TABLE `Vendedor` (
-  `id` int NOT NULL,
+  `id` Integer NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
-  `coordenada_id` int DEFAULT NULL
+  `coordenada_id` Integer DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --

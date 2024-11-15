@@ -2,7 +2,7 @@ package isi.deso.tp.model;
 
 public interface PagoStrategy {
 
-    public double agregarRecargo(double precioTotal);
+    public Double agregarRecargo(Double precioTotal);
 
     public String nombreEstrategia();
 

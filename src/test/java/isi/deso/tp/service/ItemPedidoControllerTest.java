@@ -103,9 +103,9 @@ public class ItemPedidoControllerTest {
     @Test
     public void testCrearItemPedido_3args() {
         System.out.println("crearItemPedido");
-        int id = 0;
+        Integer id = 0;
         ItemMenu itemMenu = null;
-        int cantidad = 0;
+        Integer cantidad = 0;
         ItemPedidoController instance = new ItemPedidoController();
         ItemPedido expResult = null;
         ItemPedido result = instance.crearItemPedido(id, itemMenu, cantidad);
@@ -120,10 +120,10 @@ public class ItemPedidoControllerTest {
     @Test
     public void testCrearItemPedido_4args() {
         System.out.println("crearItemPedido");
-        int id = 0;
+        Integer id = 0;
         ItemMenu itemMenu = null;
-        int cantidad = 0;
-        double precio = 0.0;
+        Integer cantidad = 0;
+        Double precio = 0.0;
         ItemPedidoController instance = new ItemPedidoController();
         ItemPedido expResult = null;
         ItemPedido result = instance.crearItemPedido(id, itemMenu, cantidad, precio);
@@ -165,7 +165,7 @@ public class ItemPedidoControllerTest {
     @Test
     public void testFiltrarPorVendedor() {
         System.out.println("filtrarPorVendedor");
-        int idVendedor = 0;
+        Integer idVendedor = 0;
         ItemPedidoController instance = new ItemPedidoController();
         List<ItemPedido> expResult = null;
         List<ItemPedido> result = instance.filtrarPorVendedor(idVendedor);
@@ -208,7 +208,7 @@ public class ItemPedidoControllerTest {
     @Test
     public void testBuscarPorRestaurante() {
         System.out.println("buscarPorRestaurante");
-        int idRestaurante = 0;
+        Integer idRestaurante = 0;
         ItemPedidoController instance = new ItemPedidoController();
         List<ItemPedido> expResult = null;
         List<ItemPedido> result = instance.buscarPorRestaurante(idRestaurante);
@@ -223,8 +223,8 @@ public class ItemPedidoControllerTest {
     @Test
     public void testBuscarPorRangoDePrecio() {
         System.out.println("buscarPorRangoDePrecio");
-        double precioMin = 0.0;
-        double precioMax = 0.0;
+        Double precioMin = 0.0;
+        Double precioMax = 0.0;
         ItemPedidoController instance = new ItemPedidoController();
         List<ItemPedido> expResult = null;
         List<ItemPedido> result = instance.buscarPorRangoDePrecio(precioMin, precioMax);
@@ -240,7 +240,7 @@ public class ItemPedidoControllerTest {
     public void testDeletePedidoPorId() {
         System.out.println("deletePedidoPorId");
         List<Pedido> pedidos = null;
-        int idPedido = 0;
+        Integer idPedido = 0;
         ItemPedidoController instance = new ItemPedidoController();
         instance.deletePedidoPorId(pedidos, idPedido);
         // TODO review the generated test code and remove the default call to fail.

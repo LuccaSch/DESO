@@ -2,47 +2,47 @@ package isi.deso.tp.model.DTO;
 
 public class ItemPedidoDTO {
 
-    private int id;
-    private int idItemMenu;
-    private int cantidad;
-    private double precio;
+    private Integer id;
+    private Integer idItemMenu;
+    private Integer cantidad;
+    private Double precio;
 
-    public ItemPedidoDTO(int id, int idItemMenu, int cantidad, double precio) {
+    public ItemPedidoDTO(Integer id, Integer idItemMenu, Integer cantidad, Double precio) {
         this.id = id;
         this.idItemMenu = idItemMenu;
         this.cantidad = cantidad;
         this.precio = precio;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getIdItemMenu() {
+    public Integer getIdItemMenu() {
         return idItemMenu;
     }
 
-    public void setIdItemMenu(int idItemMenu) {
+    public void setIdItemMenu(Integer idItemMenu) {
         this.idItemMenu = idItemMenu;
     }
 
-    public int getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 

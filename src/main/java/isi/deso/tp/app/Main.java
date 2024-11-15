@@ -13,18 +13,18 @@ import java.util.List;
 
 public class Main {
 
-    private static final int EFECTIVO = 1;
-    private static final int TRANSFERENCIA = 2;
-    private static final int MERCADOPAGO = 3;
+    private static final Integer EFECTIVO = 1;
+    private static final Integer TRANSFERENCIA = 2;
+    private static final Integer MERCADOPAGO = 3;
 
     public static void main(String[] args) throws ItemNoEncontradoException {
         VendedorController vendedorController = new VendedorController();
         ClienteController clienteController = new ClienteController(ClienteMemoryDAO.getInstance());
 
-        Vendedor vendedor1 = vendedorController.crearVendedor(1, "Roticeria Pampita", "San Luis 3984", new Coordenada(1, 2));
-        Vendedor vendedor2 = vendedorController.crearVendedor(2, "Polleria Don Pechuga", "Paraguay 4244", new Coordenada(2, 3));
-        Vendedor vendedor3 = vendedorController.crearVendedor(3, "Polleria Alitas", "Vicente 2301", new Coordenada(3, 6));
-        Vendedor vendedor4 = vendedorController.crearVendedor(1, "Almacen El Tio", "Lujan 2354", new Coordenada(1, 2));
+        Vendedor vendedor1 = vendedorController.crearVendedor(1, "Roticeria Pampita", "San Luis 3984", new Coordenada(1.0, 2.0));
+        Vendedor vendedor2 = vendedorController.crearVendedor(2, "Polleria Don Pechuga", "Paraguay 4244", new Coordenada(2.0, 3.0));
+        Vendedor vendedor3 = vendedorController.crearVendedor(3, "Polleria Alitas", "Vicente 2301", new Coordenada(3.0, 6.0));
+        Vendedor vendedor4 = vendedorController.crearVendedor(1, "Almacen El Tio", "Lujan 2354", new Coordenada(1.0, 2.0));
 
         List<Vendedor> listaVendedores = new ArrayList<>();
 
@@ -33,10 +33,10 @@ public class Main {
         listaVendedores.add(vendedor3);
         listaVendedores.add(vendedor4);
 
-        Cliente cliente1 = clienteController.crearCliente(1, "Lucca Perez", "2043350012", "lsch@gmail.com", "San Luis 6612", new Coordenada(1, 1));
-        Cliente cliente2 = clienteController.crearCliente(2, "Pedro Suarez", "2042250012", "pedrito@gmail.com", "Salta 981", new Coordenada(2, 3));
-        Cliente cliente3 = clienteController.crearCliente(2, "Patricio Vilozco", "2042255512", "p@gmail.com", "Peron 2022", new Coordenada(4, 4));
-        Cliente cliente4 = clienteController.crearCliente(4, "Juan Alcaraz", "2042255512", "jalcaraz12@gmail.com", "Libertador 2323", new Coordenada(4, 4));
+        Cliente cliente1 = clienteController.crearCliente(1, "Lucca Perez", "2043350012", "lsch@gmail.com", "San Luis 6612", new Coordenada(1.0, 1.0));
+        Cliente cliente2 = clienteController.crearCliente(2, "Pedro Suarez", "2042250012", "pedrito@gmail.com", "Salta 981", new Coordenada(2.0, 3.0));
+        Cliente cliente3 = clienteController.crearCliente(2, "Patricio Vilozco", "2042255512", "p@gmail.com", "Peron 2022", new Coordenada(4.0, 4.0));
+        Cliente cliente4 = clienteController.crearCliente(4, "Juan Alcaraz", "2042255512", "jalcaraz12@gmail.com", "Libertador 2323", new Coordenada(4.0, 4.0));
 
         List<Cliente> listaClientes = new ArrayList<>();
 

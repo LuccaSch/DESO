@@ -32,12 +32,12 @@ public class ItemMenuController {
     }
 
     
-    public void eliminarItemMenu(int idItemMenu) {
+    public void eliminarItemMenu(Integer idItemMenu) {
         itemMenuDAO.listarItemMenu().remove(idItemMenu);
     }
 
     
-    public List<ItemMenu> buscarItemMenu(int idItemMenu) {
+    public List<ItemMenu> buscarItemMenu(Integer idItemMenu) {
         return itemMenuDAO.listarItemMenu().stream().filter(itemMenu -> itemMenu.getId() == idItemMenu).toList();
     }
 

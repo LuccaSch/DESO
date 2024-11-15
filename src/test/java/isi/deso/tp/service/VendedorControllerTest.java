@@ -93,7 +93,7 @@ public class VendedorControllerTest {
     @Test
     public void testCrearVendedor_4args() {
         System.out.println("crearVendedor");
-        int id = 0;
+        Integer id = 0;
         String nombre = "";
         String direccion = "";
         Coordenada coordenada = null;
@@ -126,7 +126,7 @@ public class VendedorControllerTest {
     public void testFilterVendedoresPorId() {
         System.out.println("filterVendedoresPorId");
         List<Vendedor> vendedores = null;
-        int filtroId = 0;
+        Integer filtroId = 0;
         VendedorController instance = new VendedorController();
         List<Vendedor> expResult = null;
         List<Vendedor> result = instance.filterVendedoresPorId(vendedores, filtroId);
@@ -157,7 +157,7 @@ public class VendedorControllerTest {
     @Test
     public void testVendedorNoEncontrado() throws Exception {
         System.out.println("VendedorNoEncontrado");
-        boolean condicion = false;
+        Boolean condicion = false;
         VendedorController instance = new VendedorController();
         instance.VendedorNoEncontrado(condicion);
         // TODO review the generated test code and remove the default call to fail.
@@ -185,7 +185,7 @@ public class VendedorControllerTest {
     @Test
     public void testModificarVendedor() {
         System.out.println("modificarVendedor");
-        int id = 0;
+        Integer id = 0;
         String nombre = "";
         String direccion = "";
         Coordenada coordenadas = null;
@@ -202,7 +202,7 @@ public class VendedorControllerTest {
     public void testDeleteVendedoresPorId() {
         System.out.println("deleteVendedoresPorId");
         List<Vendedor> vendedores = null;
-        int filtroId = 0;
+        Integer filtroId = 0;
         VendedorController instance = new VendedorController();
         instance.deleteVendedoresPorId(vendedores, filtroId);
         // TODO review the generated test code and remove the default call to fail.
@@ -230,7 +230,7 @@ public class VendedorControllerTest {
     public void testDeleteVendedoresPorPosicion() {
         System.out.println("deleteVendedoresPorPosicion");
         List<Vendedor> vendedores = null;
-        int posicion = 0;
+        Integer posicion = 0;
         VendedorController instance = new VendedorController();
         instance.deleteVendedoresPorPosicion(vendedores, posicion);
         // TODO review the generated test code and remove the default call to fail.
@@ -243,7 +243,7 @@ public class VendedorControllerTest {
     @Test
     public void testBuscarPedidosPorEstado() {
         System.out.println("buscarPedidosPorEstado");
-        int idVendedor = 0;
+        Integer idVendedor = 0;
         EstadoPedidoEnum estadoPedido = null;
         VendedorController instance = new VendedorController();
         List<Pedido> expResult = null;

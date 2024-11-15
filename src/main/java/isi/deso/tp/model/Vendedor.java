@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Vendedor {
 
-    private int id;
+    private Integer id;
     private String nombre;
     private String direccion;
     private Coordenada coordenada;
@@ -15,7 +15,7 @@ public class Vendedor {
         this.menu = new ArrayList<>();
     }
 
-    public Vendedor(int id, String nombre, String direccion, Coordenada coordenada) {
+    public Vendedor(Integer id, String nombre, String direccion, Coordenada coordenada) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -27,11 +27,11 @@ public class Vendedor {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -72,13 +72,13 @@ public class Vendedor {
     }
 
     // Calculo de distancia, con lat y long en radianes
-    public double distancia(Cliente cliente) {
-        double radio = 6378;
-        double latV = this.coordenada.getLat();
-        double lonV = this.coordenada.getLgn();
-        double latC = cliente.getCoordenada().getLat();
-        double lonC = cliente.getCoordenada().getLgn();
-        double dentroRaiz;
+    public Double distancia(Cliente cliente) {
+        Double radio = 6378.0;
+        Double latV = this.coordenada.getLat();
+        Double lonV = this.coordenada.getLgn();
+        Double latC = cliente.getCoordenada().getLat();
+        Double lonC = cliente.getCoordenada().getLgn();
+        Double dentroRaiz;
         dentroRaiz = ((Math.pow(Math.sin((latC - latV) / 2), 2)) + Math.cos(latV) * Math.cos(latC) * (Math.pow(Math.sin((lonC - lonV) / 2), 2)));
 
         return 2 * radio * Math.asin(Math.sqrt(dentroRaiz));

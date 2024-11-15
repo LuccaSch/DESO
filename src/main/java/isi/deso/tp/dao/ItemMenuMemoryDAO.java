@@ -39,12 +39,12 @@ public class ItemMenuMemoryDAO implements ItemMenuDAO {
     }
 
     @Override
-    public void eliminarItemMenu(int idItemMenu) {
+    public void eliminarItemMenu(Integer idItemMenu) {
         this.listaItemsMenu.remove(idItemMenu);
     }
 
     @Override
-    public List<ItemMenu> buscarItemMenu(int idItemMenu) {
+    public List<ItemMenu> buscarItemMenu(Integer idItemMenu) {
         return this.listaItemsMenu.stream().filter(itemMenu -> itemMenu.getId() == idItemMenu).toList();
     }
 

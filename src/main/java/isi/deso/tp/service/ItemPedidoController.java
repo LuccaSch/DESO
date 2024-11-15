@@ -37,13 +37,13 @@ public class ItemPedidoController {
         this.itemsPedidoDAO = itemsPedidoDAO;
     }
 
-    public ItemPedido crearItemPedido(int id, ItemMenu itemMenu, int cantidad) {
+    public ItemPedido crearItemPedido(Integer id, ItemMenu itemMenu, Integer cantidad) {
         ItemPedido itemPedido = new ItemPedido(id, itemMenu, cantidad);
 
         return itemPedido;
     }
 
-    public ItemPedido crearItemPedido(int id, ItemMenu itemMenu, int cantidad, double precio) {
+    public ItemPedido crearItemPedido(Integer id, ItemMenu itemMenu, Integer cantidad, Double precio) {
         ItemPedido itemPedido = new ItemPedido(id, itemMenu, cantidad, precio);
 
         return itemPedido;
@@ -57,7 +57,7 @@ public class ItemPedidoController {
         return this.itemsPedidoDAO.getLista();
     }
 
-    public List<ItemPedido> filtrarPorVendedor(int idVendedor) {
+    public List<ItemPedido> filtrarPorVendedor(Integer idVendedor) {
         List<ItemPedido> listaFiltrada = null;
         try {
             listaFiltrada = this.itemsPedidoDAO.filtrarPorVendedor(idVendedor);
@@ -90,7 +90,7 @@ public class ItemPedidoController {
         return listaOrdenada;
     }
 
-    public List<ItemPedido> buscarPorRestaurante(int idRestaurante) {
+    public List<ItemPedido> buscarPorRestaurante(Integer idRestaurante) {
         List<ItemPedido> listaBusqueda = null;
         try {
             listaBusqueda = this.itemsPedidoDAO.buscarPorRestaurante(idRestaurante);
@@ -102,7 +102,7 @@ public class ItemPedidoController {
         return listaBusqueda;
     }
 
-    public List<ItemPedido> buscarPorRangoDePrecio(double precioMin, double precioMax) {
+    public List<ItemPedido> buscarPorRangoDePrecio(Double precioMin, Double precioMax) {
         List<ItemPedido> listaFiltrada = null;
         try {
             listaFiltrada = this.itemsPedidoDAO.buscarPorRangoDePrecio(precioMin, precioMax);
@@ -113,7 +113,7 @@ public class ItemPedidoController {
         return listaFiltrada;
     }
 
-    public void deletePedidoPorId(List<Pedido> pedidos, int idPedido) {
+    public void deletePedidoPorId(List<Pedido> pedidos, Integer idPedido) {
         pedidos.remove(idPedido);
         pedidos.removeIf(pedido -> pedido.getId() == idPedido);
     }

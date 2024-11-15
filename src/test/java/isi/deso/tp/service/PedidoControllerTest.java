@@ -76,7 +76,7 @@ public class PedidoControllerTest {
     @Test
     public void testCrearPedido_3args() {
         System.out.println("crearPedido");
-        int id = 0;
+        Integer id = 0;
         Cliente cliente = null;
         List<ItemPedido> pedidoDetalle = null;
         PedidoController instance = null;
@@ -93,11 +93,11 @@ public class PedidoControllerTest {
     @Test
     public void testCrearPedido_5args() {
         System.out.println("crearPedido");
-        int id = 0;
+        Integer id = 0;
         Cliente cliente = null;
         EstadoPedidoEnum estadoPedido = null;
         List<ItemPedido> pedidoDetalle = null;
-        double precioTotal = 0.0;
+        Double precioTotal = 0.0;
         PedidoController instance = null;
         Pedido expResult = null;
         Pedido result = instance.crearPedido(id, cliente, estadoPedido, pedidoDetalle, precioTotal);
@@ -141,8 +141,8 @@ public class PedidoControllerTest {
         System.out.println("calcularParcial");
         Pedido pedido = null;
         PedidoController instance = null;
-        double expResult = 0.0;
-        double result = instance.calcularParcial(pedido);
+        Double expResult = 0.0;
+        Double result = instance.calcularParcial(pedido);
         assertEquals(expResult, result, 0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -185,8 +185,8 @@ public class PedidoControllerTest {
         System.out.println("aplicarRecargo");
         Pedido pedido = null;
         PedidoController instance = null;
-        double expResult = 0.0;
-        double result = instance.aplicarRecargo(pedido);
+        Double expResult = 0.0;
+        Double result = instance.aplicarRecargo(pedido);
         assertEquals(expResult, result, 0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -200,8 +200,8 @@ public class PedidoControllerTest {
         System.out.println("aplicarRecargoPorDTO");
         PedidoDTO pedidoDTO = null;
         PedidoController instance = null;
-        double expResult = 0.0;
-        double result = instance.aplicarRecargoPorDTO(pedidoDTO);
+        Double expResult = 0.0;
+        Double result = instance.aplicarRecargoPorDTO(pedidoDTO);
         assertEquals(expResult, result, 0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -241,7 +241,7 @@ public class PedidoControllerTest {
     @Test
     public void testBuscarPorRestaurante() {
         System.out.println("buscarPorRestaurante");
-        int idVendedor = 0;
+        Integer idVendedor = 0;
         PedidoController instance = null;
         List<Pedido> expResult = null;
         List<Pedido> result = instance.buscarPorRestaurante(idVendedor);
@@ -256,7 +256,7 @@ public class PedidoControllerTest {
     @Test
     public void testBuscarPorIdPedido() {
         System.out.println("buscarPorIdPedido");
-        int idPedido = 0;
+        Integer idPedido = 0;
         PedidoController instance = null;
         List<Pedido> expResult = null;
         List<Pedido> result = instance.buscarPorIdPedido(idPedido);

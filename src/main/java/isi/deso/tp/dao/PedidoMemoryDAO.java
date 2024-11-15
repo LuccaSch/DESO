@@ -34,7 +34,7 @@ public class PedidoMemoryDAO implements PedidoDAO {
     }
 
     @Override
-    public List<Pedido> buscarPorIdVendedor(int idVendedor) {
+    public List<Pedido> buscarPorIdVendedor(Integer idVendedor) {
         List<Pedido> listaBusqueda = new ArrayList<>();
         for (Pedido pedido : listaPedidos) {
             for (ItemPedido itemPedido : pedido.getPedidoDetalle()) {
@@ -61,7 +61,7 @@ public class PedidoMemoryDAO implements PedidoDAO {
     }
 
     @Override
-    public List<Pedido> buscarPorIdPedido(int idPedido) {
+    public List<Pedido> buscarPorIdPedido(Integer idPedido) {
         List<Pedido> listaBusqueda = new ArrayList<>();
         for (Pedido pedido : listaPedidos) {
 

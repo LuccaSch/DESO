@@ -14,7 +14,7 @@ public class EfectivoStrategy implements PagoStrategy {
     }
 
     @Override
-    public double agregarRecargo(double precioTotal) {
+    public Double agregarRecargo(Double precioTotal) {
         return precioTotal;
     }
 
@@ -28,7 +28,7 @@ public class EfectivoStrategy implements PagoStrategy {
 
         PedidoController pedidoController = new PedidoController(PedidoMemoryDAO.getInstance());
 
-        double precioFinalPedido = pedidoController.aplicarRecargo(pedido);
+        Double precioFinalPedido = pedidoController.aplicarRecargo(pedido);
 
         System.out.println("Desde EfectivoStrategy: Precio final del pedido con id " + pedido.getId() + ": " + precioFinalPedido);
 

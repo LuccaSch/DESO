@@ -29,7 +29,7 @@ public class ClienteMemoryDAO implements ClienteDAO {
     }
 
     @Override
-    public Cliente buscarPorIdCliente(int idCliente) {
+    public Cliente buscarPorIdCliente(Integer idCliente) {
         Cliente cliente = null;
         for (Cliente c : this.listaClientes) {
             if (c.getId() == idCliente) {

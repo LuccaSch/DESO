@@ -118,7 +118,7 @@ public class ClienteControllerTest {
     @Test
     public void testCrearCliente_6args() {
         System.out.println("crearCliente");
-        int id = 0;
+        Integer id = 0;
         String nombre = "";
         String cuit = "";
         String email = "";
@@ -196,7 +196,7 @@ public class ClienteControllerTest {
     public void testFilterClientePorId() {
         System.out.println("filterClientePorId");
         List<Cliente> clientes = null;
-        int filtroId = 0;
+        Integer filtroId = 0;
         ClienteController instance = null;
         List<Cliente> expResult = null;
         List<Cliente> result = instance.filterClientePorId(clientes, filtroId);
@@ -228,7 +228,7 @@ public class ClienteControllerTest {
     public void testDeleteClientePorId() {
         System.out.println("deleteClientePorId");
         List<Cliente> clientes = null;
-        int filtroId = 0;
+        Integer filtroId = 0;
         ClienteController instance = null;
         instance.deleteClientePorId(clientes, filtroId);
         // TODO review the generated test code and remove the default call to fail.
@@ -256,7 +256,7 @@ public class ClienteControllerTest {
     public void testDeleteClientePorPosicion() {
         System.out.println("deleteClientePorPosicion");
         List<Cliente> clientes = null;
-        int posicion = 0;
+        Integer posicion = 0;
         ClienteController instance = null;
         instance.deleteClientePorPosicion(clientes, posicion);
         // TODO review the generated test code and remove the default call to fail.
@@ -284,8 +284,8 @@ public class ClienteControllerTest {
     @Test
     public void testGenerarPagoPara() {
         System.out.println("generarPagoPara");
-        int idCliente = 0;
-        int idPedido = 0;
+        Integer idCliente = 0;
+        Integer idPedido = 0;
         ClienteController instance = null;
         instance.generarPagoPara(idCliente, idPedido);
         // TODO review the generated test code and remove the default call to fail.

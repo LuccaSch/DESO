@@ -40,16 +40,16 @@ public class VendedorMemoryDAO implements VendedorDAO {
     }
 
     @Override
-    public void eliminarVendedor(int idVendedor) {
+    public void eliminarVendedor(Integer idVendedor) {
         this.listaVendedores.remove(idVendedor);
     }
 
     @Override
-    public List<Vendedor> buscarVendedor(int idVendedor) {
+    public List<Vendedor> buscarVendedor(Integer idVendedor) {
         return this.listaVendedores.stream().filter(Vendedor -> Vendedor.getId() == idVendedor).toList();
     }
 
-    public void VendedorNoEncontrado(boolean condicion) throws VendedorNoEncontradoException {
+    public void VendedorNoEncontrado(Boolean condicion) throws VendedorNoEncontradoException {
         if (!condicion) {
             throw new VendedorNoEncontradoException();
         }

@@ -2,61 +2,61 @@ package isi.deso.tp.model;
 
 public class Plato extends ItemMenu {
 
-    private int calorias;
-    private boolean aptoCeliaco;
-    private boolean aptoVegano;
+    private Integer calorias;
+    private Boolean aptoCeliaco;
+    private Boolean aptoVegano;
 
     public Plato() {
     }
 
-    public Plato(int calorias, boolean aptoCeliaco, boolean aptoVegano, int id, String nombre, String descripcion, double precio, Categoria categoria, double peso, Vendedor vendedor) {
+    public Plato(Integer calorias, Boolean aptoCeliaco, Boolean aptoVegano, Integer id, String nombre, String descripcion, Double precio, Categoria categoria, Double peso, Vendedor vendedor) {
         super(id, nombre, descripcion, precio, categoria, peso, vendedor);
         this.calorias = calorias;
         this.aptoCeliaco = aptoCeliaco;
         this.aptoVegano = aptoVegano;
     }
 
-    public int getCalorias() {
+    public Integer getCalorias() {
         return calorias;
     }
 
-    public void setCalorias(int calorias) {
+    public void setCalorias(Integer calorias) {
         this.calorias = calorias;
     }
 
-    public boolean getAptoCeliaco() {
+    public Boolean getAptoCeliaco() {
         return aptoCeliaco;
     }
 
-    public void setAptoCeliaco(boolean aptoCeliaco) {
+    public void setAptoCeliaco(Boolean aptoCeliaco) {
         this.aptoCeliaco = aptoCeliaco;
     }
 
-    public boolean getAptoVegano() {
+    public Boolean getAptoVegano() {
         return this.aptoVegano;
     }
 
-    public void setAptoVegano(boolean aptoVegano) {
+    public void setAptoVegano(Boolean aptoVegano) {
         this.aptoVegano = aptoVegano;
     }
 
     @Override
-    public double peso() {
+    public Double peso() {
         return (this.peso) * 1.1;
     }
 
     @Override
-    public boolean esBebida() {
+    public Boolean esBebida() {
         return false;
     }
 
     @Override
-    public boolean esComida() {
+    public Boolean esComida() {
         return true;
     }
 
     @Override
-    public boolean aptoVegano() {
+    public Boolean aptoVegano() {
         return aptoVegano;
     }
 

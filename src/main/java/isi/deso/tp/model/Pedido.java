@@ -7,11 +7,11 @@ import java.util.List;
 
 public class Pedido implements Observable {
 
-    private int id;
+    private Integer id;
     private Cliente cliente;
     private EstadoPedidoEnum estadoPedido;
     private List<ItemPedido> pedidoDetalle;
-    private double precioTotal;
+    private Double precioTotal;
     private ContextoPago contextoPago;
     private List<Observer> observadores;
 
@@ -21,7 +21,7 @@ public class Pedido implements Observable {
         this.contextoPago = new ContextoPago();
     }
 
-    public Pedido(int id, Cliente cliente) {
+    public Pedido(Integer id, Cliente cliente) {
         this.cliente = cliente;
         this.id = id;
         this.pedidoDetalle = new ArrayList<>();
@@ -31,7 +31,7 @@ public class Pedido implements Observable {
 
     }
 
-    public Pedido(int id, Cliente cliente, List<ItemPedido> pedidoDetalle) {
+    public Pedido(Integer id, Cliente cliente, List<ItemPedido> pedidoDetalle) {
         this.id = id;
         this.cliente = cliente;
         this.pedidoDetalle = pedidoDetalle;
@@ -42,7 +42,7 @@ public class Pedido implements Observable {
 
     }
 
-    public Pedido(int id, Cliente cliente, List<ItemPedido> pedidoDetalle, double precioTotal) {
+    public Pedido(Integer id, Cliente cliente, List<ItemPedido> pedidoDetalle, Double precioTotal) {
         this.id = id;
         this.cliente = cliente;
         this.precioTotal = precioTotal;
@@ -52,7 +52,7 @@ public class Pedido implements Observable {
 
     }
 
-    public Pedido(int id, Cliente cliente, EstadoPedidoEnum estadoPedido, List<ItemPedido> pedidoDetalle, double precioTotal) {
+    public Pedido(Integer id, Cliente cliente, EstadoPedidoEnum estadoPedido, List<ItemPedido> pedidoDetalle, Double precioTotal) {
         this.id = id;
         this.cliente = cliente;
         this.estadoPedido = estadoPedido;
@@ -64,7 +64,7 @@ public class Pedido implements Observable {
 
     }
 
-    public Pedido(int id, List<ItemPedido> pedidoDetalle, double precioTotal) {
+    public Pedido(Integer id, List<ItemPedido> pedidoDetalle, Double precioTotal) {
         this.id = id;
         this.precioTotal = precioTotal;
         this.pedidoDetalle = pedidoDetalle;
@@ -74,11 +74,11 @@ public class Pedido implements Observable {
 
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -106,11 +106,11 @@ public class Pedido implements Observable {
         this.pedidoDetalle = pedidoDetalle;
     }
 
-    public double getPrecioTotal() {
+    public Double getPrecioTotal() {
         return precioTotal;
     }
 
-    public void setPrecioTotal(double precioTotal) {
+    public void setPrecioTotal(Double precioTotal) {
         this.precioTotal = precioTotal;
     }
 
@@ -173,7 +173,7 @@ public class Pedido implements Observable {
     }
 
     @Override
-    public void notifyChange(int idPedido) {
+    public void notifyChange(Integer idPedido) {
         for (Observer observador : observadores) {
             observador.update(this.getEstadoPedido(), idPedido);
         }

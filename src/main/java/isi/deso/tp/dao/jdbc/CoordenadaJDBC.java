@@ -1,5 +1,6 @@
 package isi.deso.tp.dao;
 
+import isi.deso.tp.dao.jdbc.DBConnector;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

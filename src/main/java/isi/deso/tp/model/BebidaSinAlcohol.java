@@ -5,12 +5,12 @@ public class BebidaSinAlcohol extends Bebida {
     public BebidaSinAlcohol() {
     }
 
-    public BebidaSinAlcohol(Tamano tamano, double volumen, int id, String nombre, String descripcion, double precio, Categoria categoria, Vendedor vendedor) {
+    public BebidaSinAlcohol(Tamano tamano, Double volumen, Integer id, String nombre, String descripcion, Double precio, Categoria categoria, Vendedor vendedor) {
         super(tamano, volumen, id, nombre, descripcion, precio, categoria, volumen * 1.04, vendedor);
     }
 
     @Override
-    public double peso() {
+    public Double peso() {
         return this.peso * 1.2;
     }
 }

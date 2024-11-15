@@ -20,7 +20,7 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
     }
 
     @Override
-    public List<ItemPedido> filtrarPorVendedor(int idVendedor) throws ItemNoEncontradoException {
+    public List<ItemPedido> filtrarPorVendedor(Integer idVendedor) throws ItemNoEncontradoException {
 
         List<ItemPedido> listaFiltrada = this.getLista().stream()
                 .filter(i -> i.getVendedor().getId() == idVendedor).distinct()
@@ -63,7 +63,7 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
     }
 
     @Override
-    public List<ItemPedido> buscarPorRestaurante(int idVendedor) throws ItemNoEncontradoException {
+    public List<ItemPedido> buscarPorRestaurante(Integer idVendedor) throws ItemNoEncontradoException {
         List<ItemPedido> listaBusqueda = this.getLista().stream()
                 .filter(item -> item.getVendedor().getId() == idVendedor)
                 .toList();
@@ -77,7 +77,7 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
     }
 
     @Override
-    public List<ItemPedido> buscarPorRangoDePrecio(double precioMin, double precioMax) throws ItemNoEncontradoException {
+    public List<ItemPedido> buscarPorRangoDePrecio(Double precioMin, Double precioMax) throws ItemNoEncontradoException {
         List<ItemPedido> listaBusqueda = this.getLista().stream()
                 .filter(item -> (precioMin <= item.getPrecio() && item.getPrecio() <= precioMax))
                 .toList();

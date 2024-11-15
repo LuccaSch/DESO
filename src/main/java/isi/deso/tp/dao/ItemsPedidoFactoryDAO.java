@@ -6,7 +6,7 @@ public abstract class ItemsPedidoFactoryDAO {
 
     public abstract ItemsPedidoDAO getUsuarioDAO();
 
-    public static ItemsPedidoFactoryDAO getFactory(int idFactory) {
+    public static ItemsPedidoFactoryDAO getFactory(Integer idFactory) {
         return switch (idFactory) {
             case MEMORY_FACTORY ->
                 new ItemsPedidoMemoryFactoryDAO();

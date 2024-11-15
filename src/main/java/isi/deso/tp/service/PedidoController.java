@@ -32,7 +32,7 @@ public class PedidoController {
         this.pedidoDAO = pedidoDAO;
     }
 
-    public Pedido crearPedido(int id, Cliente cliente, List<ItemPedido> pedidoDetalle) {
+    public Pedido crearPedido(Integer id, Cliente cliente, List<ItemPedido> pedidoDetalle) {
         Pedido pedido = null;
         try {
             vendedorEsUnico(pedidoDetalle);
@@ -46,7 +46,7 @@ public class PedidoController {
         return pedido;
     }
 
-    public Pedido crearPedido(int id, Cliente cliente, EstadoPedidoEnum estadoPedido, List<ItemPedido> pedidoDetalle, double precioTotal) {
+    public Pedido crearPedido(Integer id, Cliente cliente, EstadoPedidoEnum estadoPedido, List<ItemPedido> pedidoDetalle, Double precioTotal) {
         Pedido pedido = null;
         try {
             vendedorEsUnico(pedidoDetalle);
@@ -64,7 +64,7 @@ public class PedidoController {
     public void vendedorEsUnico(List<ItemPedido> pedidoDetalle) throws VendedorNoUnicoException {
         if (!(pedidoDetalle.isEmpty())) {
             Vendedor vendedor = pedidoDetalle.getFirst().getVendedor();
-            boolean vendedorEsUnico = pedidoDetalle.stream().allMatch(item -> item.getVendedor().equals(vendedor));
+            Boolean vendedorEsUnico = pedidoDetalle.stream().allMatch(item -> item.getVendedor().equals(vendedor));
 
             if (!vendedorEsUnico) {
                 throw new VendedorNoUnicoException("Vendedor no es unico para pedidoDetalle");
@@ -82,7 +82,7 @@ public class PedidoController {
 
     }
 
-    public double calcularParcial(Pedido pedido) {
+    public Double calcularParcial(Pedido pedido) {
         return pedido.getPedidoDetalle().stream().mapToDouble(ItemPedido::getPrecio).sum();
     }
 
@@ -106,15 +106,15 @@ public class PedidoController {
         pedido.setEstadoPedido(estadoNuevo);
     }
 
-    public double aplicarRecargo(Pedido pedido) {
-        double precioTotal = pedido.getContextoPago().agregarRecargo(calcularParcial(pedido));
+    public Double aplicarRecargo(Pedido pedido) {
+        Double precioTotal = pedido.getContextoPago().agregarRecargo(calcularParcial(pedido));
 
         System.out.println("Desde PedidoController: El cliente realiza el pago de $" + precioTotal + " con " + pedido.getContextoPago().getPagoStrategy().toString());
 
         return precioTotal;
     }
 
-    public double aplicarRecargoPorDTO(PedidoDTO pedidoDTO) {
+    public Double aplicarRecargoPorDTO(PedidoDTO pedidoDTO) {
         ContextoPago contextoPago = null;
         try {
             switch (pedidoDTO.getMetodoPago()) {
@@ -133,11 +133,11 @@ public class PedidoController {
         }
 
         if (contextoPago != null) {
-            double precioTotal = contextoPago.agregarRecargo(pedidoDTO.getPrecioTotal());
+            Double precioTotal = contextoPago.agregarRecargo(pedidoDTO.getPrecioTotal());
             System.out.println("Desde PedidoController: El cliente realiza el pago de $" + precioTotal + " por " + contextoPago.getPagoStrategy().nombreEstrategia());
             return precioTotal;
         } else {
-            return -1;
+            return -1.0;
         }
     }
 
@@ -149,11 +149,11 @@ public class PedidoController {
         return listaPedidos.stream().filter(pedido -> pedido.getEstadoPedido() == estadoPedido).toList();
     }
 
-    public List<Pedido> buscarPorRestaurante(int idVendedor) {
+    public List<Pedido> buscarPorRestaurante(Integer idVendedor) {
         return pedidoDAO.buscarPorIdVendedor(idVendedor);
     }
 
-    public List<Pedido> buscarPorIdPedido(int idPedido) {
+    public List<Pedido> buscarPorIdPedido(Integer idPedido) {
         return pedidoDAO.buscarPorIdPedido(idPedido);
     }
 
@@ -164,15 +164,15 @@ public class PedidoController {
     public void generarPagoPara(Pedido pedido) {
         pedido.getContextoPago().getPagoStrategy().generarPago(pedido);
     }
-    
+
     public void agregarPedidoALista(Pedido pedido) {
         pedidoDAO.getListaPedidos().add(pedido);
     }
-    
-    public List<Pedido> getListaPedidos(){
+
+    public List<Pedido> getListaPedidos() {
         return pedidoDAO.getListaPedidos();
     }
-    
+
     public Pedido buscarPorNombreCliente(String cliente) {
         for (Pedido pedido : pedidoDAO.getListaPedidos()) {
             if (pedido.getCliente().getNombre().equals(cliente)) {

@@ -4,11 +4,11 @@ import java.util.*;
 
 public class PedidoDTO {
 
-    private int id;
-    private int idCliente;
+    private Integer id;
+    private Integer idCliente;
     private List<ItemPedidoDTO> listaItemPedidoDTO;
-    private int metodoPago;
-    private double precioTotal;
+    private Integer metodoPago;
+    private Double precioTotal;
     private String cbu;
     private String cuit;
     private String alias;
@@ -16,32 +16,32 @@ public class PedidoDTO {
     public PedidoDTO() {
     }
 
-    public PedidoDTO(int idCliente, List<ItemPedidoDTO> listaItemPedidoDTO, double saldo) {
+    public PedidoDTO(Integer idCliente, List<ItemPedidoDTO> listaItemPedidoDTO, Double saldo) {
         this.idCliente = idCliente;
         this.listaItemPedidoDTO = listaItemPedidoDTO;
         this.precioTotal = saldo;
     }
 
-    public PedidoDTO(int idCliente, List<ItemPedidoDTO> listaItemPedidoDTO, int metodoPago, double saldo) {
+    public PedidoDTO(Integer idCliente, List<ItemPedidoDTO> listaItemPedidoDTO, Integer metodoPago, Double saldo) {
         this.idCliente = idCliente;
         this.listaItemPedidoDTO = listaItemPedidoDTO;
         this.metodoPago = metodoPago;
         this.precioTotal = saldo;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getIdCliente() {
+    public Integer getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -53,19 +53,19 @@ public class PedidoDTO {
         this.listaItemPedidoDTO = listaItemPedidoDTO;
     }
 
-    public int getMetodoPago() {
+    public Integer getMetodoPago() {
         return metodoPago;
     }
 
-    public void setMetodoPago(int metodoPago) {
+    public void setMetodoPago(Integer metodoPago) {
         this.metodoPago = metodoPago;
     }
 
-    public double getPrecioTotal() {
+    public Double getPrecioTotal() {
         return precioTotal;
     }
 
-    public void setPrecioTotal(double saldo) {
+    public void setPrecioTotal(Double saldo) {
         this.precioTotal = saldo;
     }
 

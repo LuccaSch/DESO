@@ -17,7 +17,7 @@ public class MercadoPagoStrategy implements PagoStrategy {
     }
 
     @Override
-    public double agregarRecargo(double precioTotal) {
+    public Double agregarRecargo(Double precioTotal) {
         return precioTotal * 1.04;
     }
 
@@ -30,7 +30,7 @@ public class MercadoPagoStrategy implements PagoStrategy {
     public void generarPago(Pedido pedido) {
         PedidoController pedidoController = new PedidoController(PedidoMemoryDAO.getInstance());
 
-        double precioFinalPedido = pedidoController.aplicarRecargo(pedido);
+        Double precioFinalPedido = pedidoController.aplicarRecargo(pedido);
 
         System.out.println("Desde MercadoPagoStrategy: Precio final del pedido con id " + pedido.getId() + ": " + precioFinalPedido);
     }
