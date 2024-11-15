@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import isi.deso.tp.model.Cliente;
 import isi.deso.tp.model.Coordenada;
 
 public class CoordenadaJDBC {
@@ -26,11 +25,11 @@ public class CoordenadaJDBC {
             Coordenada coord=new Coordenada(lat,lgn);
             listaCoordenadas.add(coord);
             }
-            
+            return listaCoordenadas.get(0);
         }
         catch (SQLException ex) {
             Logger.getLogger(ClienteJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return listaCoordenadas.;
     }
 }
