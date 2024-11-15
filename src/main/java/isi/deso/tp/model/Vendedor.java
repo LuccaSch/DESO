@@ -136,7 +136,7 @@ public class Vendedor {
 
         // Dos vendedores son iguales si su id es el mismo
         Vendedor otherVendedor = (Vendedor) obj;
-        return this.id == otherVendedor.getId();
+        return this.id == otherVendedor.getId().intValue();
     }
 
     @Override

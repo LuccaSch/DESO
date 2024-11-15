@@ -48,7 +48,7 @@ public class Coordenada {
         // Dos vendedores son iguales si su lat y long son los mismos
         Coordenada otherCoordenada = (Coordenada) obj;
 
-        return (this.lat == otherCoordenada.lat && this.lgn == otherCoordenada.lgn);
+        return (this.lat == otherCoordenada.lat.doubleValue() && this.lgn == otherCoordenada.lgn.doubleValue());
     }
 
     @Override

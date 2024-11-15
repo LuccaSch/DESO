@@ -114,7 +114,7 @@ public class Cliente implements Observer {
             case EstadoPedidoEnum.ENVIADO:
                 ClienteController clienteController = new ClienteController(ClienteMemoryDAO.getInstance());
                 for (Pedido pedido : this.listaPedidos) {
-                    if (pedido.getId() == idPedido) {
+                    if (pedido.getId() == idPedido.intValue()) {
                         display(pedido);
                         //pedidoController.generarPagoPara(pedido);
                         clienteController.generarPagoPara(this.getId(), idPedido);

@@ -15,6 +15,9 @@ public class ClienteController {
 
     private ClienteDAO clienteDAO;
 
+    public ClienteController() {
+    }
+
     public ClienteController(ClienteDAO clienteDAO) {
         this.clienteDAO = clienteDAO;
     }
@@ -31,11 +34,11 @@ public class ClienteController {
         ClienteJDBC clienteJDBC = new ClienteJDBC();
         return clienteJDBC.listarClientes();
     }
-    
+
     public List<Cliente> listarClientes() {
         return clienteDAO.listarClientes();
     }
-    
+
     public Cliente crearCliente() {
         Cliente cliente = new Cliente();
         clienteDAO.agregarClienteALista(cliente);
@@ -47,15 +50,15 @@ public class ClienteController {
         clienteDAO.agregarClienteALista(cliente);
         return cliente;
     }
-    
+
     public void agregarClienteALista(Cliente cliente) {
         clienteDAO.listarClientes().add(cliente);
     }
-    
+
     public void agregarPedido(Cliente cliente, Pedido pedidoNuevo) {
         cliente.getListaPedidos().add(pedidoNuevo);
     }
-    
+
     public Cliente buscarPorNombreCliente(String nombreCliente) {
         Cliente cliente = null;
         for (Cliente c : clienteDAO.listarClientes()) {
@@ -65,7 +68,11 @@ public class ClienteController {
         }
         return cliente;
     }
-    
+
+    public Cliente buscarPorIdCliente(Integer id) {
+        return this.clienteDAO.buscarPorIdCliente(id.intValue());
+    }
+
     public Cliente convertirClienteDesdeDTO(ClienteDTO clienteDTO) {
         Cliente clienteNuevo = new Cliente(clienteDTO.getNombre(), clienteDTO.getCuit(), clienteDTO.getEmail(), clienteDTO.getDireccion());
         clienteDAO.agregarClienteALista(clienteNuevo);
@@ -98,7 +105,7 @@ public class ClienteController {
     }
 
     public void deleteClientePorId(List<Cliente> clientes, Integer filtroId) {
-        clientes.removeIf(cliente -> cliente.getId() == filtroId);
+        clientes.removeIf(cliente -> cliente.getId() == filtroId.intValue());
         clienteDAO.eliminarListaClientesALista(clientes);
     }
 
@@ -108,25 +115,29 @@ public class ClienteController {
     }
 
     public void deleteClientePorPosicion(List<Cliente> clientes, Integer posicion) {
-        clientes.remove(posicion);
+        clientes.remove(posicion.intValue());
         clienteDAO.eliminarListaClientesALista(clientes);
     }
 
-    public PagoStrategy elegirMetodoPago(Cliente cliente) {
-        PagoStrategy mercadoPagoStrategy = new MercadoPagoStrategy(cliente.getNombre().toLowerCase().replaceAll("\\s+", "") + ".mp"
-        );
-
-        return mercadoPagoStrategy;
-    }
-
     public void generarPagoPara(Integer idCliente, Integer idPedido) {
-        Cliente cliente = clienteDAO.buscarPorIdCliente(idCliente);
+        Cliente cliente = this.buscarPorIdCliente(idCliente.intValue());
         for (Pedido pedido : cliente.getListaPedidos()) {
-            if (pedido.getId() == idPedido) {
-
-                pedido.setPagoStrategy(this.elegirMetodoPago(cliente));
+            if (pedido.getId() == idPedido.intValue()) {
+                PagoStrategy mercadoPagoStrategy = new MercadoPagoStrategy(cliente.getNombre().toLowerCase().replaceAll("\\s+", "") + ".mp"); // Hardcodeado para poder usarlo
+                pedido.setPagoStrategy(mercadoPagoStrategy);  // Hardcodeado para poder usarlo
                 pedido.getContextoPago().getPagoStrategy().generarPago(pedido);
             }
         }
+    }
+
+    public PagoStrategy mostrarEstrategiaDePagoDelPedido(Integer idCliente, Integer idPedido) {
+        Cliente cliente = this.buscarPorIdCliente(idCliente.intValue());
+        PagoStrategy estrategiaDePago = null;
+        for (Pedido pedido : cliente.getListaPedidos()) {
+            if (pedido.getId() == idPedido.intValue()) {
+                estrategiaDePago = pedido.getContextoPago().getPagoStrategy();
+            }
+        }
+        return estrategiaDePago;
     }
 }
