@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Cliente implements Observer {
 
-    private int id;
+    private Integer id;
     private String nombre;
     private String cuit;
     private String email;

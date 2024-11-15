@@ -8,7 +8,6 @@ import isi.deso.tp.service.ClienteController;
 import isi.deso.tp.service.ItemPedidoController;
 import isi.deso.tp.service.PedidoController;
 import isi.deso.tp.service.VendedorController;
-import isi.deso.tp.ui.Inicio;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,15 +81,17 @@ public class Main {
 
         pedido1.setEstadoPedido(EstadoPedidoEnum.RECIBIDO);
 
+        // Inicio i = new Inicio();
+        // i.setVisible(true);
         //
         // --------------------------------
         //
-        System.out.println("\nINICIO App TP Etapa 6\n");
+        System.out.println("\nINICIO App TP Etapa 7\n");
 
-        Inicio i = new Inicio();
-        i.setVisible(true);
+        List<Cliente> lista = clienteController.index();
+        System.out.println(lista.toString());
 
-        System.out.println("\nFIN App TP Etapa 6");
+        System.out.println("\nFIN App TP Etapa 7");
         //
         // --------------------------------
         //

@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface ClienteDAO {
 
+    public List<Cliente> listarClientes();
+
     public void agregarClienteALista(Cliente cliente);
 
     public Cliente buscarPorIdCliente(int idCliente);

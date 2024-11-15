@@ -59,7 +59,8 @@ public class ClienteMemoryDAO implements ClienteDAO {
         return cliente;
     }
 
-    public List<Cliente> listaCliente() {
+    @Override
+    public List<Cliente> listarClientes() {
         return this.listaClientes;
     }
 

@@ -2039,7 +2039,7 @@ public class Inicio extends javax.swing.JFrame {
         while (modeloCliente.getRowCount() > 0) {
             modeloCliente.removeRow(0);
         }
-        for (Cliente a : clienteMemoryDAO.listaCliente()) {
+        for (Cliente a : clienteMemoryDAO.listarClientes()) {
 
             Object o[] = new Object[5];
             o[0] = a.getNombre();
@@ -2135,7 +2135,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void iniciarListaClientes() {
         modeloListaClientePedido.clear();
-        for (Cliente c : clienteMemoryDAO.listaCliente()) {
+        for (Cliente c : clienteMemoryDAO.listarClientes()) {
             modeloListaClientePedido.addElement(c.getNombre());
         }
         listClientesPedido.setModel(modeloListaClientePedido);

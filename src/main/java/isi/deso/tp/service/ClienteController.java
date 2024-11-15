@@ -1,6 +1,7 @@
 package isi.deso.tp.service;
 
 import isi.deso.tp.dao.ClienteDAO;
+import isi.deso.tp.dao.ClienteJDBC;
 import isi.deso.tp.model.Cliente;
 import isi.deso.tp.model.Coordenada;
 import isi.deso.tp.model.DTO.ClienteDTO;
@@ -24,6 +25,11 @@ public class ClienteController {
 
     public void setClienteDAO(ClienteDAO clienteDAO) {
         this.clienteDAO = clienteDAO;
+    }
+
+    public List<Cliente> index() {
+        ClienteJDBC clienteJDBC = new ClienteJDBC();
+        return clienteJDBC.listarClientes();
     }
 
     public Cliente crearCliente() {
