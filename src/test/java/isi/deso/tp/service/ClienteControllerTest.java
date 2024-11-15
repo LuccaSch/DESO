@@ -1,44 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
- */
 package isi.deso.tp.service;
 
 import isi.deso.tp.dao.ClienteDAO;
 import isi.deso.tp.model.Cliente;
 import isi.deso.tp.model.Coordenada;
 import isi.deso.tp.model.DTO.ClienteDTO;
-import isi.deso.tp.model.PagoStrategy;
 import isi.deso.tp.model.Pedido;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Nacho
- */
 public class ClienteControllerTest {
-    
+
     public ClienteControllerTest() {
     }
-    
+
     @BeforeAll
     public static void setUpClass() {
     }
-    
+
     @AfterAll
     public static void tearDownClass() {
     }
-    
+
     @BeforeEach
     public void setUp() {
     }
-    
+
     @AfterEach
     public void tearDown() {
     }
@@ -264,21 +255,6 @@ public class ClienteControllerTest {
     }
 
     /**
-     * Test of elegirMetodoPago method, of class ClienteController.
-     */
-    @Test
-    public void testElegirMetodoPago() {
-        System.out.println("elegirMetodoPago");
-        Cliente cliente = null;
-        ClienteController instance = null;
-        PagoStrategy expResult = null;
-        PagoStrategy result = instance.elegirMetodoPago(cliente);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of generarPagoPara method, of class ClienteController.
      */
     @Test
@@ -291,5 +267,5 @@ public class ClienteControllerTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }
