@@ -31,7 +31,11 @@ public class ClienteController {
         ClienteJDBC clienteJDBC = new ClienteJDBC();
         return clienteJDBC.listarClientes();
     }
-
+    
+    public List<Cliente> listarClientes() {
+        return clienteDAO.listarClientes();
+    }
+    
     public Cliente crearCliente() {
         Cliente cliente = new Cliente();
         clienteDAO.agregarClienteALista(cliente);
@@ -43,11 +47,25 @@ public class ClienteController {
         clienteDAO.agregarClienteALista(cliente);
         return cliente;
     }
-
+    
+    public void agregarClienteALista(Cliente cliente) {
+        clienteDAO.listarClientes().add(cliente);
+    }
+    
     public void agregarPedido(Cliente cliente, Pedido pedidoNuevo) {
         cliente.getListaPedidos().add(pedidoNuevo);
     }
-
+    
+    public Cliente buscarPorNombreCliente(String nombreCliente) {
+        Cliente cliente = null;
+        for (Cliente c : clienteDAO.listarClientes()) {
+            if (c.getNombre().equals(nombreCliente)) {
+                cliente = c;
+            }
+        }
+        return cliente;
+    }
+    
     public Cliente convertirClienteDesdeDTO(ClienteDTO clienteDTO) {
         Cliente clienteNuevo = new Cliente(clienteDTO.getNombre(), clienteDTO.getCuit(), clienteDTO.getEmail(), clienteDTO.getDireccion());
         clienteDAO.agregarClienteALista(clienteNuevo);

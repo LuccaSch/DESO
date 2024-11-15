@@ -16,6 +16,10 @@ import isi.deso.tp.model.Pedido;
 import isi.deso.tp.model.Plato;
 import isi.deso.tp.model.Tamano;
 import isi.deso.tp.model.Vendedor;
+import isi.deso.tp.service.ClienteController;
+import isi.deso.tp.service.ItemMenuController;
+import isi.deso.tp.service.PedidoController;
+import isi.deso.tp.service.VendedorController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -42,10 +46,10 @@ public class Inicio extends javax.swing.JFrame {
     List<Cliente> listaClientes = new ArrayList<>();
     List<Plato> listaPlatos = new ArrayList<>();
     List<ItemPedido> listaItemPedido = new ArrayList<>();
-    VendedorMemoryDAO vendedorMemoryDAO;
-    ClienteMemoryDAO clienteMemoryDAO;
-    ItemMenuMemoryDAO itemMenuMemoryDAO;
-    PedidoMemoryDAO pedidoMemoryDAO;
+    VendedorController vendedorController;
+    ClienteController clienteController;
+    ItemMenuController itemMenuController;
+    PedidoController pedidoController;
     private String vendedorABuscar;
 
     /**
@@ -59,10 +63,10 @@ public class Inicio extends javax.swing.JFrame {
         panelAlcohol.setVisible(false);
         panelSinAlcohol.setVisible(false);
         panelPlato.setVisible(false);
-        vendedorMemoryDAO = VendedorMemoryDAO.getInstance();
-        clienteMemoryDAO = ClienteMemoryDAO.getInstance();
-        itemMenuMemoryDAO = ItemMenuMemoryDAO.getInstance();
-        pedidoMemoryDAO = PedidoMemoryDAO.getInstance();
+        vendedorController = new VendedorController(VendedorMemoryDAO.getInstance());
+        clienteController = new ClienteController(ClienteMemoryDAO.getInstance());
+        itemMenuController = new ItemMenuController(ItemMenuMemoryDAO.getInstance());
+        pedidoController = new PedidoController(PedidoMemoryDAO.getInstance());
         iniciarListaItems();
         iniciarListaClientes();
         iniciarListaVendedores();
@@ -1399,7 +1403,7 @@ public class Inicio extends javax.swing.JFrame {
 
         //v.addItemMenu((obtenerItem((String)cmbItemVendedor.getSelectedItem())));
         listaVendedores.add(v);
-        vendedorMemoryDAO.crearVendedor(v);
+        vendedorController.crearVendedor(v);
         iniciarTabla();
         iniciarListaVendedores();
         txtNombre.setText("");
@@ -1447,13 +1451,13 @@ public class Inicio extends javax.swing.JFrame {
         a.setCategoria(ca);
         a.setPrecio((double) spnnerPrecioA.getValue());
         try {
-            a.setVendedor(vendedorMemoryDAO.buscarVendedorPorNombre(listVendedorAlcohol.getSelectedValue()));
+            a.setVendedor(vendedorController.buscarVendedorPorNombre(listVendedorAlcohol.getSelectedValue()));
         } catch (VendedorNoEncontradoException ex) {
 
         }
         listaAlcohol.add(a);
         listaItem.add(a);
-        itemMenuMemoryDAO.crearItemMenu(a);
+        itemMenuController.crearItemMenu(a);
         iniciarListaItems();
         iniciarTablaAlcohol();
         cmbCategoriaA.setSelectedIndex(0);
@@ -1484,7 +1488,7 @@ public class Inicio extends javax.swing.JFrame {
         c.setDireccion(txtDireccionCliente.getText());
         c.setCoordenada(co);
         listaClientes.add(c);
-        clienteMemoryDAO.agregarClienteALista(c);
+        clienteController.agregarClienteALista(c);
         iniciarTablaCliente();
         iniciarListaClientes();
         txtNombreCliente.setText("");
@@ -1512,12 +1516,12 @@ public class Inicio extends javax.swing.JFrame {
         a.setNombre(txtNombreSinAlcohol.getText());
         a.setPrecio((double) spinnerPrecioSinAlcohol.getValue());
         try {
-            a.setVendedor(vendedorMemoryDAO.buscarVendedorPorNombre(listVendedorSinAlcohol.getSelectedValue()));
+            a.setVendedor(vendedorController.buscarVendedorPorNombre(listVendedorSinAlcohol.getSelectedValue()));
         } catch (VendedorNoEncontradoException ex) {
 
         }
         listaSinAlcohol.add(a);
-        itemMenuMemoryDAO.crearItemMenu(a);
+        itemMenuController.crearItemMenu(a);
         listaItem.add(a);
         iniciarListaItems();
         iniciarTablaSinAlcohol();
@@ -1585,13 +1589,13 @@ public class Inicio extends javax.swing.JFrame {
         p.setNombre(txtNombrePlato.getText());
         p.setPrecio((double) SpinnerPrecioPlato.getValue());
         try {
-            p.setVendedor(vendedorMemoryDAO.buscarVendedorPorNombre((String) listVendedorPlato.getSelectedValue()));
+            p.setVendedor(vendedorController.buscarVendedorPorNombre((String) listVendedorPlato.getSelectedValue()));
         } catch (VendedorNoEncontradoException ex) {
 
         }
         listaPlatos.add(p);
         listaItem.add(p);
-        itemMenuMemoryDAO.crearItemMenu(p);
+        itemMenuController.crearItemMenu(p);
         iniciarTablaPlatos();
         iniciarListaItems();
 
@@ -1618,7 +1622,7 @@ public class Inicio extends javax.swing.JFrame {
         Vendedor vendedorBuscado = new Vendedor();
 
         try {
-            vendedorBuscado = vendedorMemoryDAO.buscarVendedorPorNombre(vendedorABuscar);
+            vendedorBuscado = vendedorController.buscarVendedorPorNombre(vendedorABuscar);
 
             modelo.setRowCount(0);
 
@@ -1646,7 +1650,7 @@ public class Inicio extends javax.swing.JFrame {
         String clienteABuscar = txtBuscadorCliente.getText();
         Cliente clienteBuscado = new Cliente();
 
-        clienteBuscado = clienteMemoryDAO.buscarPorNombreCliente(clienteABuscar);
+        clienteBuscado = clienteController.buscarPorNombreCliente(clienteABuscar);
 
         modeloCliente.setRowCount(0);
 
@@ -1671,7 +1675,7 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         listaItemPedido.clear();
         String carrito = listItemsPedido.getSelectedValue();
-        ItemPedido p = new ItemPedido(0, itemMenuMemoryDAO.buscarItemPorNombre(carrito), (int) spinnerCarrito.getValue());
+        ItemPedido p = new ItemPedido(0, itemMenuController.buscarItemPorNombre(carrito), (int) spinnerCarrito.getValue());
 
         listaItemPedido.add(p);
 
@@ -1686,7 +1690,7 @@ public class Inicio extends javax.swing.JFrame {
             aux = aux + i.getPrecio();
         }
         Pedido p = new Pedido();
-        p.setCliente(clienteMemoryDAO.buscarPorNombreCliente(listClientesPedido.getSelectedValue()));
+        p.setCliente(clienteController.buscarPorNombreCliente(listClientesPedido.getSelectedValue()));
         p.setPedidoDetalle(listaItemPedido);
         if (cmbBoxFormaPago.getSelectedItem().equals("Transferencia")) {
             aux = (aux * 1.002);
@@ -1694,7 +1698,7 @@ public class Inicio extends javax.swing.JFrame {
             aux = aux * 1.004;
         }
         p.setPrecioTotal(aux);
-        pedidoMemoryDAO.agregarPedidoALista(p);
+        pedidoController.agregarPedidoALista(p);
         iniciarTablaPedido();
         while (modeloCarrito.getRowCount() > 0) {
             modeloCarrito.removeRow(0);
@@ -1712,7 +1716,7 @@ public class Inicio extends javax.swing.JFrame {
         String alcoholABuscar = txtBuscadorAlcohol.getText();
         BebidaAlcoholica alcoholBuscado = new BebidaAlcoholica();
 
-        alcoholBuscado = (BebidaAlcoholica) itemMenuMemoryDAO.buscarItemPorNombre(alcoholABuscar);
+        alcoholBuscado = (BebidaAlcoholica) itemMenuController.buscarItemPorNombre(alcoholABuscar);
 
         modeloAlcohol.setRowCount(0);
 
@@ -1739,7 +1743,7 @@ public class Inicio extends javax.swing.JFrame {
         String sinAlcoholABuscar = txtBuscadorSinAlcohol.getText();
         BebidaSinAlcohol alcoholBuscado = new BebidaSinAlcohol();
 
-        alcoholBuscado = (BebidaSinAlcohol) itemMenuMemoryDAO.buscarItemPorNombre(sinAlcoholABuscar);
+        alcoholBuscado = (BebidaSinAlcohol) itemMenuController.buscarItemPorNombre(sinAlcoholABuscar);
 
         modeloSinAlcohol.setRowCount(0);
 
@@ -1778,7 +1782,7 @@ public class Inicio extends javax.swing.JFrame {
         } else if (cmbBoxFormaPago.getSelectedItem().equals("MercadoPago")) {
             aux = aux * 1.004;
         }
-        modeloPedido.setValueAt(clienteMemoryDAO.buscarPorNombreCliente(listClientesPedido.getSelectedValue()).getNombre(), fila, 0);
+        modeloPedido.setValueAt(clienteController.buscarPorNombreCliente(listClientesPedido.getSelectedValue()).getNombre(), fila, 0);
         modeloPedido.setValueAt(aux, fila, 1);
         modeloPedido.setValueAt(listaItemPedido, fila, 2);
 
@@ -1789,7 +1793,7 @@ public class Inicio extends javax.swing.JFrame {
         String clienteABuscar = listClientesPedido.getSelectedValue();
         Pedido pedidoBuscado = new Pedido();
 
-        pedidoBuscado = pedidoMemoryDAO.buscarPorNombreCliente(clienteMemoryDAO.buscarPorNombreCliente(clienteABuscar).getNombre());
+        pedidoBuscado = pedidoController.buscarPorNombreCliente(clienteController.buscarPorNombreCliente(clienteABuscar).getNombre());
 
         modeloPedido.setRowCount(0);
 
@@ -2003,7 +2007,7 @@ public class Inicio extends javax.swing.JFrame {
             modelo.removeRow(0);
         }
 
-        for (Vendedor vend : vendedorMemoryDAO.listarVendedor()) {
+        for (Vendedor vend : vendedorController.listarVendedor()) {
             Object o[] = new Object[4];
             o[0] = vend.getNombre();
             o[1] = vend.getDireccion();
@@ -2039,7 +2043,7 @@ public class Inicio extends javax.swing.JFrame {
         while (modeloCliente.getRowCount() > 0) {
             modeloCliente.removeRow(0);
         }
-        for (Cliente a : clienteMemoryDAO.listarClientes()) {
+        for (Cliente a : clienteController.listarClientes()) {
 
             Object o[] = new Object[5];
             o[0] = a.getNombre();
@@ -2066,7 +2070,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void iniciarListaItems() {
         modeloListaItemVendedor.clear();
-        for (ItemMenu a : itemMenuMemoryDAO.listarItemMenu()) {
+        for (ItemMenu a : itemMenuController.listarItemMenu()) {
 
             modeloListaItemVendedor.addElement(a.toString());
         }
@@ -2135,7 +2139,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void iniciarListaClientes() {
         modeloListaClientePedido.clear();
-        for (Cliente c : clienteMemoryDAO.listarClientes()) {
+        for (Cliente c : clienteController.listarClientes()) {
             modeloListaClientePedido.addElement(c.getNombre());
         }
         listClientesPedido.setModel(modeloListaClientePedido);
@@ -2145,7 +2149,7 @@ public class Inicio extends javax.swing.JFrame {
         while (modeloPedido.getRowCount() > 0) {
             modeloPedido.removeRow(0);
         }
-        for (Pedido a : pedidoMemoryDAO.getListaPedidos()) {
+        for (Pedido a : pedidoController.getListaPedidos()) {
 
             Object o[] = new Object[3];
             o[0] = a.getCliente().getNombre();
@@ -2159,7 +2163,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void iniciarListaVendedores() {
         modeloListaVendedorItem.clear();
-        for (Vendedor c : vendedorMemoryDAO.listarVendedor()) {
+        for (Vendedor c : vendedorController.listarVendedor()) {
             modeloListaVendedorItem.addElement(c.getNombre());
         }
         listVendedorAlcohol.setModel(modeloListaVendedorItem);

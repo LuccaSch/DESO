@@ -164,5 +164,21 @@ public class PedidoController {
     public void generarPagoPara(Pedido pedido) {
         pedido.getContextoPago().getPagoStrategy().generarPago(pedido);
     }
-
+    
+    public void agregarPedidoALista(Pedido pedido) {
+        pedidoDAO.getListaPedidos().add(pedido);
+    }
+    
+    public List<Pedido> getListaPedidos(){
+        return pedidoDAO.getListaPedidos();
+    }
+    
+    public Pedido buscarPorNombreCliente(String cliente) {
+        for (Pedido pedido : pedidoDAO.getListaPedidos()) {
+            if (pedido.getCliente().getNombre().equals(cliente)) {
+                return pedido;
+            }
+        }
+        return null;
+    }
 }

@@ -2,6 +2,7 @@ package isi.deso.tp.service;
 
 import isi.deso.tp.dao.PedidoMemoryDAO;
 import isi.deso.tp.dao.VendedorDAO;
+import isi.deso.tp.exception.VendedorNoEncontradoException;
 import isi.deso.tp.model.Coordenada;
 import isi.deso.tp.model.EstadoPedidoEnum;
 import isi.deso.tp.model.Pedido;
@@ -30,12 +31,16 @@ public class VendedorController {
     public Vendedor crearVendedor() {
         return new Vendedor();
     }
-
+    
+    public Vendedor crearVendedor(Vendedor v){
+        return v;
+    }
+    
     public Vendedor crearVendedor(int id, String nombre, String direccion, Coordenada coordenada) {
         return new Vendedor(id, nombre, direccion, coordenada);
     }
 
-    public List<Vendedor> mostrarListaVendedor() {
+    public List<Vendedor> listarVendedor() {
         return vendedorDAO.listarVendedor();
     }
 
@@ -62,7 +67,27 @@ public class VendedorController {
 
         return vendedoresAux;
     }
+    
+        public void VendedorNoEncontrado(boolean condicion) throws VendedorNoEncontradoException {
+        if (!condicion) {
+            throw new VendedorNoEncontradoException();
+        }
+    }
 
+    public Vendedor buscarVendedorPorNombre(String nombre) throws VendedorNoEncontradoException {
+        Vendedor vendedor = null;
+        for (Vendedor v : vendedorDAO.listarVendedor()) {
+            if (v.getNombre().equals(nombre)) {
+                vendedor = v;
+            }
+        }
+        if (vendedor == null) {
+            VendedorNoEncontrado(true);
+        }
+        return vendedor;
+    }
+    
+    
     public void modificarVendedor(int id, String nombre, String direccion, Coordenada coordenadas) {
         Vendedor vendedorAModificar = this.vendedorDAO.buscarVendedor(id).getFirst();
         vendedorAModificar.setNombre(nombre);
