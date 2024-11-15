@@ -1,6 +1,5 @@
 package isi.deso.tp.dao;
 
-import isi.deso.tp.model.Cliente;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import isi.deso.tp.model.Cliente;
+import isi.deso.tp.model.Coordenada;
 
 public class ClienteJDBC implements ClienteDAO {
 
@@ -26,14 +28,15 @@ public class ClienteJDBC implements ClienteDAO {
                 String email = rs.getString("email");
                 String direccion = rs.getString("direccion");
                 Integer coordenadaId = rs.getInt("coordenada_id");
-                // Coordenada coordenada = CoordenadaJDBC.obtenerPorId(coordenadaId);
-                // Cliente cliente = new Cliente(id, nombre, cuit, email, direccion, coordenada);
-                // lista.add(cliente);
+                Coordenada coordenada = CoordenadaJDBC.obtenerCoordenadaById(coordenadaId);
+                Cliente cliente = new Cliente(id, nombre, cuit, email, direccion, coordenada);
+                lista.add(cliente);
             }
+            return lista;
         } catch (SQLException ex) {
             Logger.getLogger(ClienteJDBC.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return lista;
     }
 
     @Override
