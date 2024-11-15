@@ -14,7 +14,9 @@ import java.util.List;
 public class ClienteController {
 
     private ClienteDAO clienteDAO;
-
+    
+    public ClienteController(){
+    }
     public ClienteController(ClienteDAO clienteDAO) {
         this.clienteDAO = clienteDAO;
     }
@@ -64,6 +66,10 @@ public class ClienteController {
             }
         }
         return cliente;
+    }
+    
+    public Cliente buscarPorIdCliente(int id){
+        return this.clienteDAO.buscarPorIdCliente(id);
     }
     
     public Cliente convertirClienteDesdeDTO(ClienteDTO clienteDTO) {
@@ -120,13 +126,23 @@ public class ClienteController {
     }
 
     public void generarPagoPara(int idCliente, int idPedido) {
-        Cliente cliente = clienteDAO.buscarPorIdCliente(idCliente);
+        Cliente cliente = this.buscarPorIdCliente(idCliente);
         for (Pedido pedido : cliente.getListaPedidos()) {
             if (pedido.getId() == idPedido) {
-
                 pedido.setPagoStrategy(this.elegirMetodoPago(cliente));
                 pedido.getContextoPago().getPagoStrategy().generarPago(pedido);
             }
         }
+    }
+    
+    public PagoStrategy mostrarEstrategiaDePagoDelPedido(int idCliente, int idPedido){
+        Cliente cliente = this.buscarPorIdCliente(idCliente);
+        PagoStrategy estrategiaDePago = null;
+        for (Pedido pedido : cliente.getListaPedidos()) {
+            if (pedido.getId() == idPedido) {
+                estrategiaDePago = pedido.getContextoPago().getPagoStrategy();
+            }
+        }
+        return estrategiaDePago;
     }
 }
