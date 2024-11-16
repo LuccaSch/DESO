@@ -1,12 +1,9 @@
-package isi.deso.tp.dao;
+package isi.deso.tp.dao.jdbc;
 
-import isi.deso.tp.dao.jdbc.DBConnector;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,22 +11,44 @@ import isi.deso.tp.model.Coordenada;
 
 public class CoordenadaJDBC {
 
-    public static Coordenada obtenerCoordenadaById(Integer id){
-        List<Coordenada> listaCoordenadas = new ArrayList<>();
-        Connection conn = DBConnector.getInstance();
-        String query = "SELECT * FROM Coordenada c WHERE c.id="+id+";";
-        try (Statement stm = conn.createStatement()) {
-            ResultSet rs = stm.executeQuery(query);
-            while (rs.next()) {
-            Double lat = rs.getDouble("lat");
-            Double lgn = rs.getDouble("lgn");
-            Coordenada coord=new Coordenada(lat,lgn);
-            listaCoordenadas.add(coord);
+    public static Coordenada obtenerCoordenadaById(Integer id) {
+        String query = "SELECT lat, lgn FROM Coordenada WHERE id = ?";
+        try (Connection conn = DBConnector.getInstance();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Double lat = rs.getDouble("lat");
+                    Double lgn = rs.getDouble("lgn");
+                    return new Coordenada(lat, lgn);
+                } else {
+                    throw new SQLException("No se encontró la coordenada con ID: " + id);
+                }
             }
-            return listaCoordenadas.get(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(CoordenadaJDBC.class.getName()).log(Level.SEVERE, "Error obteniendo coordenada", ex);
+            return null;
         }
-        catch (SQLException ex) {
-            Logger.getLogger(ClienteJDBC.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    public static Integer guardarCoordenada(Coordenada coordenada) {
+        String query = "INSERT INTO Coordenada (lat, lgn) VALUES (?, ?) RETURNING id;";
+        try (Connection conn = DBConnector.getInstance();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+    
+            ps.setDouble(1, coordenada.getLat());
+            ps.setDouble(2, coordenada.getLgn());
+    
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("No se pudo insertar la coordenada");
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CoordenadaJDBC.class.getName())
+                  .log(Level.SEVERE, "Error al guardar la coordenada", ex);
             return null;
         }
     }

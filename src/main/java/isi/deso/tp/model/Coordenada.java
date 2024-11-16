@@ -1,31 +1,40 @@
 package isi.deso.tp.model;
 
 public class Coordenada {
+    private Integer id;
 
-    private Double lat;
-    private Double lgn;
+    private double lat;
+    private double lgn;
 
     public Coordenada() {
     }
 
-    public Coordenada(Double lat, Double lgn) {
+    public Coordenada(double lat, double lgn) {
         this.lat = lat;
         this.lgn = lgn;
     }
 
-    public Double getLat() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(Double lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public Double getLgn() {
+    public double getLgn() {
         return lgn;
     }
 
-    public void setLgn(Double lgn) {
+    public void setLgn(double lgn) {
         this.lgn = lgn;
     }
 
@@ -48,7 +57,7 @@ public class Coordenada {
         // Dos vendedores son iguales si su lat y long son los mismos
         Coordenada otherCoordenada = (Coordenada) obj;
 
-        return (this.lat == otherCoordenada.lat.doubleValue() && this.lgn == otherCoordenada.lgn.doubleValue());
+        return (this.lat == otherCoordenada.lat && this.lgn == otherCoordenada.lgn);
     }
 
     @Override
