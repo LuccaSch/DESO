@@ -5,52 +5,47 @@ import isi.deso.tp.model.ItemMenu;
 import java.util.List;
 
 public class ItemMenuController {
-      
+
     private ItemMenuDAO itemMenuDAO;
-    
+
     public ItemMenuController() {
     }
-    
+
     public ItemMenuController(ItemMenuDAO itemMenuDAO) {
         this.itemMenuDAO = itemMenuDAO;
     }
-    
-        
+
     public List<ItemMenu> listarItemMenu() {
-        return itemMenuDAO.listarItemMenu();
+        return itemMenuDAO.listarItemsMenu();
     }
 
-    
     public void crearItemMenu(ItemMenu itemMenu) {
-        itemMenuDAO.listarItemMenu().add(itemMenu);
+        itemMenuDAO.crearItemMenu(itemMenu);
     }
 
-   
     public void actualizarItemMenu(ItemMenu itemMenu) {
-        itemMenuDAO.listarItemMenu().remove(itemMenu.getId());
-        itemMenuDAO.listarItemMenu().add(itemMenu);
+        itemMenuDAO.actualizarItemMenu(itemMenu);
     }
 
-    
     public void eliminarItemMenu(Integer idItemMenu) {
-        itemMenuDAO.listarItemMenu().remove(idItemMenu);
+        itemMenuDAO.eliminarItemMenu(idItemMenu);
     }
 
-    
-    public List<ItemMenu> buscarItemMenu(Integer idItemMenu) {
-        return itemMenuDAO.listarItemMenu().stream().filter(itemMenu -> itemMenu.getId() == idItemMenu).toList();
+    public List<ItemMenu> buscarItemsMenuPorId(Integer idItemMenu) {
+        return itemMenuDAO.buscarItemsMenuPorId(idItemMenu);
     }
 
     public ItemMenu buscarItemPorNombre(String nombre) {
         ItemMenu item = null;
 
-        for (ItemMenu v : itemMenuDAO.listarItemMenu()) {
+        for (ItemMenu v : itemMenuDAO.listarItemsMenu()) {
             if (v.getNombre().equals(nombre)) {
                 item = v;
             }
         }
 
         return item;
+
     }
-    
+
 }

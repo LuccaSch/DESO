@@ -1,7 +1,8 @@
 package isi.deso.tp.app;
 
-import isi.deso.tp.dao.ClienteMemoryDAO;
-import isi.deso.tp.dao.PedidoMemoryDAO;
+import isi.deso.tp.dao.jdbc.ClienteJDBC;
+import isi.deso.tp.dao.jdbc.PedidoJDBC;
+import isi.deso.tp.dao.jdbc.VendedorJDBC;
 import isi.deso.tp.exception.ItemNoEncontradoException;
 import isi.deso.tp.model.*;
 import isi.deso.tp.service.ClienteController;
@@ -18,8 +19,8 @@ public class Main {
     private static final Integer MERCADOPAGO = 3;
 
     public static void main(String[] args) throws ItemNoEncontradoException {
-        VendedorController vendedorController = new VendedorController();
-        ClienteController clienteController = new ClienteController(ClienteMemoryDAO.getInstance());
+        VendedorController vendedorController = new VendedorController(new VendedorJDBC());
+        ClienteController clienteController = new ClienteController(new ClienteJDBC());
 
         Vendedor vendedor1 = vendedorController.crearVendedor(1, "Roticeria Pampita", "San Luis 3984", new Coordenada(1.0, 2.0));
         Vendedor vendedor2 = vendedorController.crearVendedor(2, "Polleria Don Pechuga", "Paraguay 4244", new Coordenada(2.0, 3.0));
@@ -35,7 +36,7 @@ public class Main {
 
         Cliente cliente1 = clienteController.crearCliente(1, "Lucca Perez", "2043350012", "lsch@gmail.com", "San Luis 6612", new Coordenada(1.0, 1.0));
         Cliente cliente2 = clienteController.crearCliente(2, "Pedro Suarez", "2042250012", "pedrito@gmail.com", "Salta 981", new Coordenada(2.0, 3.0));
-        Cliente cliente3 = clienteController.crearCliente(2, "Patricio Vilozco", "2042255512", "p@gmail.com", "Peron 2022", new Coordenada(4.0, 4.0));
+        Cliente cliente3 = clienteController.crearCliente(3, "Patricio Vilozco", "2042255512", "p@gmail.com", "Peron 2022", new Coordenada(4.0, 4.0));
         Cliente cliente4 = clienteController.crearCliente(4, "Juan Alcaraz", "2042255512", "jalcaraz12@gmail.com", "Libertador 2323", new Coordenada(4.0, 4.0));
 
         List<Cliente> listaClientes = new ArrayList<>();
@@ -59,7 +60,7 @@ public class Main {
         // --------------------------------
         // App de TP Etapa 4 Modulo de gestion de creacion de Pedido
         //
-        PedidoController pedidoController = new PedidoController(PedidoMemoryDAO.getInstance());
+        PedidoController pedidoController = new PedidoController(new PedidoJDBC());
         ItemPedidoController itemPedidoController = new ItemPedidoController();
 
         ItemPedido itemPedido1 = itemPedidoController.crearItemPedido(1, itemMenu2, 3);
@@ -88,7 +89,7 @@ public class Main {
         //
         System.out.println("\nINICIO App TP Etapa 7\n");
 
-        List<Cliente> lista = clienteController.index();
+        List<Cliente> lista = clienteController.listarClientes();
         System.out.println(lista.toString());
 
         System.out.println("\nFIN App TP Etapa 7");

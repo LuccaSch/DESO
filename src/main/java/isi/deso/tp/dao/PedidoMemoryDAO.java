@@ -29,16 +29,16 @@ public class PedidoMemoryDAO implements PedidoDAO {
     }
 
     @Override
-    public List<Pedido> getListaPedidos() {
+    public List<Pedido> listarPedidos() {
         return this.listaPedidos;
     }
 
     @Override
-    public List<Pedido> buscarPorIdVendedor(Integer idVendedor) {
+    public List<Pedido> buscarPedidosPorIdVendedor(Integer idVendedor) {
         List<Pedido> listaBusqueda = new ArrayList<>();
         for (Pedido pedido : listaPedidos) {
             for (ItemPedido itemPedido : pedido.getPedidoDetalle()) {
-                if (itemPedido.getVendedor().getId() == idVendedor && !listaBusqueda.contains(pedido)) {
+                if (itemPedido.getVendedor().getId() == idVendedor.intValue() && !listaBusqueda.contains(pedido)) {
                     listaBusqueda.add(pedido);
                 }
             }
@@ -61,11 +61,11 @@ public class PedidoMemoryDAO implements PedidoDAO {
     }
 
     @Override
-    public List<Pedido> buscarPorIdPedido(Integer idPedido) {
+    public List<Pedido> buscarPedidosPorId(Integer idPedido) {
         List<Pedido> listaBusqueda = new ArrayList<>();
         for (Pedido pedido : listaPedidos) {
 
-            if (pedido.getId() == idPedido && !listaBusqueda.contains(pedido)) {
+            if (pedido.getId() == idPedido.intValue() && !listaBusqueda.contains(pedido)) {
                 listaBusqueda.add(pedido);
 
             }

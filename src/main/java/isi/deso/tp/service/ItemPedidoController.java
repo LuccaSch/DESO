@@ -6,7 +6,6 @@ import isi.deso.tp.exception.ItemNoEncontradoException;
 import isi.deso.tp.model.DTO.ItemPedidoDTO;
 import isi.deso.tp.model.ItemMenu;
 import isi.deso.tp.model.ItemPedido;
-import isi.deso.tp.model.Pedido;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,13 +38,13 @@ public class ItemPedidoController {
 
     public ItemPedido crearItemPedido(Integer id, ItemMenu itemMenu, Integer cantidad) {
         ItemPedido itemPedido = new ItemPedido(id, itemMenu, cantidad);
-
+        itemsPedidoDAO.agregarItemPedidoALista(itemPedido);
         return itemPedido;
     }
 
     public ItemPedido crearItemPedido(Integer id, ItemMenu itemMenu, Integer cantidad, Double precio) {
         ItemPedido itemPedido = new ItemPedido(id, itemMenu, cantidad, precio);
-
+        itemsPedidoDAO.agregarItemPedidoALista(itemPedido);
         return itemPedido;
     }
 
@@ -113,9 +112,13 @@ public class ItemPedidoController {
         return listaFiltrada;
     }
 
-    public void deletePedidoPorId(List<Pedido> pedidos, Integer idPedido) {
-        pedidos.remove(idPedido);
-        pedidos.removeIf(pedido -> pedido.getId() == idPedido);
+    public void deletePedidoPorId(Integer idPedido) {
+        try {
+            itemsPedidoDAO.eliminarItemPedidoPorId(idPedido);
+        } catch (ItemNoEncontradoException excep) {
+            System.err.println("Desde ItemPedidoController: " + excep.getMessage());
+
+        }
     }
 
     public ItemPedido convertirDesdeDTO(ItemPedidoDTO itemPedidoDTO) {

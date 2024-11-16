@@ -11,6 +11,14 @@ public class MercadoPagoStrategy implements PagoStrategy {
         this.alias = alias;
     }
 
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
     @Override
     public String toString() {
         return "MercadoPagoStrategy{" + "alias=" + alias + '}';

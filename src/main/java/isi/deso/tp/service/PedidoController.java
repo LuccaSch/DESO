@@ -93,7 +93,7 @@ public class PedidoController {
         List<ItemPedido> pedidoDetalle = itemPedidoController.convertirDesdeListaDTO(pedidoDTO.getListaItemPedidoDTO());
         try {
             vendedorEsUnico(pedidoDetalle);
-            pedidoNuevo = crearPedido(pedidoDTO.getId(), clienteController.getClienteDAO().buscarPorIdCliente(pedidoDTO.getIdCliente()), pedidoDetalle);
+            pedidoNuevo = crearPedido(pedidoDTO.getId(), clienteController.getClienteDAO().buscarClientePorId(pedidoDTO.getIdCliente()), pedidoDetalle);
             clienteController.agregarPedido(pedidoNuevo.getCliente(), pedidoNuevo);
 
         } catch (VendedorNoUnicoException excep) {
@@ -150,11 +150,11 @@ public class PedidoController {
     }
 
     public List<Pedido> buscarPorRestaurante(Integer idVendedor) {
-        return pedidoDAO.buscarPorIdVendedor(idVendedor);
+        return pedidoDAO.buscarPedidosPorIdVendedor(idVendedor);
     }
 
     public List<Pedido> buscarPorIdPedido(Integer idPedido) {
-        return pedidoDAO.buscarPorIdPedido(idPedido);
+        return pedidoDAO.buscarPedidosPorId(idPedido);
     }
 
     public void actualizarEstado(EstadoPedidoEnum estadoPedidoNuevo, Pedido pedido) {
@@ -166,19 +166,20 @@ public class PedidoController {
     }
 
     public void agregarPedidoALista(Pedido pedido) {
-        pedidoDAO.getListaPedidos().add(pedido);
+        pedidoDAO.listarPedidos().add(pedido);
     }
 
     public List<Pedido> getListaPedidos() {
-        return pedidoDAO.getListaPedidos();
+        return pedidoDAO.listarPedidos();
     }
 
     public Pedido buscarPorNombreCliente(String cliente) {
-        for (Pedido pedido : pedidoDAO.getListaPedidos()) {
+        for (Pedido pedido : pedidoDAO.listarPedidos()) {
             if (pedido.getCliente().getNombre().equals(cliente)) {
                 return pedido;
             }
         }
         return null;
     }
+
 }

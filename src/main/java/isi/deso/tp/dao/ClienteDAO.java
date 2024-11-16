@@ -9,7 +9,7 @@ public interface ClienteDAO {
 
     public void agregarClienteALista(Cliente cliente);
 
-    public Cliente buscarPorIdCliente(Integer idCliente);
+    public Cliente buscarClientePorId(Integer idCliente);
 
     public void eliminarClienteALista(Cliente cliente);
 

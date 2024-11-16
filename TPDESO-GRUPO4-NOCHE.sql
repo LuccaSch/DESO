@@ -293,6 +293,49 @@ ALTER TABLE `Vendedor`
   ADD PRIMARY KEY (`id`),
   ADD KEY `coordenada_id` (`coordenada_id`);
 
+
+ALTER TABLE `Bebida`
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `Categoria`
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `Cliente` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `ContextoPago` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `Coordenada` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `Efectivo` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `ItemMenu` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `ItemPedido` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `MercadoPago` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `Pago` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `Pedido` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `Plato` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `Transferencia` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
+ALTER TABLE `Vendedor` 
+  MODIFY COLUMN `id` INT AUTO_INCREMENT;
+
 --
 -- Restricciones para tablas volcadas
 --
@@ -330,12 +373,24 @@ ALTER TABLE `ItemPedido`
   ADD CONSTRAINT `ItemPedido_ibfk_2` FOREIGN KEY (`id`) REFERENCES `Pedido` (`id`);
 
 --
--- Filtros para la tabla `Pago`
+-- Filtros para la tabla `Efectivo`
 --
-ALTER TABLE `Pago`
-  ADD CONSTRAINT `Pago_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Efectivo` (`id`),
-  ADD CONSTRAINT `Pago_ibfk_2` FOREIGN KEY (`id`) REFERENCES `MercadoPago` (`id`),
-  ADD CONSTRAINT `Pago_ibfk_3` FOREIGN KEY (`id`) REFERENCES `Transferencia` (`id`);
+ALTER TABLE `Efectivo`
+  ADD CONSTRAINT `Efectivo_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Pago` (`id`);
+
+
+--
+-- Filtros para la tabla `MercadoPago`
+--
+ALTER TABLE `MercadoPago`
+  ADD CONSTRAINT `MercadoPago_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Pago` (`id`);
+
+--
+-- Filtros para la tabla `Transferencia`
+--
+ALTER TABLE `Transferencia`
+  ADD CONSTRAINT `Transferencia_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Pago` (`id`);
+
 
 --
 -- Filtros para la tabla `Pedido`
@@ -355,7 +410,11 @@ ALTER TABLE `Plato`
 --
 ALTER TABLE `Vendedor`
   ADD CONSTRAINT `Vendedor_ibfk_1` FOREIGN KEY (`coordenada_id`) REFERENCES `Coordenada` (`id`);
+
+
 COMMIT;
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

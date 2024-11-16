@@ -23,7 +23,7 @@ public class ItemMenuMemoryDAO implements ItemMenuDAO {
     }
 
     @Override
-    public List<ItemMenu> listarItemMenu() {
+    public List<ItemMenu> listarItemsMenu() {
         return this.listaItemsMenu;
     }
 
@@ -34,18 +34,13 @@ public class ItemMenuMemoryDAO implements ItemMenuDAO {
 
     @Override
     public void actualizarItemMenu(ItemMenu itemMenu) {
-        this.listaItemsMenu.remove(itemMenu.getId());
+        eliminarItemMenu(itemMenu.getId());
         this.listaItemsMenu.add(itemMenu);
     }
 
     @Override
-    public void eliminarItemMenu(Integer idItemMenu) {
-        this.listaItemsMenu.remove(idItemMenu);
-    }
-
-    @Override
-    public List<ItemMenu> buscarItemMenu(Integer idItemMenu) {
-        return this.listaItemsMenu.stream().filter(itemMenu -> itemMenu.getId() == idItemMenu).toList();
+    public List<ItemMenu> buscarItemsMenuPorId(Integer idItemMenu) {
+        return this.listaItemsMenu.stream().filter(itemMenu -> itemMenu.getId() == idItemMenu.intValue()).toList();
     }
 
     public ItemMenu buscarItemPorNombre(String nombre) {
@@ -58,6 +53,12 @@ public class ItemMenuMemoryDAO implements ItemMenuDAO {
         }
 
         return item;
+    }
+
+    @Override
+    public void eliminarItemMenu(Integer idItemMenu) {
+        ItemMenu itemMenuEncontrado = buscarItemsMenuPorId(idItemMenu).getFirst();
+        this.listaItemsMenu.remove(itemMenuEncontrado);
     }
 
 }

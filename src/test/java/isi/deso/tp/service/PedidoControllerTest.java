@@ -1,11 +1,15 @@
 package isi.deso.tp.service;
 
-import isi.deso.tp.dao.PedidoDAO;
+import isi.deso.tp.dao.PedidoMemoryDAO;
 import isi.deso.tp.model.Cliente;
-import isi.deso.tp.model.DTO.PedidoDTO;
+import isi.deso.tp.model.Coordenada;
 import isi.deso.tp.model.EstadoPedidoEnum;
+import isi.deso.tp.model.ItemMenu;
 import isi.deso.tp.model.ItemPedido;
 import isi.deso.tp.model.Pedido;
+import isi.deso.tp.model.Plato;
+import isi.deso.tp.model.Vendedor;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +20,9 @@ import org.junit.jupiter.api.Test;
 
 public class PedidoControllerTest {
 
+    PedidoMemoryDAO pedidoMemoryDAO;
+    PedidoController pedidoController;
+
     public PedidoControllerTest() {
     }
 
@@ -25,41 +32,19 @@ public class PedidoControllerTest {
 
     @AfterAll
     public static void tearDownClass() {
+
     }
 
     @BeforeEach
     public void setUp() {
+        pedidoMemoryDAO = PedidoMemoryDAO.getInstance();
+        pedidoController = new PedidoController(pedidoMemoryDAO);
+
     }
 
     @AfterEach
     public void tearDown() {
-    }
-
-    /**
-     * Test of getPedidoDAO method, of class PedidoController.
-     */
-    @Test
-    public void testGetPedidoDAO() {
-        System.out.println("getPedidoDAO");
-        PedidoController instance = null;
-        PedidoDAO expResult = null;
-        PedidoDAO result = instance.getPedidoDAO();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setPedidoDAO method, of class PedidoController.
-     */
-    @Test
-    public void testSetPedidoDAO() {
-        System.out.println("setPedidoDAO");
-        PedidoDAO pedidoDAO = null;
-        PedidoController instance = null;
-        instance.setPedidoDAO(pedidoDAO);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        pedidoMemoryDAO.listarPedidos().clear();
     }
 
     /**
@@ -67,48 +52,45 @@ public class PedidoControllerTest {
      */
     @Test
     public void testCrearPedido_3args() {
-        System.out.println("crearPedido");
-        Integer id = 0;
-        Cliente cliente = null;
-        List<ItemPedido> pedidoDetalle = null;
-        PedidoController instance = null;
-        Pedido expResult = null;
-        Pedido result = instance.crearPedido(id, cliente, pedidoDetalle);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    /**
-     * Test of crearPedido method, of class PedidoController.
-     */
-    @Test
-    public void testCrearPedido_5args() {
-        System.out.println("crearPedido");
-        Integer id = 0;
-        Cliente cliente = null;
-        EstadoPedidoEnum estadoPedido = null;
-        List<ItemPedido> pedidoDetalle = null;
-        Double precioTotal = 0.0;
-        PedidoController instance = null;
-        Pedido expResult = null;
-        Pedido result = instance.crearPedido(id, cliente, estadoPedido, pedidoDetalle, precioTotal);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Vendedor v1 = new Vendedor(1, "Juan", "Calle 1", new Coordenada(10, 20));
+        Vendedor v2 = new Vendedor(2, "Pepe", "Calle 1", new Coordenada(10, 20));
+        ItemMenu i1 = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, v1);
+        ItemMenu i2 = new Plato(600, true, false, 3, "Helado", "Flan casero con crema", 1000.0, null, 0.5, v1);
+
+        Cliente cliente = new Cliente(1, "Cliente Prueba", "20304050", "cliente@correo.com", "Dirección", null);
+        List<ItemPedido> items = new ArrayList<>();
+
+        items.add(new ItemPedido(1, i1, 10));
+        items.add(new ItemPedido(2, i2, 20));
+
+        Pedido pedido = pedidoController.crearPedido(1, cliente, items);
+
+        assertNotNull(pedido);
+        assertEquals(1, pedido.getId());
+        assertEquals(cliente, pedido.getCliente());
+        assertEquals(items.size(), pedido.getPedidoDetalle().size());
     }
 
     /**
      * Test of vendedorEsUnico method, of class PedidoController.
      */
     @Test
-    public void testVendedorEsUnico() throws Exception {
-        System.out.println("vendedorEsUnico");
-        List<ItemPedido> pedidoDetalle = null;
-        PedidoController instance = null;
-        instance.vendedorEsUnico(pedidoDetalle);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testVendedorNoUnicoException() {
+        Vendedor v1 = new Vendedor(1, "Juan", "Calle 1", new Coordenada(10, 20));
+        Vendedor v2 = new Vendedor(2, "Pepe", "Calle 1", new Coordenada(10, 20));
+        ItemMenu i1 = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, v1);
+        ItemMenu i2 = new Plato(600, true, false, 3, "Helado", "Flan casero con crema", 1000.0, null, 0.5, v2);
+
+        Cliente cliente = new Cliente(1, "Cliente Prueba", "20304050", "cliente@correo.com", "Dirección", null);
+        List<ItemPedido> items = new ArrayList<>();
+
+        items.add(new ItemPedido(1, i1, 10));
+        items.add(new ItemPedido(2, i2, 20));
+
+        Pedido pedido = pedidoController.crearPedido(1, cliente, items);
+
+        assertNull(pedido);
     }
 
     /**
@@ -116,13 +98,20 @@ public class PedidoControllerTest {
      */
     @Test
     public void testAgregarItemPedido() {
-        System.out.println("agregarItemPedido");
-        Pedido pedido = null;
-        ItemPedido itemPedido = null;
-        PedidoController instance = null;
-        instance.agregarItemPedido(pedido, itemPedido);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Vendedor v1 = new Vendedor(1, "Juan", "Calle 1", new Coordenada(10, 20));
+        ItemMenu i1 = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, v1);
+
+        Cliente cliente = new Cliente(3, "Cliente Ejemplo", "20304050", "ejemplo@correo.com", "Dirección", null);
+        List<ItemPedido> items = new ArrayList<>();
+        items.add(new ItemPedido(1, i1, 10));
+
+        Pedido pedido = pedidoController.crearPedido(3, cliente, items);
+
+        ItemPedido nuevoItem = new ItemPedido(3, i1, 30);
+        pedidoController.agregarItemPedido(pedido, nuevoItem);
+
+        assertEquals(2, pedido.getPedidoDetalle().size());
+        assertTrue(pedido.getPedidoDetalle().contains(nuevoItem));
     }
 
     /**
@@ -130,29 +119,18 @@ public class PedidoControllerTest {
      */
     @Test
     public void testCalcularParcial() {
-        System.out.println("calcularParcial");
-        Pedido pedido = null;
-        PedidoController instance = null;
-        Double expResult = 0.0;
-        Double result = instance.calcularParcial(pedido);
-        assertEquals(expResult, result, 0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        Vendedor v1 = new Vendedor(1, "Juan", "Calle 1", new Coordenada(10, 20));
+        ItemMenu i1 = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, v1);
+        Cliente cliente = new Cliente(4, "Cliente Total", "20304050", "total@correo.com", "Dirección", null);
 
-    /**
-     * Test of convertirPedidoDesdeDTO method, of class PedidoController.
-     */
-    @Test
-    public void testConvertirPedidoDesdeDTO() {
-        System.out.println("convertirPedidoDesdeDTO");
-        PedidoDTO pedidoDTO = null;
-        PedidoController instance = null;
-        Pedido expResult = null;
-        Pedido result = instance.convertirPedidoDesdeDTO(pedidoDTO);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<ItemPedido> items = new ArrayList<>();
+        items.add(new ItemPedido(1, i1, 50));
+        items.add(new ItemPedido(2, i1, 100));
+
+        Pedido pedido = pedidoController.crearPedido(4, cliente, items);
+
+        Double parcial = pedidoController.calcularParcial(pedido);
+        assertEquals(150000.0, parcial);
     }
 
     /**
@@ -161,54 +139,17 @@ public class PedidoControllerTest {
     @Test
     public void testActualizarEstadoPedido() {
         System.out.println("actualizarEstadoPedido");
-        Pedido pedido = null;
-        EstadoPedidoEnum estadoNuevo = null;
-        PedidoController instance = null;
-        instance.actualizarEstadoPedido(pedido, estadoNuevo);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        Vendedor v1 = new Vendedor(1, "Juan", "Calle 1", new Coordenada(10, 20));
+        ItemMenu i1 = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, v1);
+        Cliente cliente = new Cliente(5, "Cliente Estado", "20304050", "estado@correo.com", "Dirección", null);
+        List<ItemPedido> items = new ArrayList<>();
+        items.add(new ItemPedido(1, i1, 20));
 
-    /**
-     * Test of aplicarRecargo method, of class PedidoController.
-     */
-    @Test
-    public void testAplicarRecargo() {
-        System.out.println("aplicarRecargo");
-        Pedido pedido = null;
-        PedidoController instance = null;
-        Double expResult = 0.0;
-        Double result = instance.aplicarRecargo(pedido);
-        assertEquals(expResult, result, 0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        Pedido pedido = pedidoController.crearPedido(5, cliente, items);
 
-    /**
-     * Test of aplicarRecargoPorDTO method, of class PedidoController.
-     */
-    @Test
-    public void testAplicarRecargoPorDTO() {
-        System.out.println("aplicarRecargoPorDTO");
-        PedidoDTO pedidoDTO = null;
-        PedidoController instance = null;
-        Double expResult = 0.0;
-        Double result = instance.aplicarRecargoPorDTO(pedidoDTO);
-        assertEquals(expResult, result, 0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        pedidoController.actualizarEstadoPedido(pedido, EstadoPedidoEnum.RECIBIDO);
 
-    /**
-     * Test of metodoPagoNoEncontrado method, of class PedidoController.
-     */
-    @Test
-    public void testMetodoPagoNoEncontrado() throws Exception {
-        System.out.println("metodoPagoNoEncontrado");
-        PedidoController instance = null;
-        instance.metodoPagoNoEncontrado();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(EstadoPedidoEnum.RECIBIDO, pedido.getEstadoPedido());
     }
 
     /**
@@ -216,30 +157,19 @@ public class PedidoControllerTest {
      */
     @Test
     public void testFiltrarPorEstado() {
-        System.out.println("filtrarPorEstado");
-        List<Pedido> listaPedidos = null;
-        EstadoPedidoEnum estadoPedido = null;
-        PedidoController instance = null;
-        List<Pedido> expResult = null;
-        List<Pedido> result = instance.filtrarPorEstado(listaPedidos, estadoPedido);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        Cliente cliente1 = new Cliente(6, "Cliente1", "20304050", "cliente1@correo.com", "Dirección", null);
+        Cliente cliente2 = new Cliente(7, "Cliente2", "20304050", "cliente2@correo.com", "Dirección", null);
 
-    /**
-     * Test of buscarPorRestaurante method, of class PedidoController.
-     */
-    @Test
-    public void testBuscarPorRestaurante() {
-        System.out.println("buscarPorRestaurante");
-        Integer idVendedor = 0;
-        PedidoController instance = null;
-        List<Pedido> expResult = null;
-        List<Pedido> result = instance.buscarPorRestaurante(idVendedor);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Pedido pedido1 = new Pedido(1, cliente1, EstadoPedidoEnum.RECIBIDO, new ArrayList<>(), 100.0);
+        Pedido pedido2 = new Pedido(2, cliente2, EstadoPedidoEnum.ENTREGADO, new ArrayList<>(), 200.0);
+
+        pedidoMemoryDAO.listarPedidos().add(pedido1);
+        pedidoMemoryDAO.listarPedidos().add(pedido2);
+
+        List<Pedido> filtrados = pedidoController.filtrarPorEstado(pedidoMemoryDAO.listarPedidos(), EstadoPedidoEnum.RECIBIDO);
+
+        assertEquals(1, filtrados.size());
+        assertEquals(pedido1, filtrados.get(0));
     }
 
     /**
@@ -248,82 +178,17 @@ public class PedidoControllerTest {
     @Test
     public void testBuscarPorIdPedido() {
         System.out.println("buscarPorIdPedido");
-        Integer idPedido = 0;
-        PedidoController instance = null;
-        List<Pedido> expResult = null;
-        List<Pedido> result = instance.buscarPorIdPedido(idPedido);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        Cliente cliente1 = new Cliente(6, "Cliente1", "20304050", "cliente1@correo.com", "Dirección", null);
+        Cliente cliente2 = new Cliente(7, "Cliente2", "20304050", "cliente2@correo.com", "Dirección", null);
 
-    /**
-     * Test of actualizarEstado method, of class PedidoController.
-     */
-    @Test
-    public void testActualizarEstado() {
-        System.out.println("actualizarEstado");
-        EstadoPedidoEnum estadoPedidoNuevo = null;
-        Pedido pedido = null;
-        PedidoController instance = null;
-        instance.actualizarEstado(estadoPedidoNuevo, pedido);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        Pedido pedido1 = new Pedido(1, cliente1, EstadoPedidoEnum.RECIBIDO, new ArrayList<>(), 100.0);
+        Pedido pedido2 = new Pedido(2, cliente2, EstadoPedidoEnum.ENTREGADO, new ArrayList<>(), 200.0);
+        pedidoMemoryDAO.listarPedidos().add(pedido1);
+        pedidoMemoryDAO.listarPedidos().add(pedido2);
+        List<Pedido> filtrados = pedidoController.buscarPorIdPedido(1);
 
-    /**
-     * Test of generarPagoPara method, of class PedidoController.
-     */
-    @Test
-    public void testGenerarPagoPara() {
-        System.out.println("generarPagoPara");
-        Pedido pedido = null;
-        PedidoController instance = null;
-        instance.generarPagoPara(pedido);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        assertEquals(pedido1, filtrados.get(0));
 
-    /**
-     * Test of agregarPedidoALista method, of class PedidoController.
-     */
-    @Test
-    public void testAgregarPedidoALista() {
-        System.out.println("agregarPedidoALista");
-        Pedido pedido = null;
-        PedidoController instance = null;
-        instance.agregarPedidoALista(pedido);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getListaPedidos method, of class PedidoController.
-     */
-    @Test
-    public void testGetListaPedidos() {
-        System.out.println("getListaPedidos");
-        PedidoController instance = null;
-        List<Pedido> expResult = null;
-        List<Pedido> result = instance.getListaPedidos();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of buscarPorNombreCliente method, of class PedidoController.
-     */
-    @Test
-    public void testBuscarPorNombreCliente() {
-        System.out.println("buscarPorNombreCliente");
-        String cliente = "";
-        PedidoController instance = null;
-        Pedido expResult = null;
-        Pedido result = instance.buscarPorNombreCliente(cliente);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

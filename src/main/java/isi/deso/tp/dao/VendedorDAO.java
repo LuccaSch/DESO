@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface VendedorDAO {
 
-    public List<Vendedor> listarVendedor();
+    public List<Vendedor> listarVendedores();
 
     public void crearVendedor(Vendedor vendedor);
 
