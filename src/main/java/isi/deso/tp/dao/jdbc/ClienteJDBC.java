@@ -50,31 +50,54 @@ public class ClienteJDBC implements ClienteDAO {
 
     @Override
     public void agregarClienteALista(Cliente cliente) {
-        String query = "INSERT INTO Cliente (nombre, cuit, email, direccion, coordenada_id) VALUES (?, ?, ?, ?, ?);";
-    
-        try (Connection conn = DBConnector.getInstance();
-            PreparedStatement ps = conn.prepareStatement(query)) {
-    
-            ps.setString(1, cliente.getNombre());
-            ps.setString(2, cliente.getCuit());
-            ps.setObject(3, cliente.getEmail());
-            ps.setString(4, cliente.getDireccion());
-    
-            Integer coordenadaId = null;
-            if (cliente.getCoordenada() != null) {
-                coordenadaId = CoordenadaJDBC.guardarCoordenada(cliente.getCoordenada());
-            }
-            ps.setObject(5, coordenadaId);
+        String insertCoordenadaQuery = "INSERT INTO Coordenada (lat, lgn) VALUES (?, ?);";
+        String insertClienteQuery = "INSERT INTO Cliente (nombre, cuit, email, direccion, coordenada_id) VALUES (?, ?, ?, ?, ?);";
 
-            ps.executeUpdate();
-    
+        try (Connection conn = DBConnector.getInstance()) {
+            // Inicia la transacción desabilito el autoCommit
+            conn.setAutoCommit(false); 
+
+            Integer coordenadaId = null;
+
+            if (cliente.getCoordenada() != null) {
+                try (PreparedStatement ps = conn.prepareStatement(insertCoordenadaQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                    ps.setDouble(1, cliente.getCoordenada().getLat());
+                    ps.setDouble(2, cliente.getCoordenada().getLgn());
+                    ps.executeUpdate();
+
+                    try (ResultSet rs = ps.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            coordenadaId = rs.getInt(1);
+                        }
+                    }
+                }
+            }
+
+            try (PreparedStatement ps = conn.prepareStatement(insertClienteQuery)) {
+                ps.setString(1, cliente.getNombre());
+                ps.setString(2, cliente.getCuit());
+                ps.setObject(3, cliente.getEmail());
+                ps.setString(4, cliente.getDireccion());
+                ps.setObject(5, coordenadaId);
+                ps.executeUpdate();
+            }
+
+            // Confirmamos la transacción
+            conn.commit(); 
             Logger.getLogger(VendedorJDBC.class.getName())
-                  .log(Level.INFO, "Cliente creado: ");
+                .log(Level.INFO, "Cliente creado: ");
         } catch (SQLException ex) {
             Logger.getLogger(VendedorJDBC.class.getName())
-                  .log(Level.SEVERE, "Error al crear cliente", ex);
+                .log(Level.SEVERE, "Error al crear cliente", ex);
+            try {
+                DBConnector.getInstance().rollback(); // Revertir cambios en caso de error
+            } catch (SQLException rollbackEx) {
+                Logger.getLogger(VendedorJDBC.class.getName())
+                    .log(Level.SEVERE, "Error al realizar rollback", rollbackEx);
+            }
         }
     }
+
 
     @Override
     public void eliminarListaClientesALista(List<Cliente> listaClientes) {

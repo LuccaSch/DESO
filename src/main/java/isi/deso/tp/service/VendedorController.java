@@ -89,7 +89,7 @@ public class VendedorController {
     
     
     public void modificarVendedor(Integer id, String nombre, String direccion, Coordenada coordenadas) {
-        Vendedor vendedorAModificar = this.vendedorDAO.buscarVendedor(id).getFirst();
+        Vendedor vendedorAModificar = this.vendedorDAO.buscarVendedor(id);
         vendedorAModificar.setNombre(nombre);
         vendedorAModificar.setDireccion(direccion);
         vendedorAModificar.setCoordenada(coordenadas);

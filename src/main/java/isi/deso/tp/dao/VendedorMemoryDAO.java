@@ -45,17 +45,6 @@ public class VendedorMemoryDAO implements VendedorDAO {
     }
 
     @Override
-    public List<Vendedor> buscarVendedor(Integer idVendedor) {
-        return this.listaVendedores.stream().filter(Vendedor -> Vendedor.getId() == idVendedor).toList();
-    }
-
-    public void VendedorNoEncontrado(Boolean condicion) throws VendedorNoEncontradoException {
-        if (!condicion) {
-            throw new VendedorNoEncontradoException();
-        }
-    }
-
-    @Override
     public Vendedor buscarVendedorPorNombre(String nombre) throws VendedorNoEncontradoException {
         Vendedor vendedor = null;
         VendedorNoEncontradoException excep;
@@ -64,10 +53,13 @@ public class VendedorMemoryDAO implements VendedorDAO {
                 vendedor = v;
             }
         }
-        if (vendedor == null) {
-            VendedorNoEncontrado(true);
-        }
         return vendedor;
+    }
+
+    @Override
+    public Vendedor buscarVendedor(Integer idVendedor) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarVendedor'");
     }
 
 }
