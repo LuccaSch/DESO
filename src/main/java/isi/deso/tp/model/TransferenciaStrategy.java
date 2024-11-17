@@ -13,6 +13,22 @@ public class TransferenciaStrategy implements PagoStrategy {
         this.cbu = cbu;
     }
 
+    public String getCuit() {
+        return cuit;
+    }
+
+    public void setCuit(String cuit) {
+        this.cuit = cuit;
+    }
+
+    public String getCbu() {
+        return cbu;
+    }
+
+    public void setCbu(String cbu) {
+        this.cbu = cbu;
+    }
+
     @Override
     public String toString() {
         return "TransferenciaStrategy{" + "cuit=" + cuit + ", cbu=" + cbu + '}';

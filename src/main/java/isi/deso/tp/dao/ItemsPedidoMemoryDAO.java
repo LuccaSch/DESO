@@ -9,20 +9,24 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
     // Atributos que simulan la base de datos
     private List<ItemPedido> listaItemPedidos;
 
-    @Override
     public List<ItemPedido> getLista() {
         return this.listaItemPedidos;
     }
 
-    @Override
     public void setLista(List<ItemPedido> listaItemPedidos) {
         this.listaItemPedidos = listaItemPedidos;
     }
 
     @Override
+    public void agregarItemPedidoALista(ItemPedido itemPedido, Integer idPedido) {
+        this.listaItemPedidos.add(itemPedido);
+
+    }
+
+    @Override
     public List<ItemPedido> filtrarPorVendedor(Integer idVendedor) throws ItemNoEncontradoException {
 
-        List<ItemPedido> listaFiltrada = this.getLista().stream()
+        List<ItemPedido> listaFiltrada = this.listaItemPedidos.stream()
                 .filter(i -> i.getVendedor().getId() == idVendedor).distinct()
                 .toList();
 
@@ -36,7 +40,7 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
 
     @Override
     public List<ItemPedido> ordenarPorPrecio() throws ItemNoEncontradoException {
-        List<ItemPedido> listaOrdenada = this.getLista().stream()
+        List<ItemPedido> listaOrdenada = this.listaItemPedidos.stream()
                 .sorted((item1, item2) -> Double.compare(item1.getItemMenu().getPrecio(), item2.getItemMenu().getPrecio()))
                 .toList();
 
@@ -50,7 +54,7 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
 
     @Override
     public List<ItemPedido> ordenarPorCantidad() throws ItemNoEncontradoException {
-        List<ItemPedido> listaOrdenada = this.getLista().stream()
+        List<ItemPedido> listaOrdenada = this.listaItemPedidos.stream()
                 .sorted((item1, item2) -> Double.compare(item1.getCantidad(), item2.getCantidad()))
                 .toList();
 
@@ -63,8 +67,13 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
     }
 
     @Override
+    public List<ItemPedido> buscarItemsPedidoPorId(Integer idItemPedido) throws ItemNoEncontradoException {
+        return this.listaItemPedidos.stream().filter(itemPedido -> itemPedido.getId() == idItemPedido.intValue()).toList();
+    }
+
+    @Override
     public List<ItemPedido> buscarPorRestaurante(Integer idVendedor) throws ItemNoEncontradoException {
-        List<ItemPedido> listaBusqueda = this.getLista().stream()
+        List<ItemPedido> listaBusqueda = this.listaItemPedidos.stream()
                 .filter(item -> item.getVendedor().getId() == idVendedor)
                 .toList();
 
@@ -78,7 +87,7 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
 
     @Override
     public List<ItemPedido> buscarPorRangoDePrecio(Double precioMin, Double precioMax) throws ItemNoEncontradoException {
-        List<ItemPedido> listaBusqueda = this.getLista().stream()
+        List<ItemPedido> listaBusqueda = this.listaItemPedidos.stream()
                 .filter(item -> (precioMin <= item.getPrecio() && item.getPrecio() <= precioMax))
                 .toList();
 
@@ -88,6 +97,12 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
 
         return listaBusqueda;
 
+    }
+
+    @Override
+    public void eliminarItemPedidoPorId(Integer idItemPedido) throws ItemNoEncontradoException {
+        ItemPedido itemPedidoEncontrado = this.listaItemPedidos.stream().filter(itemPedido -> itemPedido.getId() == idItemPedido.intValue()).toList().getFirst();
+        this.listaItemPedidos.remove(itemPedidoEncontrado);
     }
 
 }

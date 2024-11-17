@@ -1,17 +1,5 @@
 package isi.deso.tp.dao.jdbc;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Types;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-
-
 import isi.deso.tp.dao.ItemMenuDAO;
 import isi.deso.tp.model.Bebida;
 import isi.deso.tp.model.BebidaAlcoholica;
@@ -20,15 +8,24 @@ import isi.deso.tp.model.Categoria;
 import isi.deso.tp.model.ItemMenu;
 import isi.deso.tp.model.Plato;
 import isi.deso.tp.model.Tamano;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class ItemMenuJDBC implements ItemMenuDAO{
+public class ItemMenuJDBC implements ItemMenuDAO {
 
-    //SOLUCIONAR LA CATEGORIA 
-
+    //SOLUCIONAR LA CATEGORIA
     @Override
-    public List<ItemMenu> listarItemMenu() {
+    public List<ItemMenu> listarItemsMenu() {
         String query = """
-            SELECT im.*, 
+            SELECT im.*,
                 b.tamano, b.volumen, b.graduacion_alcoholica, b.tipoBebida,
                 p.calorias, p.apto_celiaco, p.apto_vegano, c.id, c.descripcion
             FROM ItemMenu im
@@ -38,9 +35,7 @@ public class ItemMenuJDBC implements ItemMenuDAO{
         """;
 
         List<ItemMenu> items = new ArrayList<>();
-        try (Connection conn = DBConnector.getInstance();
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = DBConnector.getInstance(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
             VendedorJDBC vendedorJDBC = new VendedorJDBC();
 
             while (rs.next()) {
@@ -69,7 +64,7 @@ public class ItemMenuJDBC implements ItemMenuDAO{
                     }
                     items.add(bebida);
 
-                } else{
+                } else {
                     // Plato
                     Integer calorias = rs.getInt("calorias");
                     Boolean aptoCeliaco = rs.getBoolean("apto_celiaco");
@@ -86,18 +81,17 @@ public class ItemMenuJDBC implements ItemMenuDAO{
     @Override
     public void crearItemMenu(ItemMenu itemMenu) {
         String itemMenuQuery = "INSERT INTO ItemMenu (nombre, descripcion, precio, categoria_id, peso, vendedor_id) VALUES (?, ?, ?, ?, ?, ?);";
-        try (Connection conn = DBConnector.getInstance();
-            PreparedStatement ps = conn.prepareStatement(itemMenuQuery, Statement.RETURN_GENERATED_KEYS)) {
-    
+        try (Connection conn = DBConnector.getInstance(); PreparedStatement ps = conn.prepareStatement(itemMenuQuery, Statement.RETURN_GENERATED_KEYS)) {
+
             ps.setString(1, itemMenu.getNombre());
             ps.setString(2, itemMenu.getDescripcion());
             ps.setDouble(3, itemMenu.getPrecio());
             ps.setObject(4, itemMenu.getCategoria() != null ? itemMenu.getCategoria().getId() : null);
             ps.setDouble(5, itemMenu.getPeso());
             ps.setObject(6, itemMenu.getVendedor() != null ? itemMenu.getVendedor().getId() : null);
-    
+
             ps.executeUpdate();
-    
+
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 int itemId = rs.getInt(1);
@@ -107,12 +101,12 @@ public class ItemMenuJDBC implements ItemMenuDAO{
                     crearPlato(plato, conn, itemId);
                 }
             }
-    
+
         } catch (SQLException ex) {
             Logger.getLogger(ItemMenuJDBC.class.getName()).log(Level.SEVERE, "Error al crear item", ex);
         }
     }
-    
+
     private void crearBebida(Bebida bebida, Connection conn, int itemId) throws SQLException {
         String query = "INSERT INTO Bebida (id, tamano, volumen, graduacion_alcoholica, tipoBebida) VALUES (?, ?, ?, ?, ?);";
         try (PreparedStatement ps = conn.prepareStatement(query)) {
@@ -122,7 +116,7 @@ public class ItemMenuJDBC implements ItemMenuDAO{
             if (bebida instanceof BebidaAlcoholica alcoholica) {
                 // tipoBebida = 1 para BebidaAlcoholica tipo 2 sin alcohol
                 ps.setInt(4, alcoholica.getGraduacionAlcoholica());
-                ps.setInt(5, 1); 
+                ps.setInt(5, 1);
             } else {
                 ps.setNull(4, Types.INTEGER);
                 ps.setInt(5, 2);
@@ -130,7 +124,7 @@ public class ItemMenuJDBC implements ItemMenuDAO{
             ps.executeUpdate();
         }
     }
-    
+
     private void crearPlato(Plato plato, Connection conn, int itemId) throws SQLException {
         String query = "INSERT INTO Plato (id, calorias, apto_celiaco, apto_vegano) VALUES (?, ?, ?, ?);";
         try (PreparedStatement ps = conn.prepareStatement(query)) {
@@ -141,7 +135,6 @@ public class ItemMenuJDBC implements ItemMenuDAO{
             ps.executeUpdate();
         }
     }
-    
 
     @Override
     public void actualizarItemMenu(ItemMenu itemMenu) {
@@ -150,9 +143,8 @@ public class ItemMenuJDBC implements ItemMenuDAO{
             SET nombre = ?, descripcion = ?, precio = ?, categoria_id = ?, peso = ?, vendedor_id = ?
             WHERE id = ?;
         """;
-        try (Connection conn = DBConnector.getInstance();
-             PreparedStatement ps = conn.prepareStatement(itemMenuQuery)) {
-    
+        try (Connection conn = DBConnector.getInstance(); PreparedStatement ps = conn.prepareStatement(itemMenuQuery)) {
+
             ps.setString(1, itemMenu.getNombre());
             ps.setString(2, itemMenu.getDescripcion());
             ps.setDouble(3, itemMenu.getPrecio());
@@ -160,20 +152,23 @@ public class ItemMenuJDBC implements ItemMenuDAO{
             ps.setDouble(5, itemMenu.getPeso());
             ps.setObject(6, itemMenu.getVendedor() != null ? itemMenu.getVendedor().getId() : null);
             ps.setInt(7, itemMenu.getId());
-    
+
             ps.executeUpdate();
-    
-            if (itemMenu instanceof Bebida bebida) {
-                actualizarBebida(bebida, conn);
-            } else if (itemMenu instanceof Plato plato) {
-                actualizarPlato(plato, conn);
+
+            switch (itemMenu) {
+                case Bebida bebida ->
+                    actualizarBebida(bebida, conn);
+                case Plato plato ->
+                    actualizarPlato(plato, conn);
+                default -> {
+                }
             }
-    
+
         } catch (SQLException ex) {
             Logger.getLogger(ItemMenuJDBC.class.getName()).log(Level.SEVERE, "Error al actualizar item", ex);
         }
     }
-    
+
     private void actualizarBebida(Bebida bebida, Connection conn) throws SQLException {
         String query = """
             UPDATE Bebida
@@ -185,16 +180,16 @@ public class ItemMenuJDBC implements ItemMenuDAO{
             ps.setDouble(2, bebida.getVolumen());
             if (bebida instanceof BebidaAlcoholica alcoholica) {
                 ps.setInt(3, alcoholica.getGraduacionAlcoholica());
-                ps.setInt(4, 1); 
+                ps.setInt(4, 1);
             } else {
                 ps.setNull(3, Types.INTEGER);
-                ps.setInt(4, 2); 
+                ps.setInt(4, 2);
             }
             ps.setInt(5, bebida.getId());
             ps.executeUpdate();
         }
     }
-    
+
     private void actualizarPlato(Plato plato, Connection conn) throws SQLException {
         String query = """
             UPDATE Plato
@@ -210,9 +205,8 @@ public class ItemMenuJDBC implements ItemMenuDAO{
         }
     }
 
-
     @Override
-    public List<ItemMenu> buscarItemMenu(Integer idItemMenu) {
+    public List<ItemMenu> buscarItemsMenuPorId(Integer idItemMenu) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'buscarItemMenu'");
     }
@@ -223,13 +217,9 @@ public class ItemMenuJDBC implements ItemMenuDAO{
         String platoQuery = "DELETE FROM Plato WHERE id = ?";
         String itemMenuQuery = "DELETE FROM ItemMenu WHERE id = ?";
 
-        try (Connection conn = DBConnector.getInstance();
-            PreparedStatement bebidaPs = conn.prepareStatement(bebidaQuery);
-            PreparedStatement platoPs = conn.prepareStatement(platoQuery);
-            PreparedStatement itemMenuPs = conn.prepareStatement(itemMenuQuery)) {
+        try (Connection conn = DBConnector.getInstance(); PreparedStatement bebidaPs = conn.prepareStatement(bebidaQuery); PreparedStatement platoPs = conn.prepareStatement(platoQuery); PreparedStatement itemMenuPs = conn.prepareStatement(itemMenuQuery)) {
 
             // Eliminar de la tabla Bebida si existe (si lo hace en cascada sacamos los metodos)
-            
             bebidaPs.setInt(1, idItemMenu);
             bebidaPs.executeUpdate();
 

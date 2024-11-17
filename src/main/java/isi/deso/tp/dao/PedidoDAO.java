@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface PedidoDAO {
 
-    public List<Pedido> getListaPedidos();
+    public List<Pedido> listarPedidos();
 
     public void agregarPedidoALista(Pedido pedido);
 
-    public List<Pedido> buscarPorIdVendedor(Integer idVendedor);
+    public List<Pedido> buscarPedidosPorIdVendedor(Integer idVendedor);
 
-    public List<Pedido> buscarPorIdPedido(Integer idPedido);
+    public List<Pedido> buscarPedidosPorId(Integer idPedido);
 }

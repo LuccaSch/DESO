@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>isi.deso</groupId>
-    <artifactId>TP_Etapa_6_Implementacion</artifactId>
+    <artifactId>TP_Etapa_7_Implementacion</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <build>
@@ -30,18 +30,13 @@
         <maven.compiler.target>21</maven.compiler.target>
         <exec.mainClass>isi.deso.tp.app.Main</exec.mainClass>
     </properties>
-    <name>TP_Etapa_6_Implementacion</name>
+    <name>TP_Etapa_7_Implementacion</name>
     <dependencies>
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE210</version>
         </dependency>
-<!--        <dependency>
-            <groupId>org.swinglabs</groupId>
-            <artifactId>swing-layout</artifactId>
-            <version>1.0.4</version>
-        </dependency>-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>

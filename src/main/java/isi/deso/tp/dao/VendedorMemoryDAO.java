@@ -24,7 +24,7 @@ public class VendedorMemoryDAO implements VendedorDAO {
     }
 
     @Override
-    public List<Vendedor> listarVendedor() {
+    public List<Vendedor> listarVendedores() {
         return this.listaVendedores;
     }
 

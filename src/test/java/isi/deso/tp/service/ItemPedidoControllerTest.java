@@ -1,11 +1,14 @@
 package isi.deso.tp.service;
 
-import isi.deso.tp.dao.ItemsPedidoDAO;
-import isi.deso.tp.dao.ItemsPedidoFactoryDAO;
-import isi.deso.tp.model.DTO.ItemPedidoDTO;
+import isi.deso.tp.dao.ItemsPedidoMemoryDAO;
+import isi.deso.tp.model.Cliente;
+import isi.deso.tp.model.Coordenada;
 import isi.deso.tp.model.ItemMenu;
 import isi.deso.tp.model.ItemPedido;
 import isi.deso.tp.model.Pedido;
+import isi.deso.tp.model.Plato;
+import isi.deso.tp.model.Vendedor;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -16,7 +19,11 @@ import org.junit.jupiter.api.Test;
 
 public class ItemPedidoControllerTest {
 
+    private ItemPedidoController itemPedidoController;
+    private ItemsPedidoMemoryDAO itemPedidoMemory;
+
     public ItemPedidoControllerTest() {
+
     }
 
     @BeforeAll
@@ -29,128 +36,36 @@ public class ItemPedidoControllerTest {
 
     @BeforeEach
     public void setUp() {
+        itemPedidoMemory = new ItemsPedidoMemoryDAO();
+        itemPedidoController = new ItemPedidoController();
+        itemPedidoController.setItemsPedidoDAO(itemPedidoMemory);
     }
 
     @AfterEach
     public void tearDown() {
     }
 
-    /**
-     * Test of getItemsPedidoMemoryFactoryDAO method, of class
-     * ItemPedidoController.
-     */
     @Test
-    public void testGetItemsPedidoMemoryFactoryDAO() {
-        System.out.println("getItemsPedidoMemoryFactoryDAO");
-        ItemPedidoController instance = new ItemPedidoController();
-        ItemsPedidoFactoryDAO expResult = null;
-        ItemsPedidoFactoryDAO result = instance.getItemsPedidoMemoryFactoryDAO();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testCrearItemPedidoSinPrecio() {
+        ItemMenu itemMenu = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, null);
+        ItemPedido itemPedido = itemPedidoController.crearItemPedido(1, 1, itemMenu, 2);
+
+        assertNotNull(itemPedido);
+        assertEquals(1, itemPedido.getId());
+        assertEquals(itemMenu, itemPedido.getItemMenu());
+        assertEquals(2, itemPedido.getCantidad());
     }
 
-    /**
-     * Test of setItemsPedidoMemoryFactoryDAO method, of class
-     * ItemPedidoController.
-     */
     @Test
-    public void testSetItemsPedidoMemoryFactoryDAO() {
-        System.out.println("setItemsPedidoMemoryFactoryDAO");
-        ItemsPedidoFactoryDAO itemsPedidoMemoryFactoryDAO = null;
-        ItemPedidoController instance = new ItemPedidoController();
-        instance.setItemsPedidoMemoryFactoryDAO(itemsPedidoMemoryFactoryDAO);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    public void testCrearItemPedidoConPrecio() {
+        ItemMenu itemMenu = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, null);
+        ItemPedido itemPedido = itemPedidoController.crearItemPedido(1, 2, itemMenu, 3, 45.0);
 
-    /**
-     * Test of getItemsPedidoDAO method, of class ItemPedidoController.
-     */
-    @Test
-    public void testGetItemsPedidoDAO() {
-        System.out.println("getItemsPedidoDAO");
-        ItemPedidoController instance = new ItemPedidoController();
-        ItemsPedidoDAO expResult = null;
-        ItemsPedidoDAO result = instance.getItemsPedidoDAO();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setItemsPedidoDAO method, of class ItemPedidoController.
-     */
-    @Test
-    public void testSetItemsPedidoDAO() {
-        System.out.println("setItemsPedidoDAO");
-        ItemsPedidoDAO itemsPedidoDAO = null;
-        ItemPedidoController instance = new ItemPedidoController();
-        instance.setItemsPedidoDAO(itemsPedidoDAO);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of crearItemPedido method, of class ItemPedidoController.
-     */
-    @Test
-    public void testCrearItemPedido_3args() {
-        System.out.println("crearItemPedido");
-        Integer id = 0;
-        ItemMenu itemMenu = null;
-        Integer cantidad = 0;
-        ItemPedidoController instance = new ItemPedidoController();
-        ItemPedido expResult = null;
-        ItemPedido result = instance.crearItemPedido(id, itemMenu, cantidad);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of crearItemPedido method, of class ItemPedidoController.
-     */
-    @Test
-    public void testCrearItemPedido_4args() {
-        System.out.println("crearItemPedido");
-        Integer id = 0;
-        ItemMenu itemMenu = null;
-        Integer cantidad = 0;
-        Double precio = 0.0;
-        ItemPedidoController instance = new ItemPedidoController();
-        ItemPedido expResult = null;
-        ItemPedido result = instance.crearItemPedido(id, itemMenu, cantidad, precio);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setLista method, of class ItemPedidoController.
-     */
-    @Test
-    public void testSetLista() {
-        System.out.println("setLista");
-        List<ItemPedido> listaItemPedidos = null;
-        ItemPedidoController instance = new ItemPedidoController();
-        instance.setLista(listaItemPedidos);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getLista method, of class ItemPedidoController.
-     */
-    @Test
-    public void testGetLista() {
-        System.out.println("getLista");
-        ItemPedidoController instance = new ItemPedidoController();
-        List<ItemPedido> expResult = null;
-        List<ItemPedido> result = instance.getLista();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(itemPedido);
+        assertEquals(2, itemPedido.getId());
+        assertEquals(itemMenu, itemPedido.getItemMenu());
+        assertEquals(3, itemPedido.getCantidad());
+        assertEquals(45.0, itemPedido.getPrecio());
     }
 
     /**
@@ -158,14 +73,18 @@ public class ItemPedidoControllerTest {
      */
     @Test
     public void testFiltrarPorVendedor() {
-        System.out.println("filtrarPorVendedor");
-        Integer idVendedor = 0;
-        ItemPedidoController instance = new ItemPedidoController();
-        List<ItemPedido> expResult = null;
-        List<ItemPedido> result = instance.filtrarPorVendedor(idVendedor);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        List<ItemPedido> lista = new ArrayList<>();
+        Vendedor v1 = new Vendedor(1, "Juan", "Calle 1", new Coordenada(10, 20));
+        Vendedor v2 = new Vendedor(2, "Pepe", "Calle 1", new Coordenada(10, 20));
+        ItemMenu i1 = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, v1);
+        ItemMenu i2 = new Plato(600, true, false, 3, "Helado", "Flan casero con crema", 1000.0, null, 0.5, v2);
+        itemPedidoController.crearItemPedido(1, 1, i1, 5);
+        itemPedidoController.crearItemPedido(1, 2, i2, 3);
+
+        List<ItemPedido> filtrados = itemPedidoController.filtrarPorVendedor(1);
+        assertNotNull(filtrados);
+
     }
 
     /**
@@ -173,13 +92,17 @@ public class ItemPedidoControllerTest {
      */
     @Test
     public void testOrdenarPorPrecio() {
-        System.out.println("ordenarPorPrecio");
-        ItemPedidoController instance = new ItemPedidoController();
-        List<ItemPedido> expResult = null;
-        List<ItemPedido> result = instance.ordenarPorPrecio();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Vendedor v1 = new Vendedor(1, "Juan", "Calle 1", new Coordenada(10, 20));
+        Vendedor v2 = new Vendedor(2, "Pepe", "Calle 1", new Coordenada(10, 20));
+        ItemMenu i1 = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, v1);
+        ItemMenu i2 = new Plato(600, true, false, 3, "Helado", "Flan casero con crema", 1000.0, null, 0.5, v2);
+        List<ItemPedido> lista = new ArrayList<>();
+        itemPedidoController.crearItemPedido(1, 1, i1, 5);
+        itemPedidoController.crearItemPedido(1, 2, i2, 3);
+
+        List<ItemPedido> ordenados = itemPedidoController.ordenarPorPrecio();
+        assertNotNull(ordenados);
+        assertTrue(ordenados.get(0).getItemMenu().getPrecio() <= ordenados.get(1).getItemMenu().getPrecio());
     }
 
     /**
@@ -187,44 +110,17 @@ public class ItemPedidoControllerTest {
      */
     @Test
     public void testOrdenarPorCantidad() {
-        System.out.println("ordenarPorCantidad");
-        ItemPedidoController instance = new ItemPedidoController();
-        List<ItemPedido> expResult = null;
-        List<ItemPedido> result = instance.ordenarPorCantidad();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        Vendedor v1 = new Vendedor(1, "Juan", "Calle 1", new Coordenada(10, 20));
+        Vendedor v2 = new Vendedor(2, "Pepe", "Calle 1", new Coordenada(10, 20));
+        ItemMenu i1 = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, v1);
+        ItemMenu i2 = new Plato(600, true, false, 3, "Helado", "Flan casero con crema", 1000.0, null, 0.5, v2);
+        List<ItemPedido> lista = new ArrayList<>();
+        itemPedidoController.crearItemPedido(1, 1, i1, 5);
+        itemPedidoController.crearItemPedido(1, 2, i2, 3);
 
-    /**
-     * Test of buscarPorRestaurante method, of class ItemPedidoController.
-     */
-    @Test
-    public void testBuscarPorRestaurante() {
-        System.out.println("buscarPorRestaurante");
-        Integer idRestaurante = 0;
-        ItemPedidoController instance = new ItemPedidoController();
-        List<ItemPedido> expResult = null;
-        List<ItemPedido> result = instance.buscarPorRestaurante(idRestaurante);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of buscarPorRangoDePrecio method, of class ItemPedidoController.
-     */
-    @Test
-    public void testBuscarPorRangoDePrecio() {
-        System.out.println("buscarPorRangoDePrecio");
-        Double precioMin = 0.0;
-        Double precioMax = 0.0;
-        ItemPedidoController instance = new ItemPedidoController();
-        List<ItemPedido> expResult = null;
-        List<ItemPedido> result = instance.buscarPorRangoDePrecio(precioMin, precioMax);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<ItemPedido> ordenados = itemPedidoController.ordenarPorCantidad();
+        assertNotNull(ordenados);
+        assertTrue(ordenados.get(0).getCantidad() <= ordenados.get(1).getCantidad());
     }
 
     /**
@@ -232,73 +128,31 @@ public class ItemPedidoControllerTest {
      */
     @Test
     public void testDeletePedidoPorId() {
-        System.out.println("deletePedidoPorId");
-        List<Pedido> pedidos = null;
-        Integer idPedido = 0;
-        ItemPedidoController instance = new ItemPedidoController();
-        instance.deletePedidoPorId(pedidos, idPedido);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        Vendedor v1 = new Vendedor(1, "Juan", "Calle 1", new Coordenada(10, 20));
+        Vendedor v2 = new Vendedor(2, "Pepe", "Calle 1", new Coordenada(10, 20));
+        ItemMenu i1 = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, null, 0.5, v1);
+        ItemMenu i2 = new Plato(600, true, false, 3, "Helado", "Flan casero con crema", 1000.0, null, 0.5, v2);
+        Cliente cliente = new Cliente(1, "Lucca Perez", "2043350012", "lsch@gmail.com", "San Luis 6612", new Coordenada(1.0, 1.0));
+        Cliente cliente2 = new Cliente(2, "Juan", "204335002", "lsh@gmail.com", "San Luis 612", new Coordenada(1.0, 1.0));
+        ItemPedido itemPedido1 = itemPedidoController.crearItemPedido(1, 3, i1, 1);
+        ItemPedido itemPedido2 = itemPedidoController.crearItemPedido(1, 4, i2, 4);
 
-    /**
-     * Test of convertirDesdeDTO method, of class ItemPedidoController.
-     */
-    @Test
-    public void testConvertirDesdeDTO() {
-        System.out.println("convertirDesdeDTO");
-        ItemPedidoDTO itemPedidoDTO = null;
-        ItemPedidoController instance = new ItemPedidoController();
-        ItemPedido expResult = null;
-        ItemPedido result = instance.convertirDesdeDTO(itemPedidoDTO);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        List<ItemPedido> listaItemPedido1 = new ArrayList<>();
 
-    /**
-     * Test of convertirADTO method, of class ItemPedidoController.
-     */
-    @Test
-    public void testConvertirADTO() {
-        System.out.println("convertirADTO");
-        ItemPedido itemPedido = null;
-        ItemPedidoController instance = new ItemPedidoController();
-        ItemPedidoDTO expResult = null;
-        ItemPedidoDTO result = instance.convertirADTO(itemPedido);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        listaItemPedido1.add(itemPedido1);
+        listaItemPedido1.add(itemPedido2);
 
-    /**
-     * Test of convertirAListaDTO method, of class ItemPedidoController.
-     */
-    @Test
-    public void testConvertirAListaDTO() {
-        System.out.println("convertirAListaDTO");
-        List<ItemPedido> itemsPedido = null;
-        ItemPedidoController instance = new ItemPedidoController();
-        List<ItemPedidoDTO> expResult = null;
-        List<ItemPedidoDTO> result = instance.convertirAListaDTO(itemsPedido);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        Pedido pedido1 = new Pedido(1, cliente, listaItemPedido1);
+        Pedido pedido2 = new Pedido(2, cliente2, listaItemPedido1);
+        List<Pedido> pedidos = new ArrayList<>();
 
-    /**
-     * Test of convertirDesdeListaDTO method, of class ItemPedidoController.
-     */
-    @Test
-    public void testConvertirDesdeListaDTO() {
-        System.out.println("convertirDesdeListaDTO");
-        List<ItemPedidoDTO> itemsPedidoDTO = null;
-        ItemPedidoController instance = new ItemPedidoController();
-        List<ItemPedido> expResult = null;
-        List<ItemPedido> result = instance.convertirDesdeListaDTO(itemsPedidoDTO);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        pedidos.add(pedido1);
+        pedidos.add(pedido2);
+
+        itemPedidoController.deletePedidoPorId(1);
+
+        assertEquals(1, pedidos.size());
+        assertFalse(pedidos.contains(pedido1));
     }
 
 }

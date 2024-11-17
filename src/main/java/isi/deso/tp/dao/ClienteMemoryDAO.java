@@ -24,12 +24,17 @@ public class ClienteMemoryDAO implements ClienteDAO {
     }
 
     @Override
+    public List<Cliente> listarClientes() {
+        return this.listaClientes;
+    }
+
+    @Override
     public void agregarClienteALista(Cliente cliente) {
         this.listaClientes.add(cliente);
     }
 
     @Override
-    public Cliente buscarPorIdCliente(Integer idCliente) {
+    public Cliente buscarClientePorId(Integer idCliente) {
         Cliente cliente = null;
         for (Cliente c : this.listaClientes) {
             if (c.getId() == idCliente) {
@@ -57,11 +62,6 @@ public class ClienteMemoryDAO implements ClienteDAO {
             }
         }
         return cliente;
-    }
-
-    @Override
-    public List<Cliente> listarClientes() {
-        return this.listaClientes;
     }
 
 }
