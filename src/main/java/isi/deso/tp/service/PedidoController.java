@@ -38,12 +38,23 @@ public class PedidoController {
             vendedorEsUnico(pedidoDetalle);
             pedido = new Pedido(id, cliente, pedidoDetalle);
             pedidoDAO.agregarPedidoALista(pedido);
-            ClienteController clienteController = new ClienteController(ClienteMemoryDAO.getInstance());
-            clienteController.agregarPedido(cliente, pedido);
         } catch (VendedorNoUnicoException excep) {
             System.err.println("Desde PedidoController: " + excep.getMessage());
         }
         return pedido;
+    }
+
+    public Pedido crearPedido(Integer id, Cliente cliente, List<ItemPedido> pedidoDetalle, EstadoPedidoEnum estadoPedidoEnum, ContextoPago contextoPago) {
+        Pedido pedido = null;
+        try {
+            vendedorEsUnico(pedidoDetalle);
+            pedido = new Pedido(id, cliente, pedidoDetalle, estadoPedidoEnum, contextoPago);
+            pedidoDAO.agregarPedidoALista(pedido);
+        } catch (VendedorNoUnicoException excep) {
+            System.err.println("Desde PedidoController: " + excep.getMessage());
+        }
+        return pedido;
+
     }
 
     public Pedido crearPedido(Integer id, Cliente cliente, EstadoPedidoEnum estadoPedido, List<ItemPedido> pedidoDetalle, Double precioTotal) {
@@ -52,8 +63,7 @@ public class PedidoController {
             vendedorEsUnico(pedidoDetalle);
             pedido = new Pedido(id, cliente, estadoPedido, pedidoDetalle, precioTotal);
             pedidoDAO.agregarPedidoALista(pedido);
-            ClienteController clienteController = new ClienteController(ClienteMemoryDAO.getInstance());
-            clienteController.agregarPedido(cliente, pedido);
+
         } catch (VendedorNoUnicoException excep) {
             System.err.println("Desde PedidoController: " + excep.getMessage());
         }

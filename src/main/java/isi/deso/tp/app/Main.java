@@ -57,30 +57,14 @@ public class Main {
         vendedor4.addItemMenu(itemMenu2);
         vendedor4.addItemMenu(itemMenu3);
 
-        // --------------------------------
-        // App de TP Etapa 4 Modulo de gestion de creacion de Pedido
-        //
         PedidoController pedidoController = new PedidoController(new PedidoJDBC());
         ItemPedidoController itemPedidoController = new ItemPedidoController();
 
-        ItemPedido itemPedido1 = itemPedidoController.crearItemPedido(1, itemMenu2, 3);
-        ItemPedido itemPedido2 = itemPedidoController.crearItemPedido(2, itemMenu1, 2);
-
-        ItemPedido itemPedido3 = itemPedidoController.crearItemPedido(3, itemMenu3, 1);
-        ItemPedido itemPedido4 = itemPedidoController.crearItemPedido(4, itemMenu2, 4);
-        ItemPedido itemPedido5 = itemPedidoController.crearItemPedido(5, itemMenu1, 1);
-
         List<ItemPedido> listaItemPedido1 = new ArrayList<>();
 
-        listaItemPedido1.add(itemPedido1);
-        listaItemPedido1.add(itemPedido2);
+        ContextoPago contextoPago1 = new ContextoPago(new TransferenciaStrategy("45365632", "20-32734242-3"));
 
-        Pedido pedido1 = pedidoController.crearPedido(1, cliente4, listaItemPedido1);
-        pedidoController.agregarItemPedido(pedido1, itemPedido5);
-
-        pedido1.getContextoPago().setPagoStrategy(new TransferenciaStrategy("45365632", "20-32734242-3"));
-
-        pedido1.setEstadoPedido(EstadoPedidoEnum.RECIBIDO);
+        Pedido pedido1 = pedidoController.crearPedido(1, clienteController.listarClientes().getFirst(), listaItemPedido1, EstadoPedidoEnum.RECIBIDO, contextoPago1);
 
         // Inicio i = new Inicio();
         // i.setVisible(true);

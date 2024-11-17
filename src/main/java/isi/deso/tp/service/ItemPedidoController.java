@@ -11,21 +11,21 @@ import java.util.List;
 
 public class ItemPedidoController {
 
-    private ItemsPedidoFactoryDAO itemsPedidoMemoryFactoryDAO;
+    private ItemsPedidoFactoryDAO itemsPedidoJDBCFactory;
 
     private ItemsPedidoDAO itemsPedidoDAO;
 
     public ItemPedidoController() {
-        this.itemsPedidoMemoryFactoryDAO = ItemsPedidoFactoryDAO.getFactory(ItemsPedidoFactoryDAO.MEMORY_FACTORY);
-        this.itemsPedidoDAO = this.itemsPedidoMemoryFactoryDAO.getUsuarioDAO();
+        this.itemsPedidoJDBCFactory = ItemsPedidoFactoryDAO.getFactory(ItemsPedidoFactoryDAO.JDBC_FACTORY);
+        this.itemsPedidoDAO = this.itemsPedidoJDBCFactory.getUsuarioDAO();
     }
 
-    public ItemsPedidoFactoryDAO getItemsPedidoMemoryFactoryDAO() {
-        return itemsPedidoMemoryFactoryDAO;
+    public ItemsPedidoFactoryDAO getItemsPedidoJDBCFactory() {
+        return itemsPedidoJDBCFactory;
     }
 
-    public void setItemsPedidoMemoryFactoryDAO(ItemsPedidoFactoryDAO itemsPedidoMemoryFactoryDAO) {
-        this.itemsPedidoMemoryFactoryDAO = itemsPedidoMemoryFactoryDAO;
+    public void setItemsPedidoJDBCFactory(ItemsPedidoFactoryDAO itemsPedidoJDBCFactory) {
+        this.itemsPedidoJDBCFactory = itemsPedidoJDBCFactory;
     }
 
     public ItemsPedidoDAO getItemsPedidoDAO() {
@@ -36,24 +36,16 @@ public class ItemPedidoController {
         this.itemsPedidoDAO = itemsPedidoDAO;
     }
 
-    public ItemPedido crearItemPedido(Integer id, ItemMenu itemMenu, Integer cantidad) {
+    public ItemPedido crearItemPedido(Integer idPedido, Integer id, ItemMenu itemMenu, Integer cantidad) {
         ItemPedido itemPedido = new ItemPedido(id, itemMenu, cantidad);
-        itemsPedidoDAO.agregarItemPedidoALista(itemPedido);
+        itemsPedidoDAO.agregarItemPedidoALista(itemPedido, idPedido);
         return itemPedido;
     }
 
-    public ItemPedido crearItemPedido(Integer id, ItemMenu itemMenu, Integer cantidad, Double precio) {
+    public ItemPedido crearItemPedido(Integer idPedido, Integer id, ItemMenu itemMenu, Integer cantidad, Double precio) {
         ItemPedido itemPedido = new ItemPedido(id, itemMenu, cantidad, precio);
-        itemsPedidoDAO.agregarItemPedidoALista(itemPedido);
+        itemsPedidoDAO.agregarItemPedidoALista(itemPedido, idPedido);
         return itemPedido;
-    }
-
-    public void setLista(List<ItemPedido> listaItemPedidos) {
-        this.itemsPedidoDAO.setLista(listaItemPedidos);
-    }
-
-    public List<ItemPedido> getLista() {
-        return this.itemsPedidoDAO.getLista();
     }
 
     public List<ItemPedido> filtrarPorVendedor(Integer idVendedor) {

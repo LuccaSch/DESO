@@ -9,18 +9,16 @@ public class ItemsPedidoMemoryDAO implements ItemsPedidoDAO {
     // Atributos que simulan la base de datos
     private List<ItemPedido> listaItemPedidos;
 
-    @Override
     public List<ItemPedido> getLista() {
         return this.listaItemPedidos;
     }
 
-    @Override
     public void setLista(List<ItemPedido> listaItemPedidos) {
         this.listaItemPedidos = listaItemPedidos;
     }
 
     @Override
-    public void agregarItemPedidoALista(ItemPedido itemPedido) {
+    public void agregarItemPedidoALista(ItemPedido itemPedido, Integer idPedido) {
         this.listaItemPedidos.add(itemPedido);
 
     }

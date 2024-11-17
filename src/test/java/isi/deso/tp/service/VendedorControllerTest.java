@@ -145,6 +145,8 @@ public class VendedorControllerTest {
 
     /**
      * Test of VendedorNoEncontrado method, of class VendedorController.
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testVendedorNoEncontrado() throws Exception {
@@ -158,6 +160,8 @@ public class VendedorControllerTest {
 
     /**
      * Test of buscarVendedorPorNombre method, of class VendedorController.
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testBuscarVendedorPorNombre() throws Exception {

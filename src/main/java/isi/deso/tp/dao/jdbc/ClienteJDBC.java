@@ -48,11 +48,48 @@ public class ClienteJDBC implements ClienteDAO {
         }
     }
 
+    public boolean idExiste(int id) {
+        String query = "SELECT COUNT(*) FROM Cliente WHERE id = ?";
+        Connection conn = null;
+
+        try {
+            // Inicia la transacción desabilito el autoCommit
+            conn = DBConnector.getInstance();
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+
+            // Confirmamos la transacción
+            conn.commit();
+            Logger.getLogger(VendedorJDBC.class.getName())
+                    .log(Level.INFO, "Cliente creado: ");
+        } catch (SQLException ex) {
+            Logger.getLogger(VendedorJDBC.class.getName())
+                    .log(Level.SEVERE, "Error al crear cliente", ex);
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.rollback();
+                }
+            } catch (SQLException rollbackEx) {
+                Logger.getLogger(VendedorJDBC.class.getName())
+                        .log(Level.SEVERE, "Error al realizar rollback", rollbackEx);
+            }
+        }
+        return false;
+    }
+
     @Override
     public void agregarClienteALista(Cliente cliente) {
         String insertCoordenadaQuery = "INSERT INTO Coordenada (lat, lgn) VALUES (?, ?);";
         String insertClienteQuery = "INSERT INTO Cliente (nombre, cuit, email, direccion, coordenada_id) VALUES (?, ?, ?, ?, ?);";
         Connection conn = null;
+
         try {
             // Inicia la transacción desabilito el autoCommit
             conn = DBConnector.getInstance();
@@ -75,11 +112,22 @@ public class ClienteJDBC implements ClienteDAO {
             }
 
             try (PreparedStatement ps = conn.prepareStatement(insertClienteQuery)) {
+
                 ps.setString(1, cliente.getNombre());
                 ps.setString(2, cliente.getCuit());
-                ps.setObject(3, cliente.getEmail());
+                ps.setString(3, cliente.getEmail());
                 ps.setString(4, cliente.getDireccion());
-                ps.setObject(5, coordenadaId);
+                ps.setInt(5, coordenadaId);
+
+                if (!insertClienteQuery.contains("id")) {
+                    try (ResultSet rs = ps.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            int nuevoId = rs.getInt(1);
+                            cliente.setId(nuevoId);
+                        }
+                    }
+                }
+
                 ps.executeUpdate();
             }
 

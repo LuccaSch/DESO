@@ -6,11 +6,7 @@ import java.util.List;
 
 public interface ItemsPedidoDAO {
 
-    public List<ItemPedido> getLista();
-
-    public void setLista(List<ItemPedido> listaItemPedidos);
-
-    public void agregarItemPedidoALista(ItemPedido itemPedido);
+    public void agregarItemPedidoALista(ItemPedido itemPedido, Integer idPedido);
 
     public List<ItemPedido> filtrarPorVendedor(Integer idVendedor) throws ItemNoEncontradoException;
 

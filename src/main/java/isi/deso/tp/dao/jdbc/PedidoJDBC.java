@@ -159,26 +159,18 @@ public class PedidoJDBC implements PedidoDAO {
                     Logger.getLogger(PedidoJDBC.class.getName()).log(Level.SEVERE, "Error al realizar rollback", rollbackEx);
                 }
             }
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException closeEx) {
-                    Logger.getLogger(PedidoJDBC.class.getName()).log(Level.SEVERE, "Error al cerrar la conexión", closeEx);
-                }
-            }
         }
         return pedidos;
     }
 
     @Override
     public void agregarPedidoALista(Pedido pedido) {
-        String sqlPedido = "INSERT INTO Pedido (cliente_id, estado_pedido, precio_total, contexto_pago_id) VALUES (?, ?, ?, ?)";
-        String sqlContextoPago = "INSERT INTO ContextoPago (estrategia_pago_id) VALUES (?)";
-        String sqlPago = "INSERT INTO Pago (tipo_estrategia) VALUES (?)";
-        String sqlEfectivo = "INSERT INTO Efectivo (id) VALUES (?)";
-        String sqlTransferencia = "INSERT INTO Transferencia (id, cuit, cbu) VALUES (?, ?, ?)";
-        String sqlMercadoPago = "INSERT INTO MercadoPago (id, alias) VALUES (?, ?)";
+        String queryPedido = "INSERT INTO Pedido (cliente_id, estado_pedido, precio_total, contexto_pago_id) VALUES (?, ?, ?, ?)";
+        String queryContextoPago = "INSERT INTO ContextoPago (estrategia_pago_id) VALUES (?)";
+        String queryPago = "INSERT INTO Pago (tipo_estrategia) VALUES (?)";
+        String queryEfectivo = "INSERT INTO Efectivo (id) VALUES (?)";
+        String queryTransferencia = "INSERT INTO Transferencia (id, cuit, cbu) VALUES (?, ?, ?)";
+        String queryMercadoPago = "INSERT INTO MercadoPago (id, alias) VALUES (?, ?)";
 
         Connection conn = null;
         try {
@@ -186,7 +178,7 @@ public class PedidoJDBC implements PedidoDAO {
             conn.setAutoCommit(false);
 
             int idPagoGenerado;
-            try (PreparedStatement stmtPago = conn.prepareStatement(sqlPago, Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement stmtPago = conn.prepareStatement(queryPago, Statement.RETURN_GENERATED_KEYS)) {
                 stmtPago.setString(1, pedido.getContextoPago().getPagoStrategy().nombreEstrategia());
                 stmtPago.executeUpdate();
 
@@ -201,13 +193,13 @@ public class PedidoJDBC implements PedidoDAO {
 
             PagoStrategy pagoStrategy = pedido.getContextoPago().getPagoStrategy();
             if (pagoStrategy instanceof EfectivoStrategy) {
-                try (PreparedStatement stmtEfectivo = conn.prepareStatement(sqlEfectivo)) {
+                try (PreparedStatement stmtEfectivo = conn.prepareStatement(queryEfectivo)) {
                     stmtEfectivo.setInt(1, idPagoGenerado);
                     stmtEfectivo.executeUpdate();
                 }
             } else if (pagoStrategy instanceof TransferenciaStrategy) {
                 TransferenciaStrategy transferencia = (TransferenciaStrategy) pagoStrategy;
-                try (PreparedStatement stmtTransferencia = conn.prepareStatement(sqlTransferencia)) {
+                try (PreparedStatement stmtTransferencia = conn.prepareStatement(queryTransferencia)) {
                     stmtTransferencia.setInt(1, idPagoGenerado);
                     stmtTransferencia.setString(2, transferencia.getCuit());
                     stmtTransferencia.setString(3, transferencia.getCbu());
@@ -215,7 +207,7 @@ public class PedidoJDBC implements PedidoDAO {
                 }
             } else if (pagoStrategy instanceof MercadoPagoStrategy) {
                 MercadoPagoStrategy mercadoPago = (MercadoPagoStrategy) pagoStrategy;
-                try (PreparedStatement stmtMercadoPago = conn.prepareStatement(sqlMercadoPago)) {
+                try (PreparedStatement stmtMercadoPago = conn.prepareStatement(queryMercadoPago)) {
                     stmtMercadoPago.setInt(1, idPagoGenerado);
                     stmtMercadoPago.setString(2, mercadoPago.getAlias());
                     stmtMercadoPago.executeUpdate();
@@ -223,7 +215,7 @@ public class PedidoJDBC implements PedidoDAO {
             }
 
             int idContextoPagoGenerado;
-            try (PreparedStatement stmtContextoPago = conn.prepareStatement(sqlContextoPago, Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement stmtContextoPago = conn.prepareStatement(queryContextoPago, Statement.RETURN_GENERATED_KEYS)) {
                 stmtContextoPago.setInt(1, idPagoGenerado);
                 stmtContextoPago.executeUpdate();
 
@@ -236,7 +228,11 @@ public class PedidoJDBC implements PedidoDAO {
                 }
             }
 
-            try (PreparedStatement stmtPedido = conn.prepareStatement(sqlPedido, Statement.RETURN_GENERATED_KEYS)) {
+            for (ItemPedido item : pedido.getPedidoDetalle()) {
+                itemsPedidoJDBC.agregarItemPedidoALista(item, pedido.getId());
+            }
+
+            try (PreparedStatement stmtPedido = conn.prepareStatement(queryPedido, Statement.RETURN_GENERATED_KEYS)) {
                 stmtPedido.setInt(1, pedido.getCliente().getId());
                 stmtPedido.setString(2, pedido.getEstadoPedido().name());
                 stmtPedido.setDouble(3, pedido.getPrecioTotal());

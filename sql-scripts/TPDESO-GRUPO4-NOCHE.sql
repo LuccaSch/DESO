@@ -336,6 +336,9 @@ ALTER TABLE `Transferencia`
 ALTER TABLE `Vendedor` 
   MODIFY COLUMN `id` INT AUTO_INCREMENT;
 
+
+
+
 --
 -- Restricciones para tablas volcadas
 --
@@ -370,7 +373,6 @@ ALTER TABLE `ItemMenu`
 --
 ALTER TABLE `ItemPedido`
   ADD CONSTRAINT `ItemPedido_ibfk_1` FOREIGN KEY (`item_menu_id`) REFERENCES `ItemMenu` (`id`),
-  ADD CONSTRAINT `ItemPedido_ibfk_2` FOREIGN KEY (`id`) REFERENCES `Pedido` (`id`);
 
 --
 -- Filtros para la tabla `Efectivo`

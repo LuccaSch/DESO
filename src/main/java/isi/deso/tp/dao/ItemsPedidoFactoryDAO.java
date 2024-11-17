@@ -3,6 +3,7 @@ package isi.deso.tp.dao;
 public abstract class ItemsPedidoFactoryDAO {
 
     public static final int MEMORY_FACTORY = 1;
+    public static final int JDBC_FACTORY = 2;
 
     public abstract ItemsPedidoDAO getUsuarioDAO();
 
@@ -10,6 +11,8 @@ public abstract class ItemsPedidoFactoryDAO {
         return switch (idFactory) {
             case MEMORY_FACTORY ->
                 new ItemsPedidoMemoryFactoryDAO();
+            case JDBC_FACTORY ->
+                new ItemsPedidoJDBCFactory();
             default ->
                 null;
         };

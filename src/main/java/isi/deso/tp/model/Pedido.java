@@ -39,7 +39,17 @@ public class Pedido implements Observable {
         this.contextoPago = new ContextoPago();
         this.observadores = new ArrayList<>();
         this.observadores.add(cliente);
+    }
 
+    public Pedido(Integer id, Cliente cliente, List<ItemPedido> pedidoDetalle, EstadoPedidoEnum estadoPedidoEnum, ContextoPago contextoPago) {
+        this.id = id;
+        this.cliente = cliente;
+        this.estadoPedido = estadoPedidoEnum;
+        this.pedidoDetalle = pedidoDetalle;
+        this.precioTotal = pedidoDetalle.stream().mapToDouble(ItemPedido::getPrecio).sum();
+        this.contextoPago = contextoPago;
+        this.observadores = new ArrayList<>();
+        this.observadores.add(cliente);
     }
 
     public Pedido(Integer id, Cliente cliente, List<ItemPedido> pedidoDetalle, Double precioTotal) {

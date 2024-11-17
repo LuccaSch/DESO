@@ -6,125 +6,173 @@ import isi.deso.tp.model.ItemMenu;
 import isi.deso.tp.model.ItemPedido;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ItemsPedidoJDBC implements ItemsPedidoDAO {
 
-    private List<ItemPedido> listaItemPedidos = new ArrayList<>();
+    private final ItemMenuJDBC itemMenuJDBC;
 
-    @Override
-    public List<ItemPedido> getLista() {
-        return listaItemPedidos;
+    public ItemsPedidoJDBC() {
+        this.itemMenuJDBC = new ItemMenuJDBC();
     }
 
     @Override
-    public void setLista(List<ItemPedido> listaItemPedidos) {
-        this.listaItemPedidos = listaItemPedidos;
-    }
+    public void agregarItemPedidoALista(ItemPedido itemPedido, Integer idPedido) {
+        String query = "INSERT INTO ItemPedido (id, item_menu_id, cantidad, precio) VALUES (?, ?, ?, ?)";
 
-    @Override
-    public void agregarItemPedidoALista(ItemPedido itemPedido) {
-        listaItemPedidos.add(itemPedido);
+        try (Connection conn = DBConnector.getInstance(); PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, itemPedido.getId());
+            ps.setInt(3, itemPedido.getItemMenu().getId());
+            ps.setInt(4, itemPedido.getCantidad());
+            ps.setDouble(5, itemPedido.getPrecio());
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemsPedidoJDBC.class.getName()).log(Level.SEVERE, "Error al agregar el item al pedido", ex);
+        }
     }
 
     @Override
     public List<ItemPedido> filtrarPorVendedor(Integer idVendedor) throws ItemNoEncontradoException {
-        List<ItemPedido> resultado = new ArrayList<>();
-        String query = """
-            SELECT ip.id, ip.item_menu_id, ip.cantidad, ip.precio
-            FROM ItemPedido ip
-            JOIN ItemMenu im ON ip.item_menu_id = im.id
-            WHERE im.vendedor_id = ?
-        """;
-
+        String query = "SELECT * FROM ItemPedido WHERE vendedor_id = ?";
+        List<ItemPedido> items = new ArrayList<>();
         try (Connection conn = DBConnector.getInstance(); PreparedStatement ps = conn.prepareStatement(query)) {
-
             ps.setInt(1, idVendedor);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    ItemPedido item = construirItemPedido(rs);
-                    resultado.add(item);
+                    ItemPedido itemPedido = new ItemPedido();
+                    itemPedido.setId(rs.getInt("id"));
+                    itemPedido.setCantidad(rs.getInt("cantidad"));
+                    itemPedido.setPrecio(rs.getDouble("precio"));
+                    int itemMenuId = rs.getInt("item_menu_id");
+                    ItemMenu itemMenu = itemMenuJDBC.buscarItemsMenuPorId(itemMenuId).get(0);
+                    itemPedido.setItemMenu(itemMenu);
+                    items.add(itemPedido);
                 }
             }
-
-        } catch (SQLException e) {
-            Logger.getLogger(ItemsPedidoJDBC.class.getName()).log(Level.SEVERE, "Error al filtrar por vendedor", e);
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemsPedidoJDBC.class.getName()).log(Level.SEVERE, "Error al filtrar items por vendedor", ex);
         }
 
-        if (resultado.isEmpty()) {
-            throw new ItemNoEncontradoException("No se encontraron items para el vendedor con ID " + idVendedor);
+        if (items.isEmpty()) {
+            throw new ItemNoEncontradoException("No se encontraron items para el vendedor con ID: " + idVendedor);
         }
 
-        return resultado;
+        return items;
     }
 
     @Override
     public List<ItemPedido> ordenarPorPrecio() throws ItemNoEncontradoException {
-        if (listaItemPedidos.isEmpty()) {
-            throw new ItemNoEncontradoException("La lista de items está vacía.");
+        String query = "SELECT * FROM ItemPedido ORDER BY precio";
+        List<ItemPedido> items = new ArrayList<>();
+        try (Connection conn = DBConnector.getInstance(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ItemPedido itemPedido = new ItemPedido();
+                itemPedido.setId(rs.getInt("id"));
+                itemPedido.setCantidad(rs.getInt("cantidad"));
+                itemPedido.setPrecio(rs.getDouble("precio"));
+                int itemMenuId = rs.getInt("item_menu_id");
+                ItemMenu itemMenu = itemMenuJDBC.buscarItemsMenuPorId(itemMenuId).get(0);
+                itemPedido.setItemMenu(itemMenu);
+                items.add(itemPedido);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemsPedidoJDBC.class.getName()).log(Level.SEVERE, "Error al ordenar items por precio", ex);
         }
 
-        listaItemPedidos.sort(Comparator.comparingDouble(ItemPedido::getPrecio));
-        return listaItemPedidos;
+        if (items.isEmpty()) {
+            throw new ItemNoEncontradoException("No se encontraron items en la base de datos");
+        }
+
+        return items;
     }
 
     @Override
     public List<ItemPedido> ordenarPorCantidad() throws ItemNoEncontradoException {
-        if (listaItemPedidos.isEmpty()) {
-            throw new ItemNoEncontradoException("La lista de items está vacía.");
+        String query = "SELECT * FROM ItemPedido ORDER BY cantidad";
+        List<ItemPedido> items = new ArrayList<>();
+        try (Connection conn = DBConnector.getInstance(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ItemPedido itemPedido = new ItemPedido();
+                itemPedido.setId(rs.getInt("id"));
+                itemPedido.setCantidad(rs.getInt("cantidad"));
+                itemPedido.setPrecio(rs.getDouble("precio"));
+                int itemMenuId = rs.getInt("item_menu_id");
+                ItemMenu itemMenu = itemMenuJDBC.buscarItemsMenuPorId(itemMenuId).get(0);
+                itemPedido.setItemMenu(itemMenu);
+                items.add(itemPedido);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemsPedidoJDBC.class.getName()).log(Level.SEVERE, "Error al ordenar items por cantidad", ex);
         }
 
-        listaItemPedidos.sort(Comparator.comparingInt(ItemPedido::getCantidad));
-        return listaItemPedidos;
+        if (items.isEmpty()) {
+            throw new ItemNoEncontradoException("No se encontraron items en la base de datos");
+        }
+
+        return items;
     }
 
     @Override
     public List<ItemPedido> buscarPorRestaurante(Integer idVendedor) throws ItemNoEncontradoException {
-        return filtrarPorVendedor(idVendedor);
+        String query = "SELECT * FROM ItemPedido WHERE restaurante_id = ?";
+        List<ItemPedido> items = new ArrayList<>();
+        try (Connection conn = DBConnector.getInstance(); PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idVendedor);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ItemPedido itemPedido = new ItemPedido();
+                    itemPedido.setId(rs.getInt("id"));
+                    itemPedido.setCantidad(rs.getInt("cantidad"));
+                    itemPedido.setPrecio(rs.getDouble("precio"));
+                    int itemMenuId = rs.getInt("item_menu_id");
+                    ItemMenu itemMenu = itemMenuJDBC.buscarItemsMenuPorId(itemMenuId).get(0);
+                    itemPedido.setItemMenu(itemMenu);
+                    items.add(itemPedido);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemsPedidoJDBC.class.getName()).log(Level.SEVERE, "Error al buscar items por restaurante", ex);
+        }
+
+        if (items.isEmpty()) {
+            throw new ItemNoEncontradoException("No se encontraron items para el restaurante con ID: " + idVendedor);
+        }
+
+        return items;
     }
 
     @Override
     public List<ItemPedido> buscarPorRangoDePrecio(Double precioMin, Double precioMax) throws ItemNoEncontradoException {
-        List<ItemPedido> resultado = new ArrayList<>();
-
-        String query = "SELECT id, item_menu_id, cantidad, precio FROM ItemPedido WHERE precio BETWEEN ? AND ?";
-
+        String query = "SELECT * FROM ItemPedido WHERE precio BETWEEN ? AND ?";
+        List<ItemPedido> items = new ArrayList<>();
         try (Connection conn = DBConnector.getInstance(); PreparedStatement ps = conn.prepareStatement(query)) {
-
             ps.setDouble(1, precioMin);
             ps.setDouble(2, precioMax);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    ItemPedido item = construirItemPedido(rs);
-                    resultado.add(item);
+                    ItemPedido itemPedido = new ItemPedido();
+                    itemPedido.setId(rs.getInt("id"));
+                    itemPedido.setCantidad(rs.getInt("cantidad"));
+                    itemPedido.setPrecio(rs.getDouble("precio"));
+                    int itemMenuId = rs.getInt("item_menu_id");
+                    ItemMenu itemMenu = itemMenuJDBC.buscarItemsMenuPorId(itemMenuId).get(0);
+                    itemPedido.setItemMenu(itemMenu);
+                    items.add(itemPedido);
                 }
             }
-
-        } catch (SQLException e) {
-            Logger.getLogger(ItemsPedidoJDBC.class.getName()).log(Level.SEVERE, "Error al buscar por rango de precio", e);
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemsPedidoJDBC.class.getName()).log(Level.SEVERE, "Error al buscar items por rango de precio", ex);
         }
 
-        if (resultado.isEmpty()) {
-            throw new ItemNoEncontradoException("No se encontraron items en el rango de precio especificado.");
+        if (items.isEmpty()) {
+            throw new ItemNoEncontradoException("No se encontraron items dentro del rango de precio indicado");
         }
 
-        return resultado;
-    }
+        return items;
 
-    private ItemPedido construirItemPedido(ResultSet rs) throws SQLException {
-        ItemPedido item = new ItemPedido();
-        item.setId(rs.getInt("id"));
-        item.setCantidad(rs.getInt("cantidad"));
-        item.setPrecio(rs.getDouble("precio"));
-
-        int itemMenuId = rs.getInt("item_menu_id");
-        ItemMenu itemMenu = new ItemMenuJDBC().buscarItemsMenuPorId(itemMenuId).getFirst();
-        item.setItemMenu(itemMenu);
-
-        return item;
     }
 
     @Override
@@ -136,4 +184,5 @@ public class ItemsPedidoJDBC implements ItemsPedidoDAO {
     public void eliminarItemPedidoPorId(Integer idItemPedido) throws ItemNoEncontradoException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 }
