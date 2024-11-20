@@ -118,6 +118,7 @@ CREATE TABLE `ItemMenu` (
 
 CREATE TABLE `ItemPedido` (
   `id` Integer NOT NULL,
+  `pedido_id` Integer DEFAULT NULL,
   `item_menu_id` Integer DEFAULT NULL,
   `cantidad` Integer DEFAULT NULL,
   `precio` Double DEFAULT NULL
@@ -252,6 +253,7 @@ ALTER TABLE `ItemMenu`
 --
 ALTER TABLE `ItemPedido`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `pedido_id` (`pedido_id`),
   ADD KEY `item_menu_id` (`item_menu_id`);
 
 --
@@ -373,6 +375,7 @@ ALTER TABLE `ItemMenu`
 --
 ALTER TABLE `ItemPedido`
   ADD CONSTRAINT `ItemPedido_ibfk_1` FOREIGN KEY (`item_menu_id`) REFERENCES `ItemMenu` (`id`),
+  ADD CONSTRAINT `ItemPedido_ibfk_2` FOREIGN KEY (`pedido_id`) REFERENCES `Pedido` (`id`);
 
 --
 -- Filtros para la tabla `Efectivo`

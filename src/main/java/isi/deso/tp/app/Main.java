@@ -1,11 +1,13 @@
 package isi.deso.tp.app;
 
 import isi.deso.tp.dao.jdbc.ClienteJDBC;
+import isi.deso.tp.dao.jdbc.ItemMenuJDBC;
 import isi.deso.tp.dao.jdbc.PedidoJDBC;
 import isi.deso.tp.dao.jdbc.VendedorJDBC;
 import isi.deso.tp.exception.ItemNoEncontradoException;
 import isi.deso.tp.model.*;
 import isi.deso.tp.service.ClienteController;
+import isi.deso.tp.service.ItemMenuController;
 import isi.deso.tp.service.ItemPedidoController;
 import isi.deso.tp.service.PedidoController;
 import isi.deso.tp.service.VendedorController;
@@ -52,6 +54,9 @@ public class Main {
         ItemMenu itemMenu1 = new BebidaAlcoholica(40, Tamano.GRANDE, 0.85, 1, "Ron Anejo", "Ron oscuro con notas de vainilla y caramelo", 16000.00, categoria1, vendedor4);
         ItemMenu itemMenu2 = new BebidaSinAlcohol(Tamano.CHICA, 0.5, 2, "Limonada Natural", "Limonada refrescante con jugo de limon natural y un toque de menta", 2000.0, categoria1, vendedor1);
         ItemMenu itemMenu3 = new Plato(300, true, false, 3, "Flan", "Flan casero con crema", 1000.0, categoria3, 0.5, vendedor4);
+        ItemMenuController itemMenuController = new ItemMenuController(new ItemMenuJDBC());
+        itemMenuController.actualizarItemMenu(itemMenu1);
+        itemMenuController.actualizarItemMenu(itemMenu2);
 
         vendedor4.addItemMenu(itemMenu1);
         vendedor4.addItemMenu(itemMenu2);
@@ -66,6 +71,7 @@ public class Main {
 
         Pedido pedido1 = pedidoController.crearPedido(1, clienteController.listarClientes().getFirst(), listaItemPedido1, EstadoPedidoEnum.RECIBIDO, contextoPago1);
 
+        // ItemPedido itemPedido1 = itemPedidoController.crearItemPedido(1, 1, itemMenu2, 3);
         // Inicio i = new Inicio();
         // i.setVisible(true);
         //

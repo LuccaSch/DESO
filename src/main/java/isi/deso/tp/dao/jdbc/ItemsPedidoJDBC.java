@@ -20,10 +20,11 @@ public class ItemsPedidoJDBC implements ItemsPedidoDAO {
 
     @Override
     public void agregarItemPedidoALista(ItemPedido itemPedido, Integer idPedido) {
-        String query = "INSERT INTO ItemPedido (id, item_menu_id, cantidad, precio) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO ItemPedido (id, pedido_id, item_menu_id, cantidad, precio) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnector.getInstance(); PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, itemPedido.getId());
+            ps.setInt(2, idPedido);
             ps.setInt(3, itemPedido.getItemMenu().getId());
             ps.setInt(4, itemPedido.getCantidad());
             ps.setDouble(5, itemPedido.getPrecio());
