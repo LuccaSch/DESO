@@ -71,8 +71,7 @@ public class Main {
 
         Pedido pedido1 = pedidoController.crearPedido(1, clienteController.listarClientes().getFirst(), listaItemPedido1, EstadoPedidoEnum.RECIBIDO, contextoPago1);
 
-        ItemPedido itemPedido1 = itemPedidoController.crearItemPedido(1, 1, itemMenu2, 3);
-
+        // ItemPedido itemPedido1 = itemPedidoController.crearItemPedido(1, 1, itemMenu2, 3);
         // Inicio i = new Inicio();
         // i.setVisible(true);
         //
