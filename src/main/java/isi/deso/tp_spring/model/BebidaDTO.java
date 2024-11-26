@@ -1,0 +1,31 @@
+package isi.deso.tp_spring.model;
+
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class BebidaDTO {
+
+    private Integer id;
+
+    @Size(max = 255)
+    private String nombre;
+
+    @Size(max = 255)
+    private String descripcion;
+
+    private Double precio;
+
+    private Double peso;
+
+    private Double volumen;
+
+    private Integer graduacionAlcoholica;
+
+    private Integer tipoBebida;
+
+    private Tamano tamano;
+
+}
