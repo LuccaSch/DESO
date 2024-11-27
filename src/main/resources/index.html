@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú de Búsquedas</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Puedes agregar estilos personalizados -->
+</head>
+<body>
+    <header>
+        <h1>Menú de Búsquedas</h1>
+        <nav>
+            <ul>
+                <li><a href="#buscar-cliente">Buscar Cliente</a></li>
+                <li><a href="#buscar-vendedor">Buscar Vendedor</a></li>
+                <li><a href="#buscar-items">Buscar Items</a></li>
+                <li><a href="#buscar-pedido">Buscar Pedido</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="buscar-cliente">
+            <h2>Buscar Cliente</h2>
+            <form th:action="@{/api/clientes/{id}(id=${#fields.id})}" method="get">
+                <label for="clienteId">Buscar por ID:</label>
+                <input type="text" id="clienteId" name="id">
+                <button type="submit">Buscar</button>
+            </form>
+            <form th:action="@{/buscarClientePorNombre}" method="get">
+                <label for="clienteNombre">Buscar por Nombre:</label>
+                <input type="text" id="clienteNombre" name="nombre">
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+        <section id="buscar-vendedor">
+            <h2>Buscar Vendedor</h2>
+            <form th:action="@{/buscarVendedorPorId}" method="get">
+                <label for="vendedorId">Buscar por ID:</label>
+                <input type="text" id="vendedorId" name="id">
+                <button type="submit">Buscar</button>
+            </form>
+            <form th:action="@{/buscarVendedorPorNombre}" method="get">
+                <label for="vendedorNombre">Buscar por Nombre:</label>
+                <input type="text" id="vendedorNombre" name="nombre">
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+
+        <section id="buscar-items">
+            <h2>Buscar Items</h2>
+            <form th:action="@{/buscarItemsMenuPorId}" method="get">
+                <label for="itemsId">Buscar por ID:</label>
+                <input type="text" id="itemsId" name="id">
+                <button type="submit">Buscar</button>
+            </form>
+            <form th:action="@{/buscarItemsMenuPorNombre}" method="get">
+                <label for="itemsNombre">Buscar por Nombre:</label>
+                <input type="text" id="itemsNombre" name="nombre">
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+
+        <section id="buscar-pedido">
+            <h2>Buscar Pedido</h2>
+            <form th:action="@{/buscarPedidoPorId}" method="get">
+                <label for="pedidoId">Buscar por ID:</label>
+                <input type="text" id="pedidoId" name="id">
+                <button type="submit">Buscar</button>
+            </form>
+            <form th:action="@{/buscarPedidoPorEstado}" method="get">
+                <label for="estadoPedido">Buscar por Estado:</label>
+                <select id="estadoPedido" name="estado">
+                    <option value="pendiente">Pendiente</option>
+                    <option value="procesado">Procesado</option>
+                    <option value="entregado">Entregado</option>
+                </select>
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; UTN FRSF DS TP</p>
+    </footer>
+</body>
+</html>

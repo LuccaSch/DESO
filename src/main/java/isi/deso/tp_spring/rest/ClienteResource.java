@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping(value = "/api/clientes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClienteResource {
@@ -38,6 +37,11 @@ public class ClienteResource {
     @GetMapping("/{id}")
     public ResponseEntity<ClienteDTO> getCliente(@PathVariable(name = "id") final Integer id) {
         return ResponseEntity.ok(clienteService.get(id));
+    }
+
+    @GetMapping("/{nombre}")
+    public ResponseEntity<ClienteDTO> getCliente(@PathVariable(name = "id") final String nombre) {
+        return ResponseEntity.ok(clienteService.getByNombre(nombre));
     }
 
     @PostMapping

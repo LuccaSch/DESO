@@ -13,7 +13,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class ClienteService {
 
@@ -40,6 +39,13 @@ public class ClienteService {
         return clienteRepository.findById(id)
                 .map(cliente -> mapToDTO(cliente, new ClienteDTO()))
                 .orElseThrow(NotFoundException::new);
+    }
+
+    public List<ClienteDTO> getByNombre(final String nombre) {
+        return clienteRepository.findByNombre(nombre)
+                .stream()
+                .map(cliente -> mapToDTO(cliente, new ClienteDTO()))
+                .toList();
     }
 
     public Integer create(final ClienteDTO clienteDTO) {
