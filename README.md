@@ -1,26 +1,44 @@
-# UTN FRSF ISI Desarrollo de Software 2024 TP
+# TpSpring
 
-## Enunciado Principal:
-### TP Integrador: Aplicación de delivery.
-El objetivo del presente proyecto es construir el MVP de una aplicación que permite gestionar delivery de
-comida de restaurantes y rotiserías.
-La aplicación tiene dos tipos de usuarios, vendedores (los restaurantes o rotiserías) y compradores.
-Los vendedores pueden ingresar al sistema para
-- Gestionar sus datos.
-- Gestionar menú de platos y bebidas que ofrecen
-- Revisar la lista de pedidos recibidos por parte de los clientes.
-- Actualizar el estado de un pedido, desde que es recibido, aceptado, preparado, hasta enviado.
-Los compradores pueden ingresar al sistema para
-- Gestionar sus datos
-- Crear un pedido indicando para un restaurante en particular que seleccione, cuales platos solicitará
-y la forma de pago. El precio de un pedido se calculará diferente según la forma de pago.
-- Ver su historial de pedidos.
+This app was created with Bootify.io - tips on working with the code [can be found here](https://bootify.io/next-steps/).
 
-## Diagrama de Clases en draw.io
-(Requiere permisos) Para accerder dar a [aquí](https://drive.google.com/file/d/1Nt4zU6iw8lsLZ3smhBiCW-I-se1H7jJk/view?usp=share_link)
+## Development
 
-## Diagrama Relacional Tablas
-Para accerder dar a [aquí](https://dbdiagram.io/d/6733e157e9daa85aca3b32b4)
+When starting the application `docker compose up` is called and the app will connect to the contained services.
+[Docker](https://www.docker.com/get-started/) must be available on the current system.
 
-## Último Diagrama de Clases en .png
-![TP Etapa 6 Modelo de Datos](https://github.com/user-attachments/assets/06a291af-769f-4234-91d0-5be9dcc40b9e)
+During development it is recommended to use the profile `local`. In IntelliJ `-Dspring.profiles.active=local` can be
+added in the VM options of the Run Configuration after enabling this property in "Modify options". Create your own
+`application-local.properties` file to override settings for development.
+
+Lombok must be supported by your IDE. For IntelliJ install the Lombok plugin and enable annotation processing -
+[learn more](https://bootify.io/next-steps/spring-boot-with-lombok.html).
+
+After starting the application it is accessible under `localhost:8080`.
+
+## Build
+
+The application can be built using the following command:
+
+```
+mvnw clean package
+```
+
+Start your application with the following command - here with the profile `production`:
+
+```
+java -Dspring.profiles.active=production -jar ./target/tpSpring-0.0.1-SNAPSHOT.jar
+```
+
+If required, a Docker image can be created with the Spring Boot plugin. Add `SPRING_PROFILES_ACTIVE=production` as
+environment variable when running the container.
+
+```
+mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=isi.deso/tp-spring
+```
+
+## Further readings
+
+* [Maven docs](https://maven.apache.org/guides/index.html)  
+* [Spring Boot reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)  
+* [Spring Data JPA reference](https://docs.spring.io/spring-data/jpa/reference/jpa.html)

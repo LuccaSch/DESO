@@ -1,38 +1,8 @@
-version: '3.8'
-
 services:
-  mysql_db:
-    image: mysql:8.0
-    container_name: mysql_db
+  mysql:
+    image: mysql:9.1
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: exampledb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: userpassword
+    - MYSQL_DATABASE=tpSpring
+    - MYSQL_ROOT_PASSWORD=P4ssword!
     ports:
-      - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-      - ./sql-scripts:/docker-entrypoint-initdb.d
-    networks:
-      - db_network
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    environment:
-      PMA_HOST: mysql_db
-      PMA_USER: user
-      PMA_PASSWORD: userpassword
-    ports:
-      - "8080:80"
-    networks:
-      - db_network
-
-networks:
-  db_network:
-    driver: bridge
-
-volumes:
-  mysql-data:
-    driver: local
+    - 3307:3306

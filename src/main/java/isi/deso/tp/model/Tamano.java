@@ -1,7 +1,10 @@
-package isi.deso.tp.model;
+package isi.deso.tp_spring.model;
+
 
 public enum Tamano {
-    CHICA,
+
+    GRANDE,
     MEDIANA,
-    GRANDE
+    CHICA
+
 }
