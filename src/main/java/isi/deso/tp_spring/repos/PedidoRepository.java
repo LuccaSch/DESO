@@ -12,6 +12,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
     Pedido findFirstByContextoPago(ContextoPago contextoPago);
 
-    boolean existsByContextoPagoId(Integer id);
+    Boolean existsByContextoPagoId(Integer id);
 
 }

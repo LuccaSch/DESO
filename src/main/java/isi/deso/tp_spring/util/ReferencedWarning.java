@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 public class ReferencedWarning {

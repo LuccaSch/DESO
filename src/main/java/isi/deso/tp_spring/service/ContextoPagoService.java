@@ -73,7 +73,7 @@ public class ContextoPagoService {
         return contextoPago;
     }
 
-    public boolean pagoExists(final Integer id) {
+    public Boolean pagoExists(final Integer id) {
         return contextoPagoRepository.existsByPagoId(id);
     }
 

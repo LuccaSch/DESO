@@ -9,6 +9,6 @@ public interface ContextoPagoRepository extends JpaRepository<ContextoPago, Inte
 
     ContextoPago findFirstByPago(Pago pago);
 
-    boolean existsByPagoId(Integer id);
+    Boolean existsByPagoId(Integer id);
 
 }

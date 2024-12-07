@@ -40,7 +40,7 @@ public class ClienteResource {
     }
 
     @GetMapping("/{nombre}")
-    public ResponseEntity<ClienteDTO> getCliente(@PathVariable(name = "id") final String nombre) {
+    public ResponseEntity<ClienteDTO> getCliente(@PathVariable(name = "nombre") final String nombre) {
         return ResponseEntity.ok(clienteService.getByNombre(nombre));
     }
 

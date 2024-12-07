@@ -85,7 +85,7 @@ public class PedidoService {
         return pedido;
     }
 
-    public boolean contextoPagoExists(final Integer id) {
+    public Boolean contextoPagoExists(final Integer id) {
         return pedidoRepository.existsByContextoPagoId(id);
     }
 

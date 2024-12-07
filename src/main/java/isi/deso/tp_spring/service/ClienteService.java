@@ -41,11 +41,10 @@ public class ClienteService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public List<ClienteDTO> getByNombre(final String nombre) {
+    public ClienteDTO getByNombre(final String nombre) {
         return clienteRepository.findByNombre(nombre)
-                .stream()
                 .map(cliente -> mapToDTO(cliente, new ClienteDTO()))
-                .toList();
+                .orElseThrow(NotFoundException::new);
     }
 
     public Integer create(final ClienteDTO clienteDTO) {
@@ -86,7 +85,7 @@ public class ClienteService {
         return cliente;
     }
 
-    public boolean cuitExists(final String cuit) {
+    public Boolean cuitExists(final String cuit) {
         return clienteRepository.existsByCuitIgnoreCase(cuit);
     }
 
