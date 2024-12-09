@@ -11,7 +11,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class PagoService {
 
@@ -55,7 +54,6 @@ public class PagoService {
     }
 
     private PagoDTO mapToDTO(final Pago pago, final PagoDTO pagoDTO) {
-        pagoDTO.setId(pago.getId());
         pagoDTO.setTipoEstrategia(pago.getTipoEstrategia());
         return pagoDTO;
     }

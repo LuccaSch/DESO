@@ -15,7 +15,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class PedidoService {
 
@@ -65,7 +64,6 @@ public class PedidoService {
     }
 
     private PedidoDTO mapToDTO(final Pedido pedido, final PedidoDTO pedidoDTO) {
-        pedidoDTO.setId(pedido.getId());
         pedidoDTO.setEstadoPedido(pedido.getEstadoPedido());
         pedidoDTO.setPrecioTotal(pedido.getPrecioTotal());
         pedidoDTO.setCliente(pedido.getCliente() == null ? null : pedido.getCliente().getId());

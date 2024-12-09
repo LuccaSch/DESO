@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class TransferenciaService {
 
@@ -50,7 +49,6 @@ public class TransferenciaService {
 
     private TransferenciaDTO mapToDTO(final Transferencia transferencia,
             final TransferenciaDTO transferenciaDTO) {
-        transferenciaDTO.setId(transferencia.getId());
         transferenciaDTO.setCuit(transferencia.getCuit());
         transferenciaDTO.setCbu(transferencia.getCbu());
         return transferenciaDTO;

@@ -65,7 +65,6 @@ public class ClienteService {
     }
 
     private ClienteDTO mapToDTO(final Cliente cliente, final ClienteDTO clienteDTO) {
-        clienteDTO.setId(cliente.getId());
         clienteDTO.setNombre(cliente.getNombre());
         clienteDTO.setCuit(cliente.getCuit());
         clienteDTO.setEmail(cliente.getEmail());

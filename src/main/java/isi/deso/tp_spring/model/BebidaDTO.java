@@ -8,8 +8,6 @@ import lombok.Setter;
 @Setter
 public class BebidaDTO {
 
-    private Integer id;
-
     @Size(max = 255)
     private String nombre;
 

@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:8.0
+    image: mysql:9.1
     environment:
       - MYSQL_DATABASE=tpSpring
       - MYSQL_ROOT_PASSWORD=P4ssword!
@@ -16,12 +16,12 @@ services:
       - PMA_HOST=mysql
       - PMA_PORT=3306
     ports:
-      - 8080:80
+      - 8081:80
     depends_on:
       - mysql
     networks:
       - app-network
-      
+
 
 networks:
   app-network:

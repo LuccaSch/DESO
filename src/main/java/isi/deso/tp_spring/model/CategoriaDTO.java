@@ -8,8 +8,6 @@ import lombok.Setter;
 @Setter
 public class CategoriaDTO {
 
-    private Integer id;
-
     @Size(max = 255)
     private String descripcion;
 

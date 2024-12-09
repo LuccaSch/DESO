@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class MercadoPagoService {
 
@@ -50,7 +49,6 @@ public class MercadoPagoService {
 
     private MercadoPagoDTO mapToDTO(final MercadoPago mercadoPago,
             final MercadoPagoDTO mercadoPagoDTO) {
-        mercadoPagoDTO.setId(mercadoPago.getId());
         mercadoPagoDTO.setAlias(mercadoPago.getAlias());
         return mercadoPagoDTO;
     }

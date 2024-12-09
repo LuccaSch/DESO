@@ -54,7 +54,6 @@ public class CategoriaService {
     }
 
     private CategoriaDTO mapToDTO(final Categoria categoria, final CategoriaDTO categoriaDTO) {
-        categoriaDTO.setId(categoria.getId());
         categoriaDTO.setDescripcion(categoria.getDescripcion());
         return categoriaDTO;
     }

@@ -59,7 +59,6 @@ public class CoordenadaService {
     }
 
     private CoordenadaDTO mapToDTO(final Coordenada coordenada, final CoordenadaDTO coordenadaDTO) {
-        coordenadaDTO.setId(coordenada.getId());
         coordenadaDTO.setLat(coordenada.getLat());
         coordenadaDTO.setLgn(coordenada.getLgn());
         return coordenadaDTO;

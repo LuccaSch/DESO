@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class PlatoService {
 
@@ -49,7 +48,6 @@ public class PlatoService {
     }
 
     private PlatoDTO mapToDTO(final Plato plato, final PlatoDTO platoDTO) {
-        platoDTO.setId(plato.getId());
         platoDTO.setNombre(plato.getNombre());
         platoDTO.setDescripcion(plato.getDescripcion());
         platoDTO.setPrecio(plato.getPrecio());

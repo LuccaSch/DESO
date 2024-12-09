@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class EfectivoService {
 
@@ -49,7 +48,6 @@ public class EfectivoService {
     }
 
     private EfectivoDTO mapToDTO(final Efectivo efectivo, final EfectivoDTO efectivoDTO) {
-        efectivoDTO.setId(efectivo.getId());
         return efectivoDTO;
     }
 

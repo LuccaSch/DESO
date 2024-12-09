@@ -1,6 +1,4 @@
-# TpSpring
-
-This app was created with Bootify.io - tips on working with the code [can be found here](https://bootify.io/next-steps/).
+# UTN FRSF DS TP Project build with Spring Boot and Docker Compose (MySQL and phpMyAdmin)
 
 ## Development
 
@@ -11,9 +9,6 @@ During development it is recommended to use the profile `local`. In IntelliJ `-D
 added in the VM options of the Run Configuration after enabling this property in "Modify options". Create your own
 `application-local.properties` file to override settings for development.
 
-Lombok must be supported by your IDE. For IntelliJ install the Lombok plugin and enable annotation processing -
-[learn more](https://bootify.io/next-steps/spring-boot-with-lombok.html).
-
 After starting the application it is accessible under `localhost:8080`.
 
 ## Build
@@ -21,20 +16,26 @@ After starting the application it is accessible under `localhost:8080`.
 The application can be built using the following command:
 
 ```
-mvnw clean package
+./mvnw clean package
 ```
 
-Start your application with the following command - here with the profile `production`:
+Start your application with the following command:
 
 ```
-java -Dspring.profiles.active=production -jar ./target/tpSpring-0.0.1-SNAPSHOT.jar
+./mvnw spring-boot:run
 ```
 
 If required, a Docker image can be created with the Spring Boot plugin. Add `SPRING_PROFILES_ACTIVE=production` as
 environment variable when running the container.
 
 ```
-mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=isi.deso/tp-spring
+./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=isi.deso/tp-spring
+```
+
+## Interactive Documentation Generation Swagger UI
+
+```
+For interactive http transactions use [SwaggerUI](http://localhost:8080/swagger-ui/index.html)
 ```
 
 ## Further readings
