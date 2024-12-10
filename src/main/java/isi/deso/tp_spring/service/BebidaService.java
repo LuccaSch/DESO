@@ -48,7 +48,6 @@ public class BebidaService {
     }
 
     private BebidaDTO mapToDTO(final Bebida bebida, final BebidaDTO bebidaDTO) {
-        bebidaDTO.setId(bebida.getId());
         bebidaDTO.setNombre(bebida.getNombre());
         bebidaDTO.setDescripcion(bebida.getDescripcion());
         bebidaDTO.setPrecio(bebida.getPrecio());

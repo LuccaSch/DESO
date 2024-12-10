@@ -13,7 +13,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class ContextoPagoService {
 
@@ -60,7 +59,6 @@ public class ContextoPagoService {
 
     private ContextoPagoDTO mapToDTO(final ContextoPago contextoPago,
             final ContextoPagoDTO contextoPagoDTO) {
-        contextoPagoDTO.setId(contextoPago.getId());
         contextoPagoDTO.setPago(contextoPago.getPago() == null ? null : contextoPago.getPago().getId());
         return contextoPagoDTO;
     }
@@ -73,7 +71,7 @@ public class ContextoPagoService {
         return contextoPago;
     }
 
-    public boolean pagoExists(final Integer id) {
+    public Boolean pagoExists(final Integer id) {
         return contextoPagoRepository.existsByPagoId(id);
     }
 

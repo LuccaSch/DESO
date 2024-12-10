@@ -2,15 +2,17 @@ package isi.deso.tp_spring.repos;
 
 import isi.deso.tp_spring.domain.Cliente;
 import isi.deso.tp_spring.domain.Coordenada;
-import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 
-    Cliente findFirstByCoordenada(Coordenada coordenada);
+    Optional<Cliente> findFirstByCoordenada(Coordenada coordenada);
 
-    boolean existsByCuitIgnoreCase(String cuit);
+    Boolean existsByCuitIgnoreCase(String cuit);
 
-    List<Cliente> findByNombre(String nombre);
+    Optional<Cliente> findByNombre(String nombre);
 
 }

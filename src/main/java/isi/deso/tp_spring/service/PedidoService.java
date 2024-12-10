@@ -65,7 +65,6 @@ public class PedidoService {
     }
 
     private PedidoDTO mapToDTO(final Pedido pedido, final PedidoDTO pedidoDTO) {
-        pedidoDTO.setId(pedido.getId());
         pedidoDTO.setEstadoPedido(pedido.getEstadoPedido());
         pedidoDTO.setPrecioTotal(pedido.getPrecioTotal());
         pedidoDTO.setCliente(pedido.getCliente() == null ? null : pedido.getCliente().getId());
@@ -85,7 +84,7 @@ public class PedidoService {
         return pedido;
     }
 
-    public boolean contextoPagoExists(final Integer id) {
+    public Boolean contextoPagoExists(final Integer id) {
         return pedidoRepository.existsByContextoPagoId(id);
     }
 

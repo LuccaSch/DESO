@@ -13,7 +13,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class CoordenadaService {
 
@@ -60,7 +59,6 @@ public class CoordenadaService {
     }
 
     private CoordenadaDTO mapToDTO(final Coordenada coordenada, final CoordenadaDTO coordenadaDTO) {
-        coordenadaDTO.setId(coordenada.getId());
         coordenadaDTO.setLat(coordenada.getLat());
         coordenadaDTO.setLgn(coordenada.getLgn());
         return coordenadaDTO;
@@ -76,7 +74,8 @@ public class CoordenadaService {
         final ReferencedWarning referencedWarning = new ReferencedWarning();
         final Coordenada coordenada = coordenadaRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
-        final Cliente coordenadaCliente = clienteRepository.findFirstByCoordenada(coordenada);
+        final Cliente coordenadaCliente = clienteRepository.findFirstByCoordenada(coordenada)
+                .orElseThrow(NotFoundException::new);
         if (coordenadaCliente != null) {
             referencedWarning.setKey("coordenada.cliente.coordenada.referenced");
             referencedWarning.addParam(coordenadaCliente.getId());

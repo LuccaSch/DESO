@@ -5,13 +5,13 @@ import isi.deso.tp_spring.domain.ItemMenu;
 import isi.deso.tp_spring.domain.Vendedor;
 import isi.deso.tp_spring.model.VendedorDTO;
 import isi.deso.tp_spring.repos.CoordenadaRepository;
+import isi.deso.tp_spring.repos.ItemMenuRepository;
 import isi.deso.tp_spring.repos.VendedorRepository;
 import isi.deso.tp_spring.util.NotFoundException;
 import isi.deso.tp_spring.util.ReferencedWarning;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import isi.deso.tp_spring.repos.ItemMenuRepository;
 
 @Service
 public class VendedorService {
@@ -59,7 +59,6 @@ public class VendedorService {
     }
 
     private VendedorDTO mapToDTO(final Vendedor vendedor, final VendedorDTO vendedorDTO) {
-        vendedorDTO.setId(vendedor.getId());
         vendedorDTO.setNombre(vendedor.getNombre());
         vendedorDTO.setDireccion(vendedor.getDireccion());
         vendedorDTO.setCoordenada(vendedor.getCoordenada() == null ? null : vendedor.getCoordenada().getId());
