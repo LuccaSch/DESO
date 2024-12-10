@@ -1,8 +1,8 @@
-package isi.deso.tp_spring.rest;
+package isi.deso.tp_spring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import isi.deso.tp_spring.model.VendedorDTO;
-import isi.deso.tp_spring.service.VendedorService;
+import isi.deso.tp_spring.model.PagoDTO;
+import isi.deso.tp_spring.service.PagoService;
 import isi.deso.tp_spring.util.ReferencedException;
 import isi.deso.tp_spring.util.ReferencedWarning;
 import jakarta.validation.Valid;
@@ -19,49 +19,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
-@RequestMapping(value = "/api/vendedores", produces = MediaType.APPLICATION_JSON_VALUE)
-public class VendedorResource {
+@RequestMapping(value = "/api/pagos", produces = MediaType.APPLICATION_JSON_VALUE)
+public class PagoController {
 
-    private final VendedorService vendedorService;
+    private final PagoService pagoService;
 
-    public VendedorResource(final VendedorService vendedorService) {
-        this.vendedorService = vendedorService;
+    public PagoController(final PagoService pagoService) {
+        this.pagoService = pagoService;
     }
 
     @GetMapping
-    public ResponseEntity<List<VendedorDTO>> getAllVendedors() {
-        return ResponseEntity.ok(vendedorService.findAll());
+    public ResponseEntity<List<PagoDTO>> getAllPagos() {
+        return ResponseEntity.ok(pagoService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VendedorDTO> getVendedor(@PathVariable(name = "id") final Integer id) {
-        return ResponseEntity.ok(vendedorService.get(id));
+    public ResponseEntity<PagoDTO> getPago(@PathVariable(name = "id") final Integer id) {
+        return ResponseEntity.ok(pagoService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<Integer> createVendedor(
-            @RequestBody @Valid final VendedorDTO vendedorDTO) {
-        final Integer createdId = vendedorService.create(vendedorDTO);
+    public ResponseEntity<Integer> createPago(@RequestBody @Valid final PagoDTO pagoDTO) {
+        final Integer createdId = pagoService.create(pagoDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Integer> updateVendedor(@PathVariable(name = "id") final Integer id,
-            @RequestBody @Valid final VendedorDTO vendedorDTO) {
-        vendedorService.update(id, vendedorDTO);
+    public ResponseEntity<Integer> updatePago(@PathVariable(name = "id") final Integer id,
+            @RequestBody @Valid final PagoDTO pagoDTO) {
+        pagoService.update(id, pagoDTO);
         return ResponseEntity.ok(id);
     }
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteVendedor(@PathVariable(name = "id") final Integer id) {
-        final ReferencedWarning referencedWarning = vendedorService.getReferencedWarning(id);
+    public ResponseEntity<Void> deletePago(@PathVariable(name = "id") final Integer id) {
+        final ReferencedWarning referencedWarning = pagoService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
-        vendedorService.delete(id);
+        pagoService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

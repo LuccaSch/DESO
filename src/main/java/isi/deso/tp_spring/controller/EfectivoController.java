@@ -1,4 +1,4 @@
-package isi.deso.tp_spring.rest;
+package isi.deso.tp_spring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.EfectivoDTO;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/efectivos", produces = MediaType.APPLICATION_JSON_VALUE)
-public class EfectivoResource {
+public class EfectivoController {
 
     private final EfectivoService efectivoService;
 
-    public EfectivoResource(final EfectivoService efectivoService) {
+    public EfectivoController(final EfectivoService efectivoService) {
         this.efectivoService = efectivoService;
     }
 

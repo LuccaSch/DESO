@@ -41,6 +41,12 @@ public class VendedorService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    public VendedorDTO getByNombre(final String nombre) {
+        return vendedorRepository.findByNombre(nombre)
+                .map(cliente -> mapToDTO(cliente, new VendedorDTO()))
+                .orElseThrow(NotFoundException::new);
+    }
+
     public Integer create(final VendedorDTO vendedorDTO) {
         final Vendedor vendedor = new Vendedor();
         mapToEntity(vendedorDTO, vendedor);
