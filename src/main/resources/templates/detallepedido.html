@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Pedido</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="@{/}">Volver al inicio</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Información del Pedido</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Recorremos la lista de itempedidos -->
+                    <tr th:each="itempedido : ${itemspedido}">
+                        <td th:text="${itempedido.nombre}"></td>
+                        <td th:text="${itempedido.descripcion}"></td>
+                        <td th:text="${itempedido.precio}"></td>
+                        <td th:text="${itempedido.cantidad}"></td>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; UTN FRSF DS TP itempedido.html</p>
+    </footer>
+</body>
+</html>
+

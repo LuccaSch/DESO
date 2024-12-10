@@ -1,9 +1,16 @@
 package isi.deso.tp_spring.service;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
 import isi.deso.tp_spring.domain.Cliente;
 import isi.deso.tp_spring.domain.ContextoPago;
 import isi.deso.tp_spring.domain.ItemPedido;
 import isi.deso.tp_spring.domain.Pedido;
+import isi.deso.tp_spring.model.EstadoPedido;
 import isi.deso.tp_spring.model.PedidoDTO;
 import isi.deso.tp_spring.repos.ClienteRepository;
 import isi.deso.tp_spring.repos.ContextoPagoRepository;
@@ -11,9 +18,6 @@ import isi.deso.tp_spring.repos.ItemPedidoRepository;
 import isi.deso.tp_spring.repos.PedidoRepository;
 import isi.deso.tp_spring.util.NotFoundException;
 import isi.deso.tp_spring.util.ReferencedWarning;
-import java.util.List;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 @Service
 public class PedidoService {
@@ -40,6 +44,27 @@ public class PedidoService {
                 .toList();
     }
 
+    public List<ItemPedido> getItemsPedido(Integer idPedido){
+        PedidoDTO pedidoDTO = findAll().stream()
+        .filter(p -> p.getId().equals(idPedido))
+        .findFirst()
+        .orElseThrow(() -> new NoSuchElementException("No se encontró el pedido con id " + idPedido));
+        Pedido pedido = null;
+        pedido = mapToEntity(pedidoDTO, pedido);
+        List<ItemPedido> itemsPedido = pedido.getItemPedidos();
+        return  itemsPedido;
+    }
+
+    public EstadoPedido getEstadoPedido(Integer idPedido){
+        PedidoDTO pedidoDTO = findAll().stream()
+        .filter(p -> p.getId().equals(idPedido))
+        .findFirst()
+        .orElseThrow(() -> new NoSuchElementException("No se encontró el pedido con id " + idPedido));
+        Pedido pedido = null;
+        pedido = mapToEntity(pedidoDTO, pedido);
+        return pedido.getEstadoPedido();
+    }
+
     public PedidoDTO get(final Integer id) {
         return pedidoRepository.findById(id)
                 .map(pedido -> mapToDTO(pedido, new PedidoDTO()))
@@ -64,6 +89,7 @@ public class PedidoService {
     }
 
     private PedidoDTO mapToDTO(final Pedido pedido, final PedidoDTO pedidoDTO) {
+        pedidoDTO.setId(pedido.getId());
         pedidoDTO.setEstadoPedido(pedido.getEstadoPedido());
         pedidoDTO.setPrecioTotal(pedido.getPrecioTotal());
         pedidoDTO.setCliente(pedido.getCliente() == null ? null : pedido.getCliente().getId());
@@ -72,6 +98,7 @@ public class PedidoService {
     }
 
     private Pedido mapToEntity(final PedidoDTO pedidoDTO, final Pedido pedido) {
+        pedido.setId(pedidoDTO.getId());
         pedido.setEstadoPedido(pedidoDTO.getEstadoPedido());
         pedido.setPrecioTotal(pedidoDTO.getPrecioTotal());
         final Cliente cliente = pedidoDTO.getCliente() == null ? null : clienteRepository.findById(pedidoDTO.getCliente())

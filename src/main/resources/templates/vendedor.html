@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Vendedor</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Detalle del Vendedor</h1>
+        <nav>
+            <a href="@{/}">Volver al inicio</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Información del vendedor</h2>
+            <div>
+                <p><strong>Nombre:</strong> <span th:text="${vendedor.nombre}"></span></p>
+                <p><strong>Dirección:</strong> <span th:text="${vendedor.direccion}"></span></p>
+                <p><strong>Coordenada:</strong> <span th:text="${vendedor.coordenada}"></span></p>
+            </div>
+            <h2>items Menu del Vendedor</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>descripcion</th>
+                        <th>Peso</th>
+                        <th>Precio</th>
+                        <th>categoria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="itemMenu : ${itemsMenu}">
+                        <td th:text="${itemMenu.nombre}"></td>
+                        <td th:text="${itemMenu.descripcion}"></td>
+                        <td th:text="${itemMenu.peso}"></td>
+                        <td th:text="${itemMenu.precio}"></td>
+                        <td th:text="${itemMenu.categoria}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; UTN FRSF DS TP vendedor.html</p>
+    </footer>
+</body>
+</html>
+

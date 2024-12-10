@@ -1,12 +1,7 @@
 package isi.deso.tp_spring.controller;
 
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import isi.deso.tp_spring.model.ClienteDTO;
-import isi.deso.tp_spring.service.ClienteService;
-import isi.deso.tp_spring.util.ReferencedException;
-import isi.deso.tp_spring.util.ReferencedWarning;
-import jakarta.validation.Valid;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import isi.deso.tp_spring.model.ClienteDTO;
+import isi.deso.tp_spring.service.ClienteService;
+import isi.deso.tp_spring.util.ReferencedException;
+import isi.deso.tp_spring.util.ReferencedWarning;
+import jakarta.validation.Valid;
+
+
 
 @Controller
 @RequestMapping("/api/clientes")
@@ -30,7 +35,7 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @GetMapping
+    @GetMapping()
     public String getAllClientes(Model model) {
         List<ClienteDTO> clientes = clienteService.findAll();
         model.addAttribute("clientes", clientes);
@@ -103,4 +108,17 @@ public class ClienteController {
         clienteService.delete(id);
         return "clienteEliminado";
     }
+    @PostMapping("/guardarcliente")
+    public String postMethodName(@ModelAttribute ClienteDTO cliente) {
+        System.out.println("hola");
+        clienteService.create(cliente);
+        return "redirect:/api/clientes";
+    }
+
+    @GetMapping("/pedidos/detalle")
+    public String getMethodName(@RequestParam String param) {
+        return new String();
+    }
+    
+    
 }

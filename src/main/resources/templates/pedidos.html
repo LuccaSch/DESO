@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de pedidoes</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <form th:action="@{/api/pedidos/guardarpedido}" method="post">
+
+        <label>id:</label>
+        <input type="number" name="id">
+        <label>estado pedido:</label>
+        <input type="text" name="estadopedido">
+        <label>cliente:</label>
+        <input type="number" name="idcliente">
+        <label>precio total:</label>
+        <input type="number" name="preciototal">
+        <label>contexto pago:</label>
+        <input type="number" name="contextopago">
+        <button type="submit" >Guardar</button>
+        </form> <br>
+        
+    <header>
+        <h1>Lista de Pedidos</h1>
+        <nav>
+            <a href="/">Volver al Inicio</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>pedidoes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Estado Pedido</th>
+                        <th>ID Cliente</th>
+                        <th>Precio</th>
+                        <th>Contexto Pago</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Recorremos la lista de pedidoes -->
+                    <tr th:each="pedido : ${pedidos}">
+                        <td th:text="${pedido.id}"></td>
+                        <td th:text="${pedido.estadopedido}"></td>
+                        <td th:text="${pedido.idcliente}"></td>
+                        <td th:text="${pedido.preciototal}"></td>
+                        <td>
+                            <!-- Acciones -->
+                            <a th:href="@{/api/pedidos/{id}(id=${pedido.id})}">Ver</a>
+                            <a th:href="@{/api/pedidos/editar/{id}(id=${pedido.id})}">Editar</a>
+                            <a th:href="@{/api/pedidos/eliminar/{id}(id=${pedido.id})}" onclick="return confirm('¿Estás seguro de eliminar este pedido?');">Eliminar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; UTN FRSF DS TP</p>
+    </footer>
+</body>
+</html>
+
