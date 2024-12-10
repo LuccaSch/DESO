@@ -1,4 +1,4 @@
-package isi.deso.tp_spring.rest;
+package isi.deso.tp_spring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.ItemPedidoDTO;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/itemsPedidos", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ItemPedidoResource {
+public class ItemPedidoController {
 
     private final ItemPedidoService itemPedidoService;
 
-    public ItemPedidoResource(final ItemPedidoService itemPedidoService) {
+    public ItemPedidoController(final ItemPedidoService itemPedidoService) {
         this.itemPedidoService = itemPedidoService;
     }
 

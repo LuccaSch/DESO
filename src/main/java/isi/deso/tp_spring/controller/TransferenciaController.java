@@ -1,4 +1,4 @@
-package isi.deso.tp_spring.rest;
+package isi.deso.tp_spring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.TransferenciaDTO;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/transferencias", produces = MediaType.APPLICATION_JSON_VALUE)
-public class TransferenciaResource {
+public class TransferenciaController {
 
     private final TransferenciaService transferenciaService;
 
-    public TransferenciaResource(final TransferenciaService transferenciaService) {
+    public TransferenciaController(final TransferenciaService transferenciaService) {
         this.transferenciaService = transferenciaService;
     }
 

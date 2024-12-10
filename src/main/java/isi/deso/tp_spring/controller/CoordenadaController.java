@@ -1,4 +1,4 @@
-package isi.deso.tp_spring.rest;
+package isi.deso.tp_spring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.CoordenadaDTO;
@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/coordenadas", produces = MediaType.APPLICATION_JSON_VALUE)
-public class CoordenadaResource {
+public class CoordenadaController {
 
     private final CoordenadaService coordenadaService;
 
-    public CoordenadaResource(final CoordenadaService coordenadaService) {
+    public CoordenadaController(final CoordenadaService coordenadaService) {
         this.coordenadaService = coordenadaService;
     }
 

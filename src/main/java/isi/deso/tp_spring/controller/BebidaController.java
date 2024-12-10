@@ -1,4 +1,4 @@
-package isi.deso.tp_spring.rest;
+package isi.deso.tp_spring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.BebidaDTO;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/bebidas", produces = MediaType.APPLICATION_JSON_VALUE)
-public class BebidaResource {
+public class BebidaController {
 
     private final BebidaService bebidaService;
 
-    public BebidaResource(final BebidaService bebidaService) {
+    public BebidaController(final BebidaService bebidaService) {
         this.bebidaService = bebidaService;
     }
 

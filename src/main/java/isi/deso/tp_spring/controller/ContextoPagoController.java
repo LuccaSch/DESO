@@ -1,4 +1,4 @@
-package isi.deso.tp_spring.rest;
+package isi.deso.tp_spring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.ContextoPagoDTO;
@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/contextosPagos", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ContextoPagoResource {
+public class ContextoPagoController {
 
     private final ContextoPagoService contextoPagoService;
 
-    public ContextoPagoResource(final ContextoPagoService contextoPagoService) {
+    public ContextoPagoController(final ContextoPagoService contextoPagoService) {
         this.contextoPagoService = contextoPagoService;
     }
 

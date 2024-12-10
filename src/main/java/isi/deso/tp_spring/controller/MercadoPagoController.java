@@ -1,4 +1,4 @@
-package isi.deso.tp_spring.rest;
+package isi.deso.tp_spring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.MercadoPagoDTO;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/mercadoPagos", produces = MediaType.APPLICATION_JSON_VALUE)
-public class MercadoPagoResource {
+public class MercadoPagoController {
 
     private final MercadoPagoService mercadoPagoService;
 
-    public MercadoPagoResource(final MercadoPagoService mercadoPagoService) {
+    public MercadoPagoController(final MercadoPagoService mercadoPagoService) {
         this.mercadoPagoService = mercadoPagoService;
     }
 

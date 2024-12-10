@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Cliente</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Detalle del Cliente</h1>
+        <nav>
+            <a href="@{/}">Volver al inicio</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Información del Cliente</h2>
+            <div>
+                <p><strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span></p>
+                <p><strong>Cuit:</strong> <span th:text="${cliente.cuit}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${cliente.email}"></span></p>
+                <p><strong>Dirección:</strong> <span th:text="${cliente.direccion}"></span></p>
+                <p><strong>Coordenada:</strong> <span th:text="${cliente.coordenada}"></span></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; UTN FRSF DS TP cliente.html</p>
+    </footer>
+</body>
+</html>
