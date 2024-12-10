@@ -64,11 +64,12 @@ public class ClienteController {
         }
     }
 
-//    @GetMapping("/crear")
-//    public String showCreateForm(Model model) {
-//        model.addAttribute("cliente", new ClienteDTO()); // Para mostrar un formulario vacío
-//        return "crearCliente";
-//    }
+    @GetMapping("/crear")
+    public String showCreateForm(Model model) {
+        model.addAttribute("cliente", new ClienteDTO()); // Para mostrar un formulario vacío
+        return "crearCliente";
+    }
+
     @PostMapping
     @ApiResponse(responseCode = "201")
     public String createCliente(@ModelAttribute @Valid ClienteDTO clienteDTO, Model model) {
@@ -77,12 +78,13 @@ public class ClienteController {
         return "clienteCreado";
     }
 
-//    @GetMapping("/editar/{id}")
-//    public String showUpdateForm(@PathVariable(name = "id") final Integer id, Model model) {
-//        ClienteDTO cliente = clienteService.get(id);
-//        model.addAttribute("cliente", cliente);
-//        return "editarCliente";
-//    }
+    @GetMapping("/editar/{id}")
+    public String showUpdateForm(@PathVariable(name = "id") final Integer id, Model model) {
+        ClienteDTO cliente = clienteService.get(id);
+        model.addAttribute("cliente", cliente);
+        return "editarCliente";
+    }
+
     @PutMapping("/{id}")
     public String updateCliente(@PathVariable(name = "id") final Integer id,
             @ModelAttribute @Valid ClienteDTO clienteDTO, Model model) {
