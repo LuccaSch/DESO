@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/api/clientes")
@@ -30,7 +32,7 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @GetMapping
+    @GetMapping()
     public String getAllClientes(Model model) {
         List<ClienteDTO> clientes = clienteService.findAll();
         model.addAttribute("clientes", clientes);
@@ -101,4 +103,12 @@ public class ClienteController {
         clienteService.delete(id);
         return "clienteEliminado";
     }
+    @PostMapping("/guardarcliente")
+    public String postMethodName(@ModelAttribute ClienteDTO cliente) {
+        System.out.println("hola");
+        clienteService.create(cliente);
+
+        return "redirect:/api/clientes";
+    }
+    
 }

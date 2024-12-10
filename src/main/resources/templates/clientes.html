@@ -6,6 +6,23 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+    <form th:action="@{/api/clientes/guardarcliente}" method="post">
+
+        <label>id:</label>
+        <input type="number" name="id">
+        <label>nombre:</label>
+        <input type="text" name="nombre">
+        <label>cuit:</label>
+        <input type="text" name="cuit">
+        <label>email:</label>
+        <input type="text" name="email">
+        <label>direccion:</label>
+        <input type="text" name="direccion">
+        <label>coordenada:</label>
+        <input type="number" name="coordenada">
+        <button type="submit" >Guardar</button>
+        </form> <br>
+        
     <header>
         <h1>Lista de Clientes</h1>
         <nav>
