@@ -1,5 +1,10 @@
 package isi.deso.tp_spring.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
 import isi.deso.tp_spring.domain.Categoria;
 import isi.deso.tp_spring.domain.ItemMenu;
 import isi.deso.tp_spring.domain.Vendedor;
@@ -8,9 +13,6 @@ import isi.deso.tp_spring.repos.CategoriaRepository;
 import isi.deso.tp_spring.repos.ItemMenuRepository;
 import isi.deso.tp_spring.repos.VendedorRepository;
 import isi.deso.tp_spring.util.NotFoundException;
-import java.util.List;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 @Service
 public class ItemMenuService {
@@ -75,6 +77,10 @@ public class ItemMenuService {
                         .orElseThrow(() -> new NotFoundException("vendedor not found"));
         ItemMenu.setVendedor(vendedor);
         return ItemMenu;
+    }
+
+    public Integer getIdVendedor(ItemMenu itemMenu){
+        return itemMenu.getVendedor().getId();
     }
 
 }

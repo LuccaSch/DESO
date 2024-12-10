@@ -1,5 +1,11 @@
 package isi.deso.tp_spring.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
 import isi.deso.tp_spring.domain.Coordenada;
 import isi.deso.tp_spring.domain.ItemMenu;
 import isi.deso.tp_spring.domain.Vendedor;
@@ -9,9 +15,6 @@ import isi.deso.tp_spring.repos.ItemMenuRepository;
 import isi.deso.tp_spring.repos.VendedorRepository;
 import isi.deso.tp_spring.util.NotFoundException;
 import isi.deso.tp_spring.util.ReferencedWarning;
-import java.util.List;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 @Service
 public class VendedorService {
@@ -27,6 +30,12 @@ public class VendedorService {
         this.coordenadaRepository = coordenadaRepository;
         this.ItemMenuRepository = ItemMenuRepository;
     }
+
+   public List<ItemMenu> obtenerItemsMenuDelVendedor(Vendedor vendedor) {
+    return ItemMenuRepository.findAll().stream()
+            .filter(item -> ItemMenuRepository.findFirstByVendedor(vendedor).equals(item))
+            .collect(Collectors.toList());
+    }    
 
     public List<VendedorDTO> findAll() {
         final List<Vendedor> vendedors = vendedorRepository.findAll(Sort.by("id"));

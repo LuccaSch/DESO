@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 public class PedidoDTO {
 
+    private Integer id;
+
     private EstadoPedido estadoPedido;
 
     private Double precioTotal;

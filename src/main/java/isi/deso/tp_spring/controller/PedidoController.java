@@ -1,11 +1,7 @@
 package isi.deso.tp_spring.controller;
 
-import isi.deso.tp_spring.model.PedidoDTO;
-import isi.deso.tp_spring.service.PedidoService;
-import isi.deso.tp_spring.util.ReferencedException;
-import isi.deso.tp_spring.util.ReferencedWarning;
-import jakarta.validation.Valid;
 import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +11,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import isi.deso.tp_spring.domain.ItemPedido;
+import isi.deso.tp_spring.model.EstadoPedido;
+import isi.deso.tp_spring.model.PedidoDTO;
+import isi.deso.tp_spring.service.PedidoService;
+import isi.deso.tp_spring.util.ReferencedException;
+import isi.deso.tp_spring.util.ReferencedWarning;
+import jakarta.validation.Valid;
+
+
 
 @Controller
 @RequestMapping("/api/pedidos")
@@ -64,4 +70,19 @@ public class PedidoController {
         pedidoService.delete(id);
         return "pedidoEliminado";
     }
+    
+    @GetMapping("/{id}/detalle")
+    public String showAllsItemsPedido(@PathVariable Integer id, Model model) {
+        List<ItemPedido> itemsPedido = pedidoService.getItemsPedido(id);
+        model.addAttribute("listaItemsPedido", itemsPedido);
+        return "lista items pedido";
+    }
+    
+    @GetMapping("/{id}/estado")
+    public String showEstadoPedido(@PathVariable Integer id, Model model) {
+        EstadoPedido estadoPedido = pedidoService.getEstadoPedido(id);
+        model.addAttribute("listaItemsPedido", estadoPedido);
+        return "lista items pedido";
+    }
+    
 }
