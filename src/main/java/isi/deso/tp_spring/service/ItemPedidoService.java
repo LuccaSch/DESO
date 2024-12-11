@@ -1,14 +1,17 @@
 package isi.deso.tp_spring.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import isi.deso.tp_spring.domain.ItemMenu;
 import isi.deso.tp_spring.domain.ItemPedido;
 import isi.deso.tp_spring.domain.Pedido;
 import isi.deso.tp_spring.model.ItemPedidoDTO;
 import isi.deso.tp_spring.repos.ItemPedidoRepository;
 import isi.deso.tp_spring.repos.PedidoRepository;
 import isi.deso.tp_spring.util.NotFoundException;
-import java.util.List;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 @Service
 public class ItemPedidoService {
@@ -52,10 +55,11 @@ public class ItemPedidoService {
         itemPedidoRepository.deleteById(id);
     }
 
-    private ItemPedidoDTO mapToDTO(final ItemPedido itemPedido, final ItemPedidoDTO itemPedidoDTO) {
+    public ItemPedidoDTO mapToDTO(final ItemPedido itemPedido, final ItemPedidoDTO itemPedidoDTO) {
         itemPedidoDTO.setCantidad(itemPedido.getCantidad());
         itemPedidoDTO.setPrecio(itemPedido.getPrecio());
         itemPedidoDTO.setPedido(itemPedido.getPedido() == null ? null : itemPedido.getPedido().getId());
+        itemPedidoDTO.setItemMenu(itemPedido.getPedido() == null ? null : itemPedido.getItemMenu());
         return itemPedidoDTO;
     }
 
@@ -65,6 +69,8 @@ public class ItemPedidoService {
         final Pedido pedido = itemPedidoDTO.getPedido() == null ? null : pedidoRepository.findById(itemPedidoDTO.getPedido())
                 .orElseThrow(() -> new NotFoundException("pedido not found"));
         itemPedido.setPedido(pedido);
+        ItemMenu itemMenu = itemPedidoDTO.getPedido() == null ? null : itemPedido.getItemMenu();
+        itemPedido.setItemMenu(itemMenu);
         return itemPedido;
     }
 

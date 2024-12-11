@@ -31,5 +31,6 @@ public class ItemPedido {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
+    private ItemMenu itemMenu;
 
 }

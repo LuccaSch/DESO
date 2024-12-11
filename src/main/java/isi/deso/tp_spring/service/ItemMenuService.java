@@ -83,4 +83,13 @@ public class ItemMenuService {
         return itemMenu.getVendedor().getId();
     }
 
+    public Integer getIdVendedor(ItemMenuDTO itemMenuDTO){
+        return itemMenuDTO.getVendedor();
+    }
+
+    public List<ItemMenuDTO> getItemsDeVendedor(Integer idVendedor){
+        List<ItemMenuDTO> items = findAll();
+        return items.stream().filter(item -> getIdVendedor(item).equals(idVendedor)).toList();
+    }
+
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.ClienteDTO;
@@ -95,10 +95,11 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     public String updateCliente(@PathVariable(name = "id") final Integer id,
-            @ModelAttribute @Valid ClienteDTO clienteDTO, Model model) {
+            @ModelAttribute @Valid ClienteDTO clienteDTO, Model model, RedirectAttributes redirectAttributes) {
         clienteService.update(id, clienteDTO);
         model.addAttribute("id", id);
-        return "clienteActualizado"; // Nombre de la plantilla Thymeleaf (clienteActualizado.html)
+        redirectAttributes.addFlashAttribute("successMessage", "¡Actualizado con éxito!"); //mostrar un swipe up cuando se edita el cliente con exito
+        return "redirect:/api/clientes";
     }
 
    // @DeleteMapping("/eliminar/{id}")
@@ -114,7 +115,7 @@ public class ClienteController {
     }
     @PostMapping("/guardarcliente")
     public String postMethodName(@ModelAttribute ClienteDTO cliente) {
-        System.out.println("hola");
+        System.out.println("hola"); //QUE??
         clienteService.create(cliente);
         return "redirect:/api/clientes";
     }
@@ -123,6 +124,5 @@ public class ClienteController {
     public String getMethodName(@RequestParam String param) {
         return new String();
     }
-    
     
 }

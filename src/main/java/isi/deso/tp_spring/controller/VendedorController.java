@@ -11,17 +11,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import isi.deso.tp_spring.model.ItemMenuDTO;
 import isi.deso.tp_spring.model.VendedorDTO;
+import isi.deso.tp_spring.service.ItemMenuService;
 import isi.deso.tp_spring.service.VendedorService;
 import isi.deso.tp_spring.util.ReferencedException;
 import isi.deso.tp_spring.util.ReferencedWarning;
 import jakarta.validation.Valid;
 
+
 @Controller
 @RequestMapping("/api/vendedores")
 public class VendedorController {
-
+    
     private final VendedorService vendedorService;
 
     public VendedorController(final VendedorService vendedorService) {
@@ -64,12 +68,21 @@ public class VendedorController {
         return "vendedorCreado";
     }
 
+    @GetMapping("/editar/{id}")
+    public String showUpdateFormS(@PathVariable(name="id") final Integer id, Model model) {
+        VendedorDTO vendedorDTO = vendedorService.get(id);
+        model.addAttribute("vendedor", vendedorDTO);
+        return "editarVendedor";
+    }
+    
+
     @PutMapping("/{id}")
     public String updateVendedor(@PathVariable(name = "id") final Integer id,
-            @ModelAttribute @Valid final VendedorDTO vendedorDTO, Model model) {
+            @ModelAttribute @Valid final VendedorDTO vendedorDTO, Model model, RedirectAttributes redirectAttributes) {
         vendedorService.update(id, vendedorDTO);
         model.addAttribute("id", id);
-        return "vendedorActualizado";
+        redirectAttributes.addFlashAttribute("successMessage", "¡Actualizado con éxito!");
+        return "redirect:/api/vendedores";
     }
 
     @DeleteMapping("/{id}")
@@ -82,5 +95,13 @@ public class VendedorController {
         return "vendedorEliminado";
     }
 
-    
+    @GetMapping("/pedido/{vendedorId}")
+    public String mostrarMenu(@PathVariable Integer vendedorId, Model model, ItemMenuService itemMenuService) {
+        VendedorDTO vendedor = vendedorService.get(vendedorId);
+        List<ItemMenuDTO> menuItems = itemMenuService.getItemsDeVendedor(vendedorId);
+        model.addAttribute("vendedor", vendedor);
+        model.addAttribute("menuItems", menuItems);
+        return "";
+    }
+
 }

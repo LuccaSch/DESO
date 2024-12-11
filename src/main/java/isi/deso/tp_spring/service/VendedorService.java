@@ -73,7 +73,7 @@ public class VendedorService {
         vendedorRepository.deleteById(id);
     }
 
-    private VendedorDTO mapToDTO(final Vendedor vendedor, final VendedorDTO vendedorDTO) {
+    public VendedorDTO mapToDTO(final Vendedor vendedor, final VendedorDTO vendedorDTO) {
         vendedorDTO.setNombre(vendedor.getNombre());
         vendedorDTO.setDireccion(vendedor.getDireccion());
         vendedorDTO.setCoordenada(vendedor.getCoordenada() == null ? null : vendedor.getCoordenada().getId());

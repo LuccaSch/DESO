@@ -1,5 +1,6 @@
 package isi.deso.tp_spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -11,6 +12,7 @@ import isi.deso.tp_spring.domain.ContextoPago;
 import isi.deso.tp_spring.domain.ItemPedido;
 import isi.deso.tp_spring.domain.Pedido;
 import isi.deso.tp_spring.model.EstadoPedido;
+import isi.deso.tp_spring.model.ItemPedidoDTO;
 import isi.deso.tp_spring.model.PedidoDTO;
 import isi.deso.tp_spring.repos.ClienteRepository;
 import isi.deso.tp_spring.repos.ContextoPagoRepository;
@@ -26,15 +28,18 @@ public class PedidoService {
     private final ClienteRepository clienteRepository;
     private final ContextoPagoRepository contextoPagoRepository;
     private final ItemPedidoRepository itemPedidoRepository;
+    private final ItemPedidoService itemPedidoService;
 
     public PedidoService(final PedidoRepository pedidoRepository,
             final ClienteRepository clienteRepository,
             final ContextoPagoRepository contextoPagoRepository,
-            final ItemPedidoRepository itemPedidoRepository) {
+            final ItemPedidoRepository itemPedidoRepository,
+            final ItemPedidoService itemPedidoService) {
         this.pedidoRepository = pedidoRepository;
         this.clienteRepository = clienteRepository;
         this.contextoPagoRepository = contextoPagoRepository;
         this.itemPedidoRepository = itemPedidoRepository;
+        this.itemPedidoService = itemPedidoService;
     }
 
     public List<PedidoDTO> findAll() {
@@ -53,6 +58,24 @@ public class PedidoService {
         pedido = mapToEntity(pedidoDTO, pedido);
         List<ItemPedido> itemsPedido = pedido.getItemPedidos();
         return  itemsPedido;
+    }
+    
+    public List<ItemPedidoDTO> getItemsPedidoDTO(Integer idPedido){
+        PedidoDTO pedidoDTO = findAll().stream()
+        .filter(p -> p.getId().equals(idPedido))
+        .findFirst()
+        .orElseThrow(() -> new NoSuchElementException("No se encontró el pedido con id " + idPedido));
+        Pedido pedido = null;
+        pedido = mapToEntity(pedidoDTO, pedido);
+        List<ItemPedido> itemsPedido = pedido.getItemPedidos();
+        List<ItemPedidoDTO> itemsPedidoDTO = new ArrayList<>(); 
+
+        for(ItemPedido itemPedido : itemsPedido){
+            ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
+            itemPedidoDTO = itemPedidoService.mapToDTO(itemPedido, itemPedidoDTO);
+            itemsPedidoDTO.add(itemPedidoDTO);
+        }
+        return  itemsPedidoDTO;
     }
 
     public EstadoPedido getEstadoPedido(Integer idPedido){
