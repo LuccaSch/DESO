@@ -1,7 +1,12 @@
 package isi.deso.tp_spring.controller;
 
+import isi.deso.tp_spring.model.PedidoDTO;
+import isi.deso.tp_spring.service.PedidoService;
+import isi.deso.tp_spring.util.ReferencedException;
+import isi.deso.tp_spring.util.ReferencedWarning;
+import jakarta.validation.Valid;
 import java.util.List;
-
+import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +31,8 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/pedidos")
 public class PedidoController {
 
+    Logger logger = org.slf4j.LoggerFactory.getLogger(PedidoController.class);
+
     private final PedidoService pedidoService;
 
     public PedidoController(final PedidoService pedidoService) {
@@ -42,8 +49,14 @@ public class PedidoController {
     @GetMapping("/{id}")
     public String getPedido(@PathVariable(name = "id") final Integer id, Model model) {
         PedidoDTO pedido = pedidoService.get(id);
-        model.addAttribute("pedido", pedido);
-        return "pedido";
+        if (pedido != null) {
+            logger.info("Pedido encontrado");
+            model.addAttribute("itemMenuDetail", pedido);
+            return "pedido";
+        } else {
+            logger.info("Pedido no encontrado");
+            return "recurso-no-encontrado";
+        }
     }
 
     @PostMapping
@@ -70,19 +83,19 @@ public class PedidoController {
         pedidoService.delete(id);
         return "pedidoEliminado";
     }
-    
+
     @GetMapping("/{id}/detalle")
     public String showAllsItemsPedido(@PathVariable Integer id, Model model) {
         List<ItemPedido> itemsPedido = pedidoService.getItemsPedido(id);
         model.addAttribute("listaItemsPedido", itemsPedido);
         return "lista items pedido";
     }
-    
+
     @GetMapping("/{id}/estado")
     public String showEstadoPedido(@PathVariable Integer id, Model model) {
         EstadoPedido estadoPedido = pedidoService.getEstadoPedido(id);
         model.addAttribute("listaItemsPedido", estadoPedido);
         return "lista items pedido";
     }
-    
+
 }
