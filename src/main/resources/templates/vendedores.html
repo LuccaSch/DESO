@@ -28,6 +28,19 @@
 
     <main>
         <section>
+            <h2>Buscar Vendedor</h2>
+            <form th:action="@{/api/vendedores/{id}(id=${id})}" method="get">
+                <label for="vendedorId">Buscar por Id:</label>
+                <input type="text" id="vendedorId" name="id">
+                <button type="submit">Buscar</button>
+            </form>
+            <form th:action="@{/api/vendedores/{nombre}(nombre=${nombre})}" method="get">
+                <label for="vendedorNombre">Buscar por Nombre:</label>
+                <input type="text" id="vendedorNombre" name="nombre">
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+        <section>
             <h2>Vendedores</h2>
             <table>
                 <thead>

@@ -8,6 +8,21 @@
 <body>
     <form th:action="@{/api/clientes/guardarcliente}" method="post">
 
+        <section id="buscar-cliente">
+            <h2>Buscar Cliente</h2>
+            <form th:action="@{/api/clientes/{id}(id=${id})}" method="get">
+                <label for="clienteId">Buscar por Id:</label>
+                <input type="text" id="clienteId" name="id" th:value="${id}" placeholder="Ingrese el ID">
+                <button type="submit">Buscar</button>
+            </form>
+
+            <form th:action="@{/api/clientes/nombre/{nombre}(nombre=${nombre})}" method="get">
+                <label for="clienteNombre">Buscar por Nombre:</label>
+                <input type="text" id="clienteNombre" name="nombre" th:value="${nombre}" placeholder="Ingrese el nombre">
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+
         <label>id:</label>
         <input type="number" name="id">
         <label>nombre:</label>

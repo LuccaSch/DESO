@@ -27,10 +27,26 @@
             <a href="/">Volver al Inicio</a>
         </nav>
     </header>
-
+    <section id="buscar-pedido">
+        <h2>Buscar Pedido</h2>
+        <form th:action="@{/api/pedidos/{id}(id=${id})}" method="get">
+            <label for="pedidoId">Buscar por Id:</label>
+            <input type="text" id="pedidoId" name="id">
+            <button type="submit">Buscar</button>
+        </form>
+        <form th:action="@{/api/pedidos/buscarPorEstado}" method="get">
+            <label for="estadoPedido">Buscar por Estado:</label>
+            <select id="estadoPedido" name="estado">
+                <option value="pendiente">Pendiente</option>
+                <option value="procesado">Procesado</option>
+                <option value="entregado">Entregado</option>
+            </select>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
     <main>
         <section>
-            <h2>pedidoes</h2>
+            <h2>Pedidos</h2>
             <table>
                 <thead>
                     <tr>
