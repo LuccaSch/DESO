@@ -42,32 +42,35 @@ public class ClienteController {
         return "clientes";
     }
 
-    @GetMapping("/{id}")
-    public String getCliente(@PathVariable final Integer id, Model model) {
+    @GetMapping("/id")
+    public String getCliente(@RequestParam final Integer id, Model model) {
         logger.info("getCliente");
         ClienteDTO cliente = clienteService.get(id);
         if (cliente != null) {
             logger.info("Cliente encontrado");
-            model.addAttribute("cliente", cliente);
-            return "cliente";
+            List<ClienteDTO> clientes = List.of(cliente);
+            model.addAttribute("clientes", clientes);
+            return "clientes";
         } else {
             logger.info("Cliente no encontrado");
             return "recurso-no-encontrado";
         }
     }
 
-    @GetMapping("/nombre/{nombre}")
-    public String getClienteByNombre(@PathVariable final String nombre, Model model) {
+    @GetMapping("/nombre")
+    public String getClienteByNombre(@RequestParam final String nombre, Model model) {
         ClienteDTO cliente = clienteService.getByNombre(nombre);
         if (cliente != null) {
             logger.info("Cliente encontrado");
-            model.addAttribute("cliente", cliente);
-            return "cliente";
+            List<ClienteDTO> clientes = List.of(cliente); 
+            model.addAttribute("clientes", clientes); 
+            return "clientes"; 
         } else {
             logger.info("Cliente no encontrado");
-            return "recurso-no-encontrado";
+            return "recurso-no-encontrado"; 
         }
     }
+    
 
     @GetMapping("/crear")
     public String showCreateForm(Model model) {
@@ -98,15 +101,16 @@ public class ClienteController {
         return "clienteActualizado"; // Nombre de la plantilla Thymeleaf (clienteActualizado.html)
     }
 
-    @DeleteMapping("/{id}")
-    @ApiResponse(responseCode = "204")
+   // @DeleteMapping("/eliminar/{id}")
+    //@ApiResponse(responseCode = "204")
+    @GetMapping("/eliminar/{id}")
     public String deleteCliente(@PathVariable(name = "id") final Integer id, Model model) {
         final ReferencedWarning referencedWarning = clienteService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
         clienteService.delete(id);
-        return "clienteEliminado";
+        return "redirect:/api/clientes";
     }
     @PostMapping("/guardarcliente")
     public String postMethodName(@ModelAttribute ClienteDTO cliente) {
