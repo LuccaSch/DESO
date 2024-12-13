@@ -17,43 +17,54 @@ import isi.deso.tp_spring.util.NotFoundException;
 @Service
 public class ItemMenuService {
 
-    private final ItemMenuRepository ItemMenuRepository;
+    private final ItemMenuRepository itemMenuRepository;
     private final CategoriaRepository categoriaRepository;
     private final VendedorRepository vendedorRepository;
 
-    public ItemMenuService(final ItemMenuRepository ItemMenuRepository,
+    public ItemMenuService(final ItemMenuRepository itemMenuRepository,
             final CategoriaRepository categoriaRepository,
             final VendedorRepository vendedorRepository) {
-        this.ItemMenuRepository = ItemMenuRepository;
+        this.itemMenuRepository = itemMenuRepository;
         this.categoriaRepository = categoriaRepository;
         this.vendedorRepository = vendedorRepository;
     }
 
     public List<ItemMenuDTO> findAll() {
-        final List<ItemMenu> ItemMenus = ItemMenuRepository.findAll(Sort.by("id"));
+        final List<ItemMenu> ItemMenus = itemMenuRepository.findAll(Sort.by("id"));
         return ItemMenus.stream()
                 .map(ItemMenu -> mapToDTO(ItemMenu, new ItemMenuDTO()))
                 .toList();
     }
 
     public ItemMenuDTO get(final Integer id) {
-        return ItemMenuRepository.findById(id)
+        return itemMenuRepository.findById(id)
                 .map(ItemMenu -> mapToDTO(ItemMenu, new ItemMenuDTO()))
                 .orElseThrow(NotFoundException::new);
     }
 
     public void update(final Integer id, final ItemMenuDTO ItemMenuDTO) {
-        final ItemMenu ItemMenu = ItemMenuRepository.findById(id)
+        final ItemMenu ItemMenu = itemMenuRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(ItemMenuDTO, ItemMenu);
-        ItemMenuRepository.save(ItemMenu);
+        itemMenuRepository.save(ItemMenu);
     }
 
     public void delete(final Integer id) {
-        ItemMenuRepository.deleteById(id);
+        itemMenuRepository.deleteById(id);
     }
 
-    private ItemMenuDTO mapToDTO(final ItemMenu ItemMenu, final ItemMenuDTO ItemMenuDTO) {
+    public List<ItemMenuDTO> findByIdVendedor(Integer idVendedor) {
+        Vendedor vendedor = vendedorRepository.findById(idVendedor).orElseThrow(NotFoundException::new);
+        return itemMenuRepository.findByVendedor(vendedor);
+    }
+
+    // public List<ItemMenuDTO> getItemsDeVendedor(Integer idVendedor) {
+    // List<ItemMenuDTO> items = findAll();
+    // return items.stream().filter(item ->
+    // item.getVendedor().equals(idVendedor)).toList();
+    // }
+
+    public ItemMenuDTO mapToDTO(final ItemMenu ItemMenu, final ItemMenuDTO ItemMenuDTO) {
         ItemMenuDTO.setNombre(ItemMenu.getNombre());
         ItemMenuDTO.setDescripcion(ItemMenu.getDescripcion());
         ItemMenuDTO.setPrecio(ItemMenu.getPrecio());
@@ -63,7 +74,7 @@ public class ItemMenuService {
         return ItemMenuDTO;
     }
 
-    private ItemMenu mapToEntity(final ItemMenuDTO ItemMenuDTO, final ItemMenu ItemMenu) {
+    public ItemMenu mapToEntity(final ItemMenuDTO ItemMenuDTO, final ItemMenu ItemMenu) {
         ItemMenu.setNombre(ItemMenuDTO.getNombre());
         ItemMenu.setDescripcion(ItemMenuDTO.getDescripcion());
         ItemMenu.setPrecio(ItemMenuDTO.getPrecio());
@@ -79,7 +90,7 @@ public class ItemMenuService {
         return ItemMenu;
     }
 
-    public Integer getIdVendedor(ItemMenu itemMenu){
+    public Integer getIdVendedor(ItemMenu itemMenu) {
         return itemMenu.getVendedor().getId();
     }
 

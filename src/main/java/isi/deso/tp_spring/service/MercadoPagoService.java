@@ -47,13 +47,13 @@ public class MercadoPagoService {
         mercadoPagoRepository.deleteById(id);
     }
 
-    private MercadoPagoDTO mapToDTO(final MercadoPago mercadoPago,
+    public MercadoPagoDTO mapToDTO(final MercadoPago mercadoPago,
             final MercadoPagoDTO mercadoPagoDTO) {
         mercadoPagoDTO.setAlias(mercadoPago.getAlias());
         return mercadoPagoDTO;
     }
 
-    private MercadoPago mapToEntity(final MercadoPagoDTO mercadoPagoDTO,
+    public MercadoPago mapToEntity(final MercadoPagoDTO mercadoPagoDTO,
             final MercadoPago mercadoPago) {
         mercadoPago.setAlias(mercadoPagoDTO.getAlias());
         return mercadoPago;

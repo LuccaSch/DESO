@@ -47,7 +47,7 @@ public class BebidaService {
         bebidaRepository.deleteById(id);
     }
 
-    private BebidaDTO mapToDTO(final Bebida bebida, final BebidaDTO bebidaDTO) {
+    public BebidaDTO mapToDTO(final Bebida bebida, final BebidaDTO bebidaDTO) {
         bebidaDTO.setNombre(bebida.getNombre());
         bebidaDTO.setDescripcion(bebida.getDescripcion());
         bebidaDTO.setPrecio(bebida.getPrecio());
@@ -59,7 +59,7 @@ public class BebidaService {
         return bebidaDTO;
     }
 
-    private Bebida mapToEntity(final BebidaDTO bebidaDTO, final Bebida bebida) {
+    public Bebida mapToEntity(final BebidaDTO bebidaDTO, final Bebida bebida) {
         bebida.setNombre(bebidaDTO.getNombre());
         bebida.setDescripcion(bebidaDTO.getDescripcion());
         bebida.setPrecio(bebidaDTO.getPrecio());

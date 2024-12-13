@@ -10,59 +10,32 @@
         <h1>Menú de Búsquedas</h1>
         <nav>
             <ul>
-                <li><a href="#buscar-cliente">Buscar Cliente</a></li>
-                <li><a href="#buscar-vendedor">Buscar Vendedor</a></li>
-                <li><a href="#buscar-pedido">Buscar Pedido</a></li>
+                <li><a href="#gestion-cliente">Gestion Cliente</a></li>
+                <li><a href="#gestion-vendedor">Gestion Vendedor</a></li>
+                <li><a href="#gestion-pedido">Gestion Pedido</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section id="buscar-cliente">
-            <h2>Buscar Cliente</h2>
-            <form th:action="@{/api/cliente}" method="get">
-                <label for="clienteId">Buscar por id:</label>
-                <input type="text" id="clienteId" name="id" placeholder="Ingrese el id" required>
-                <button type="submit">Buscar</button>
-            </form>
-
-            <form th:action="@{/api/cliente/nombre}" method="get">
-                <label for="clienteNombre">Buscar por nombre:</label>
-                <input type="text" id="clienteNombre" name="nombre" placeholder="Ingrese el nombre" required>
-                <button type="submit">Buscar</button>
+        <section id="gestion-cliente">
+            <h2>Gestion Cliente</h2>
+            <form th:action="@{/api/clientes}" method="get">
+                <button type="submit">Acceder</button>
             </form>
         </section>
         
-        <section id="buscar-vendedor">
-            <h2>Buscar Vendedor</h2>
-            <form th:action="@{/api/vendedor}" method="get">
-                <label for="vendedorId">Buscar por id:</label>
-                <input type="text" id="vendedorId" name="id" placeholder="Ingrese el id" required>
-                <button type="submit">Buscar</button>
-                
-            </form>
-            <form th:action="@{/api/vendedor/nombre}" method="get">
-                <label for="vendedorNombre">Buscar por nombre:</label>
-                <input type="text" id="vendedorNombre" name="nombre" placeholder="Ingrese el nombre" required>
-                <button type="submit">Buscar</button>
+        <section id="gestion-vendedor">
+            <h2>Gestion Vendedor</h2>
+            <form th:action="@{/api/vendedores}" method="get">
+                <button type="submit">Acceder</button>
             </form>
         </section>
 
-        <section id="buscar-pedido">
-            <h2>Buscar Pedido</h2>
-            <form th:action="@{/api/pedido}" method="get">
-                <label for="pedidoId">Buscar por id:</label>
-                <input type="text" id="pedidoId" name="id" placeholder="Ingrese el id" required>
-                <button type="submit">Buscar</button>
-            </form>
-            <form th:action="@{/api/pedido/estado}" method="get">
-                <label for="estadoPedido">Buscar por estado:</label>
-                <select id="estadoPedido" name="estado">
-                    <option value="pendiente">Pendiente</option>
-                    <option value="procesado">Procesado</option>
-                    <option value="entregado">Entregado</option>
-                </select>
-                <button type="submit">Buscar</button>
+        <section id="gestion-pedido">
+            <h2>Gestion Pedido</h2>
+            <form th:action="@{/api/pedidos}" method="get">
+                <button type="submit">Acceder</button>
             </form>
         </section>
     </main>

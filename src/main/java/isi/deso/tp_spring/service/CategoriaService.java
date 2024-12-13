@@ -53,12 +53,12 @@ public class CategoriaService {
         categoriaRepository.deleteById(id);
     }
 
-    private CategoriaDTO mapToDTO(final Categoria categoria, final CategoriaDTO categoriaDTO) {
+    public CategoriaDTO mapToDTO(final Categoria categoria, final CategoriaDTO categoriaDTO) {
         categoriaDTO.setDescripcion(categoria.getDescripcion());
         return categoriaDTO;
     }
 
-    private Categoria mapToEntity(final CategoriaDTO categoriaDTO, final Categoria categoria) {
+    public Categoria mapToEntity(final CategoriaDTO categoriaDTO, final Categoria categoria) {
         categoria.setDescripcion(categoriaDTO.getDescripcion());
         return categoria;
     }

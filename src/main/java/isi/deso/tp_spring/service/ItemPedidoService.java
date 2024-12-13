@@ -56,7 +56,7 @@ public class ItemPedidoService {
         itemPedidoRepository.deleteById(id);
     }
 
-    private ItemPedidoDTO mapToDTO(final ItemPedido itemPedido, final ItemPedidoDTO itemPedidoDTO) {
+    public ItemPedidoDTO mapToDTO(final ItemPedido itemPedido, final ItemPedidoDTO itemPedidoDTO) {
         itemPedidoDTO.setCantidad(itemPedido.getCantidad());
         itemPedidoDTO.setPrecio(itemPedido.getPrecio());
         itemPedidoDTO.setPedido(itemPedido.getPedido() == null ? null : itemPedido.getPedido().getId());
@@ -64,7 +64,7 @@ public class ItemPedidoService {
         return itemPedidoDTO;
     }
 
-    private ItemPedido mapToEntity(final ItemPedidoDTO itemPedidoDTO, final ItemPedido itemPedido) {
+    public ItemPedido mapToEntity(final ItemPedidoDTO itemPedidoDTO, final ItemPedido itemPedido) {
         itemPedido.setCantidad(itemPedidoDTO.getCantidad());
         itemPedido.setPrecio(itemPedidoDTO.getPrecio());
         final Pedido pedido = itemPedidoDTO.getPedido() == null ? null

@@ -28,9 +28,9 @@
             <h3>Acciones</h3>
             <tr th:each="pedido : ${pedidos}">
                 <td>
-                    <a th:href="@{'/api/pedido/' + ${pedido.id} + '/estado'}">Ver Estado</a>
-                    <a th:href="@{'/api/pedido/' + ${pedido.id} + '/detalle'}">Ver Detalle</a>
-                    <a th:href="@{/api/pedido}">Cancelar</a>
+                    <a th:href="@{'/api/pedidos/' + ${pedido.id} + '/estado'}">Ver Estado</a>
+                    <a th:href="@{'/api/pedidos/' + ${pedido.id} + '/detalle'}">Ver Detalle</a>
+                    <a th:href="@{/api/pedidos/{id}(id=${pedido.id})}">Cancelar</a>
                 </td>
             </tr>
         </section>

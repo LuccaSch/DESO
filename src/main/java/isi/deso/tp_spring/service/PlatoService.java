@@ -47,7 +47,7 @@ public class PlatoService {
         platoRepository.deleteById(id);
     }
 
-    private PlatoDTO mapToDTO(final Plato plato, final PlatoDTO platoDTO) {
+    public PlatoDTO mapToDTO(final Plato plato, final PlatoDTO platoDTO) {
         platoDTO.setNombre(plato.getNombre());
         platoDTO.setDescripcion(plato.getDescripcion());
         platoDTO.setPrecio(plato.getPrecio());
@@ -58,7 +58,7 @@ public class PlatoService {
         return platoDTO;
     }
 
-    private Plato mapToEntity(final PlatoDTO platoDTO, final Plato plato) {
+    public Plato mapToEntity(final PlatoDTO platoDTO, final Plato plato) {
         plato.setNombre(platoDTO.getNombre());
         plato.setDescripcion(platoDTO.getDescripcion());
         plato.setPrecio(platoDTO.getPrecio());

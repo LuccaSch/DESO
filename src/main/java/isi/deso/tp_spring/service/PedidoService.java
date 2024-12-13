@@ -1,5 +1,6 @@
 package isi.deso.tp_spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -11,6 +12,7 @@ import isi.deso.tp_spring.domain.ContextoPago;
 import isi.deso.tp_spring.domain.ItemPedido;
 import isi.deso.tp_spring.domain.Pedido;
 import isi.deso.tp_spring.model.EstadoPedido;
+import isi.deso.tp_spring.model.ItemPedidoDTO;
 import isi.deso.tp_spring.model.PedidoDTO;
 import isi.deso.tp_spring.repos.ClienteRepository;
 import isi.deso.tp_spring.repos.ContextoPagoRepository;
@@ -26,15 +28,18 @@ public class PedidoService {
     private final ClienteRepository clienteRepository;
     private final ContextoPagoRepository contextoPagoRepository;
     private final ItemPedidoRepository itemPedidoRepository;
+    private final ItemPedidoService itemPedidoService;
 
     public PedidoService(final PedidoRepository pedidoRepository,
             final ClienteRepository clienteRepository,
             final ContextoPagoRepository contextoPagoRepository,
-            final ItemPedidoRepository itemPedidoRepository) {
+            final ItemPedidoRepository itemPedidoRepository,
+            final ItemPedidoService itemPedidoService) {
         this.pedidoRepository = pedidoRepository;
         this.clienteRepository = clienteRepository;
         this.contextoPagoRepository = contextoPagoRepository;
         this.itemPedidoRepository = itemPedidoRepository;
+        this.itemPedidoService = itemPedidoService;
     }
 
     public List<PedidoDTO> findAll() {
@@ -44,25 +49,43 @@ public class PedidoService {
                 .toList();
     }
 
-    public List<ItemPedido> getItemsPedido(Integer idPedido){
+    public List<ItemPedido> getItemsPedido(Integer idPedido) {
         PedidoDTO pedidoDTO = findAll().stream()
-        .filter(p -> p.getId().equals(idPedido))
-        .findFirst()
-        .orElseThrow(() -> new NoSuchElementException("No se encontró el pedido con id " + idPedido));
+                .filter(p -> p.getId().equals(idPedido))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("No se encontró el pedido con id " + idPedido));
         Pedido pedido = null;
         pedido = mapToEntity(pedidoDTO, pedido);
         List<ItemPedido> itemsPedido = pedido.getItemPedidos();
-        return  itemsPedido;
+        return itemsPedido;
     }
 
-    public EstadoPedido getEstadoPedido(Integer idPedido){
+    public EstadoPedido getEstadoPedido(Integer idPedido) {
         PedidoDTO pedidoDTO = findAll().stream()
-        .filter(p -> p.getId().equals(idPedido))
-        .findFirst()
-        .orElseThrow(() -> new NoSuchElementException("No se encontró el pedido con id " + idPedido));
+                .filter(p -> p.getId().equals(idPedido))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("No se encontró el pedido con id " + idPedido));
         Pedido pedido = null;
         pedido = mapToEntity(pedidoDTO, pedido);
         return pedido.getEstadoPedido();
+    }
+
+    public List<ItemPedidoDTO> getItemsPedidoDTO(Integer idPedido) {
+        PedidoDTO pedidoDTO = findAll().stream()
+                .filter(p -> p.getId().equals(idPedido))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("No se encontró el pedido con id " + idPedido));
+        Pedido pedido = null;
+        pedido = mapToEntity(pedidoDTO, pedido);
+        List<ItemPedido> itemsPedido = pedido.getItemPedidos();
+        List<ItemPedidoDTO> itemsPedidoDTO = new ArrayList<>();
+
+        for (ItemPedido itemPedido : itemsPedido) {
+            ItemPedidoDTO itemPedidoDTO = new ItemPedidoDTO();
+            itemPedidoDTO = itemPedidoService.mapToDTO(itemPedido, itemPedidoDTO);
+            itemsPedidoDTO.add(itemPedidoDTO);
+        }
+        return itemsPedidoDTO;
     }
 
     public PedidoDTO get(final Integer id) {
@@ -88,7 +111,7 @@ public class PedidoService {
         pedidoRepository.deleteById(id);
     }
 
-    private PedidoDTO mapToDTO(final Pedido pedido, final PedidoDTO pedidoDTO) {
+    public PedidoDTO mapToDTO(final Pedido pedido, final PedidoDTO pedidoDTO) {
         pedidoDTO.setId(pedido.getId());
         pedidoDTO.setEstadoPedido(pedido.getEstadoPedido());
         pedidoDTO.setPrecioTotal(pedido.getPrecioTotal());
@@ -97,15 +120,17 @@ public class PedidoService {
         return pedidoDTO;
     }
 
-    private Pedido mapToEntity(final PedidoDTO pedidoDTO, final Pedido pedido) {
+    public Pedido mapToEntity(final PedidoDTO pedidoDTO, final Pedido pedido) {
         pedido.setId(pedidoDTO.getId());
         pedido.setEstadoPedido(pedidoDTO.getEstadoPedido());
         pedido.setPrecioTotal(pedidoDTO.getPrecioTotal());
-        final Cliente cliente = pedidoDTO.getCliente() == null ? null : clienteRepository.findById(pedidoDTO.getCliente())
-                .orElseThrow(() -> new NotFoundException("cliente not found"));
+        final Cliente cliente = pedidoDTO.getCliente() == null ? null
+                : clienteRepository.findById(pedidoDTO.getCliente())
+                        .orElseThrow(() -> new NotFoundException("cliente not found"));
         pedido.setCliente(cliente);
-        final ContextoPago contextoPago = pedidoDTO.getContextoPago() == null ? null : contextoPagoRepository.findById(pedidoDTO.getContextoPago())
-                .orElseThrow(() -> new NotFoundException("contextoPago not found"));
+        final ContextoPago contextoPago = pedidoDTO.getContextoPago() == null ? null
+                : contextoPagoRepository.findById(pedidoDTO.getContextoPago())
+                        .orElseThrow(() -> new NotFoundException("contextoPago not found"));
         pedido.setContextoPago(contextoPago);
         return pedido;
     }

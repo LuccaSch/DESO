@@ -58,13 +58,13 @@ public class CoordenadaService {
         coordenadaRepository.deleteById(id);
     }
 
-    private CoordenadaDTO mapToDTO(final Coordenada coordenada, final CoordenadaDTO coordenadaDTO) {
+    public CoordenadaDTO mapToDTO(final Coordenada coordenada, final CoordenadaDTO coordenadaDTO) {
         coordenadaDTO.setLat(coordenada.getLat());
         coordenadaDTO.setLgn(coordenada.getLgn());
         return coordenadaDTO;
     }
 
-    private Coordenada mapToEntity(final CoordenadaDTO coordenadaDTO, final Coordenada coordenada) {
+    public Coordenada mapToEntity(final CoordenadaDTO coordenadaDTO, final Coordenada coordenada) {
         coordenada.setLat(coordenadaDTO.getLat());
         coordenada.setLgn(coordenadaDTO.getLgn());
         return coordenada;

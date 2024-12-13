@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.ClienteDTO;
@@ -66,49 +67,55 @@ public class ClienteController {
         }
     }
 
-    @GetMapping("/api/cliente/crear")
-    public String showCreateForm(Model model) {
-        model.addAttribute("cliente", new ClienteDTO()); // Para mostrar un formulario vacío
-        return "crearCliente";
-    }
+    // @GetMapping("/api/cliente/crear")
+    // public String showCreateForm(Model model) {
+    // model.addAttribute("cliente", new ClienteDTO()); // Para mostrar un
+    // formulario vacío
+    // return "crear-cliente";
+    // }
 
-    @PostMapping("/api/cliente")
+    @PostMapping("/api/cliente/crear")
     @ApiResponse(responseCode = "201")
-    public String createCliente(@ModelAttribute @Valid ClienteDTO clienteDTO, Model model) {
+    public String createCliente(@ModelAttribute @Valid ClienteDTO clienteDTO, Model model,
+            RedirectAttributes redirectAttributes) {
         Integer createdId = clienteService.create(clienteDTO);
         model.addAttribute("createdId", createdId);
-        return "clienteCreado";
+        redirectAttributes.addFlashAttribute("successMessage", "¡Creado con éxito!");
+        return "redirect:/api/clientes";
     }
 
     @GetMapping("/api/cliente/editar")
     public String showUpdateForm(@RequestParam final Integer id, Model model) {
         ClienteDTO cliente = clienteService.get(id);
         model.addAttribute("cliente", cliente);
-        return "editarCliente";
+        return "editar-cliente";
     }
 
     @PutMapping("/api/cliente")
-    public String updateCliente(@RequestParam final Integer id,
-            @ModelAttribute @Valid ClienteDTO clienteDTO, Model model) {
+    @ApiResponse(responseCode = "200")
+    public String updateCliente(@RequestParam final Integer id, @ModelAttribute @Valid ClienteDTO clienteDTO,
+            Model model, RedirectAttributes redirectAttributes) {
         clienteService.update(id, clienteDTO);
         model.addAttribute("id", id);
-        return "clienteActualizado"; // Nombre de la plantilla Thymeleaf (clienteActualizado.html)
+        redirectAttributes.addFlashAttribute("successMessage", "¡Actualizado con éxito!");
+        return "redirect:/api/clientes";
     }
 
-    @DeleteMapping("/api/cliente")
+    @GetMapping("/api/cliente/eliminar/{id}")
     @ApiResponse(responseCode = "204")
-    public String deleteCliente(@RequestParam final Integer id, Model model) {
+    public String deleteCliente(@PathVariable(name = "id") final Integer id, Model model,
+            RedirectAttributes redirectAttributes) {
         final ReferencedWarning referencedWarning = clienteService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
         clienteService.delete(id);
-        return "clienteEliminado";
+        redirectAttributes.addFlashAttribute("successMessage", "¡Eliminado con éxito!");
+        return "redirect:/api/clientes";
     }
 
     @PostMapping("/api/cliente/guardar")
     public String postMethodName(@ModelAttribute ClienteDTO cliente) {
-        System.out.println("hola");
         clienteService.create(cliente);
         return "redirect:/api/clientes";
     }

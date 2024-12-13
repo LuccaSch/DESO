@@ -47,11 +47,11 @@ public class EfectivoService {
         efectivoRepository.deleteById(id);
     }
 
-    private EfectivoDTO mapToDTO(final Efectivo efectivo, final EfectivoDTO efectivoDTO) {
+    public EfectivoDTO mapToDTO(final Efectivo efectivo, final EfectivoDTO efectivoDTO) {
         return efectivoDTO;
     }
 
-    private Efectivo mapToEntity(final EfectivoDTO efectivoDTO, final Efectivo efectivo) {
+    public Efectivo mapToEntity(final EfectivoDTO efectivoDTO, final Efectivo efectivo) {
         return efectivo;
     }
 

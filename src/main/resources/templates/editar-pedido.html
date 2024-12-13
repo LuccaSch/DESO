@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Pedido</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Editar Pedido</h1>
+        <nav>
+            <a href="/api/pedido">Volver al Pedido</a>
+        </nav>
+    </header>
+    
+    <main>
+        <form th:action="@{/api/pedido}" method="post">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Seleccionar</th>
+                        <th>Nombre del Ítem</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${menuItems}">
+                        <td>
+                            <input type="checkbox" name="itemIds" th:value="${item.id}" />
+                        </td>
+                        <td th:text="${item.nombre}"></td>
+                        <td th:text="${item.precio}"></td>
+                        <td>
+                            <input type="number" name="itemCantidad" th:value="${item.cantidad}" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <button type="submit">Guardar Cambios</button>
+                <button type="reset">Restablecer</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; UTN FRSF DS TP</p>
+    </footer>
+</body>
+</html>
+

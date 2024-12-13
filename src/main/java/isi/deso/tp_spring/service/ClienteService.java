@@ -64,7 +64,7 @@ public class ClienteService {
         clienteRepository.deleteById(id);
     }
 
-    private ClienteDTO mapToDTO(final Cliente cliente, final ClienteDTO clienteDTO) {
+    public ClienteDTO mapToDTO(final Cliente cliente, final ClienteDTO clienteDTO) {
         clienteDTO.setId(cliente.getId());
         clienteDTO.setNombre(cliente.getNombre());
         clienteDTO.setCuit(cliente.getCuit());
@@ -74,13 +74,14 @@ public class ClienteService {
         return clienteDTO;
     }
 
-    private Cliente mapToEntity(final ClienteDTO clienteDTO, final Cliente cliente) {
+    public Cliente mapToEntity(final ClienteDTO clienteDTO, final Cliente cliente) {
         cliente.setNombre(clienteDTO.getNombre());
         cliente.setCuit(clienteDTO.getCuit());
         cliente.setEmail(clienteDTO.getEmail());
         cliente.setDireccion(clienteDTO.getDireccion());
-        final Coordenada coordenada = clienteDTO.getCoordenada() == null ? null : coordenadaRepository.findById(clienteDTO.getCoordenada())
-                .orElseThrow(() -> new NotFoundException("coordenada not found"));
+        final Coordenada coordenada = clienteDTO.getCoordenada() == null ? null
+                : coordenadaRepository.findById(clienteDTO.getCoordenada())
+                        .orElseThrow(() -> new NotFoundException("coordenada not found"));
         cliente.setCoordenada(coordenada);
         return cliente;
     }

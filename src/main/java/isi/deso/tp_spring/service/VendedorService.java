@@ -31,11 +31,11 @@ public class VendedorService {
         this.ItemMenuRepository = ItemMenuRepository;
     }
 
-   public List<ItemMenu> obtenerItemsMenuDelVendedor(Vendedor vendedor) {
-    return ItemMenuRepository.findAll().stream()
-            .filter(item -> ItemMenuRepository.findFirstByVendedor(vendedor).equals(item))
-            .collect(Collectors.toList());
-    }    
+    public List<ItemMenu> obtenerItemsMenuDelVendedor(Vendedor vendedor) {
+        return ItemMenuRepository.findAll().stream()
+                .filter(item -> ItemMenuRepository.findFirstByVendedor(vendedor).equals(item))
+                .collect(Collectors.toList());
+    }
 
     public List<VendedorDTO> findAll() {
         final List<Vendedor> vendedors = vendedorRepository.findAll(Sort.by("id"));
@@ -73,14 +73,14 @@ public class VendedorService {
         vendedorRepository.deleteById(id);
     }
 
-    private VendedorDTO mapToDTO(final Vendedor vendedor, final VendedorDTO vendedorDTO) {
+    public VendedorDTO mapToDTO(final Vendedor vendedor, final VendedorDTO vendedorDTO) {
         vendedorDTO.setNombre(vendedor.getNombre());
         vendedorDTO.setDireccion(vendedor.getDireccion());
         vendedorDTO.setCoordenada(vendedor.getCoordenada() == null ? null : vendedor.getCoordenada().getId());
         return vendedorDTO;
     }
 
-    private Vendedor mapToEntity(final VendedorDTO vendedorDTO, final Vendedor vendedor) {
+    public Vendedor mapToEntity(final VendedorDTO vendedorDTO, final Vendedor vendedor) {
         vendedor.setNombre(vendedorDTO.getNombre());
         vendedor.setDireccion(vendedorDTO.getDireccion());
         final Coordenada coordenada = vendedorDTO.getCoordenada() == null ? null

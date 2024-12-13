@@ -47,14 +47,14 @@ public class TransferenciaService {
         transferenciaRepository.deleteById(id);
     }
 
-    private TransferenciaDTO mapToDTO(final Transferencia transferencia,
+    public TransferenciaDTO mapToDTO(final Transferencia transferencia,
             final TransferenciaDTO transferenciaDTO) {
         transferenciaDTO.setCuit(transferencia.getCuit());
         transferenciaDTO.setCbu(transferencia.getCbu());
         return transferenciaDTO;
     }
 
-    private Transferencia mapToEntity(final TransferenciaDTO transferenciaDTO,
+    public Transferencia mapToEntity(final TransferenciaDTO transferenciaDTO,
             final Transferencia transferencia) {
         transferencia.setCuit(transferenciaDTO.getCuit());
         transferencia.setCbu(transferenciaDTO.getCbu());

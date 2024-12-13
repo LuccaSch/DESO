@@ -53,12 +53,12 @@ public class PagoService {
         pagoRepository.deleteById(id);
     }
 
-    private PagoDTO mapToDTO(final Pago pago, final PagoDTO pagoDTO) {
+    public PagoDTO mapToDTO(final Pago pago, final PagoDTO pagoDTO) {
         pagoDTO.setTipoEstrategia(pago.getTipoEstrategia());
         return pagoDTO;
     }
 
-    private Pago mapToEntity(final PagoDTO pagoDTO, final Pago pago) {
+    public Pago mapToEntity(final PagoDTO pagoDTO, final Pago pago) {
         pago.setTipoEstrategia(pagoDTO.getTipoEstrategia());
         return pago;
     }

@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.ClienteDTO;
+import isi.deso.tp_spring.model.ItemMenuDTO;
 import isi.deso.tp_spring.model.VendedorDTO;
+import isi.deso.tp_spring.service.ItemMenuService;
 import isi.deso.tp_spring.service.VendedorService;
 import isi.deso.tp_spring.util.NotFoundException;
 import isi.deso.tp_spring.util.ReferencedException;
@@ -28,9 +32,11 @@ public class VendedorController {
     Logger logger = org.slf4j.LoggerFactory.getLogger(VendedorController.class);
 
     private final VendedorService vendedorService;
+    private final ItemMenuService itemMenuService;
 
-    public VendedorController(final VendedorService vendedorService) {
+    public VendedorController(final VendedorService vendedorService, final ItemMenuService itemMenuService) {
         this.vendedorService = vendedorService;
+        this.itemMenuService = itemMenuService;
     }
 
     @GetMapping("/api/vendedores")
@@ -66,29 +72,45 @@ public class VendedorController {
         }
     }
 
-    @PostMapping
-    public String createVendedor(@ModelAttribute @Valid final VendedorDTO vendedorDTO, Model model) {
+    @PostMapping("/api/vendedor/guardar")
+    @ApiResponse(responseCode = "201")
+    public String createVendedor(@ModelAttribute @Valid final VendedorDTO vendedorDTO, Model model,
+            RedirectAttributes redirectAttributes) {
         Integer createdId = vendedorService.create(vendedorDTO);
         model.addAttribute("createdId", createdId);
-        return "vendedorCreado";
+        redirectAttributes.addFlashAttribute("successMessage", "¡Creado con éxito!");
+        return "redirect:/api/vendedores";
     }
 
-    @PutMapping("/api/vendedor")
+    @PutMapping("/api/vendedor/editar")
+    @ApiResponse(responseCode = "200")
     public String updateVendedor(@RequestParam final Integer id,
-            @ModelAttribute @Valid final VendedorDTO vendedorDTO, Model model) {
+            @ModelAttribute @Valid final VendedorDTO vendedorDTO, Model model, RedirectAttributes redirectAttributes) {
         vendedorService.update(id, vendedorDTO);
         model.addAttribute("id", id);
-        return "vendedorActualizado";
+        redirectAttributes.addFlashAttribute("successMessage", "¡Actualizado con éxito!");
+        return "redirect:/api/vendedores";
     }
 
-    @DeleteMapping("/api/vendedor")
-    public String deleteVendedor(@RequestParam final Integer id, Model model) {
+    @GetMapping("/api/vendedor/eliminar/{id}")
+    public String deleteVendedor(@PathVariable(name = "id") final Integer id, Model model,
+            RedirectAttributes redirectAttributes) {
         final ReferencedWarning referencedWarning = vendedorService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
         }
         vendedorService.delete(id);
-        return "vendedorEliminado";
+        redirectAttributes.addFlashAttribute("successMessage", "¡Eliminado con éxito!");
+        return "redirect:/api/vendedores";
+    }
+
+    @GetMapping("/api/vendedor/menu")
+    public String getMenu(@RequestParam Integer vendedorId, Model model) {
+        VendedorDTO vendedor = vendedorService.get(vendedorId);
+        List<ItemMenuDTO> menuItems = itemMenuService.findByIdVendedor(vendedorId);
+        model.addAttribute("vendedor", vendedor);
+        model.addAttribute("menuItems", menuItems);
+        return "";
     }
 
 }

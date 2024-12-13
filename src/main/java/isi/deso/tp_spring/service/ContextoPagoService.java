@@ -57,16 +57,17 @@ public class ContextoPagoService {
         contextoPagoRepository.deleteById(id);
     }
 
-    private ContextoPagoDTO mapToDTO(final ContextoPago contextoPago,
+    public ContextoPagoDTO mapToDTO(final ContextoPago contextoPago,
             final ContextoPagoDTO contextoPagoDTO) {
         contextoPagoDTO.setPago(contextoPago.getPago() == null ? null : contextoPago.getPago().getId());
         return contextoPagoDTO;
     }
 
-    private ContextoPago mapToEntity(final ContextoPagoDTO contextoPagoDTO,
+    public ContextoPago mapToEntity(final ContextoPagoDTO contextoPagoDTO,
             final ContextoPago contextoPago) {
-        final Pago pago = contextoPagoDTO.getPago() == null ? null : pagoRepository.findById(contextoPagoDTO.getPago())
-                .orElseThrow(() -> new NotFoundException("pago not found"));
+        final Pago pago = contextoPagoDTO.getPago() == null ? null
+                : pagoRepository.findById(contextoPagoDTO.getPago())
+                        .orElseThrow(() -> new NotFoundException("pago not found"));
         contextoPago.setPago(pago);
         return contextoPago;
     }
