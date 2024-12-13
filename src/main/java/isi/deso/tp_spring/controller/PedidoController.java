@@ -1,7 +1,9 @@
 package isi.deso.tp_spring.controller;
 
 import isi.deso.tp_spring.model.PedidoDTO;
+import isi.deso.tp_spring.model.VendedorDTO;
 import isi.deso.tp_spring.service.PedidoService;
+import isi.deso.tp_spring.util.NotFoundException;
 import isi.deso.tp_spring.util.ReferencedException;
 import isi.deso.tp_spring.util.ReferencedWarning;
 import jakarta.validation.Valid;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import isi.deso.tp_spring.domain.ItemPedido;
 import isi.deso.tp_spring.model.EstadoPedido;
@@ -25,10 +28,7 @@ import isi.deso.tp_spring.util.ReferencedException;
 import isi.deso.tp_spring.util.ReferencedWarning;
 import jakarta.validation.Valid;
 
-
-
 @Controller
-@RequestMapping("/api/pedidos")
 public class PedidoController {
 
     Logger logger = org.slf4j.LoggerFactory.getLogger(PedidoController.class);
@@ -39,43 +39,43 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
-    @GetMapping
+    @GetMapping("/api/pedidos")
     public String getAllPedidos(Model model) {
         List<PedidoDTO> pedidos = pedidoService.findAll();
         model.addAttribute("pedidos", pedidos);
         return "pedidos";
     }
 
-    @GetMapping("/{id}")
-    public String getPedido(@PathVariable(name = "id") final Integer id, Model model) {
-        PedidoDTO pedido = pedidoService.get(id);
-        if (pedido != null) {
+    @GetMapping("/api/pedido")
+    public String getPedido(@RequestParam final Integer id, Model model) {
+        try {
+            PedidoDTO pedido = pedidoService.get(id);
             logger.info("Pedido encontrado");
-            model.addAttribute("itemMenuDetail", pedido);
+            model.addAttribute("pedido", pedido);
             return "pedido";
-        } else {
+        } catch (NotFoundException ex) {
             logger.info("Pedido no encontrado");
             return "recurso-no-encontrado";
         }
     }
 
-    @PostMapping
+    @PostMapping("/api/pedido")
     public String createPedido(@ModelAttribute @Valid final PedidoDTO pedidoDTO, Model model) {
         Integer createdId = pedidoService.create(pedidoDTO);
         model.addAttribute("createdId", createdId);
         return "pedidoCreado";
     }
 
-    @PutMapping("/{id}")
-    public String updatePedido(@PathVariable(name = "id") final Integer id,
+    @PutMapping("/api/pedido")
+    public String updatePedido(@RequestParam final Integer id,
             @ModelAttribute @Valid final PedidoDTO pedidoDTO, Model model) {
         pedidoService.update(id, pedidoDTO);
         model.addAttribute("id", id);
         return "pedidoActualizado";
     }
 
-    @DeleteMapping("/{id}")
-    public String deletePedido(@PathVariable(name = "id") final Integer id, Model model) {
+    @DeleteMapping("/api/pedido")
+    public String deletePedido(@RequestParam final Integer id, Model model) {
         final ReferencedWarning referencedWarning = pedidoService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
@@ -84,18 +84,24 @@ public class PedidoController {
         return "pedidoEliminado";
     }
 
-    @GetMapping("/{id}/detalle")
-    public String showAllsItemsPedido(@PathVariable Integer id, Model model) {
+    @GetMapping("/api/pedidos/detalle")
+    public String showAllsItemsPedido(@RequestParam Integer id, Model model) {
         List<ItemPedido> itemsPedido = pedidoService.getItemsPedido(id);
         model.addAttribute("listaItemsPedido", itemsPedido);
         return "lista items pedido";
     }
 
-    @GetMapping("/{id}/estado")
-    public String showEstadoPedido(@PathVariable Integer id, Model model) {
-        EstadoPedido estadoPedido = pedidoService.getEstadoPedido(id);
-        model.addAttribute("listaItemsPedido", estadoPedido);
-        return "lista items pedido";
+    @GetMapping("/api/pedidos/estado")
+    public String showEstadoPedido(@RequestParam Integer id, Model model) {
+        try {
+            EstadoPedido estadoPedido = pedidoService.getEstadoPedido(id);
+            logger.info("Pedidos encontrados");
+            model.addAttribute("listaItemsPedido", estadoPedido);
+            return "lista items pedido";
+        } catch (NotFoundException ex) {
+            logger.info("Pedidos encontrados");
+            return "recurso-no-encontrado";
+        }
     }
 
 }

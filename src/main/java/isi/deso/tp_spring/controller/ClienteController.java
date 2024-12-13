@@ -17,14 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.ClienteDTO;
 import isi.deso.tp_spring.service.ClienteService;
+import isi.deso.tp_spring.util.NotFoundException;
 import isi.deso.tp_spring.util.ReferencedException;
 import isi.deso.tp_spring.util.ReferencedWarning;
 import jakarta.validation.Valid;
 
-
-
 @Controller
-@RequestMapping("/api/clientes")
 public class ClienteController {
 
     Logger logger = org.slf4j.LoggerFactory.getLogger(ClienteController.class);
@@ -35,47 +33,46 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @GetMapping()
+    @GetMapping("/api/clientes")
     public String getAllClientes(Model model) {
         List<ClienteDTO> clientes = clienteService.findAll();
         model.addAttribute("clientes", clientes);
         return "clientes";
     }
 
-    @GetMapping("/{id}")
-    public String getCliente(@PathVariable final Integer id, Model model) {
-        logger.info("getCliente");
-        ClienteDTO cliente = clienteService.get(id);
-        if (cliente != null) {
+    @GetMapping("/api/cliente")
+    public String getCliente(@RequestParam final Integer id, Model model) {
+        try {
+            ClienteDTO cliente = clienteService.get(id);
             logger.info("Cliente encontrado");
             model.addAttribute("cliente", cliente);
             return "cliente";
-        } else {
+        } catch (NotFoundException ex) {
             logger.info("Cliente no encontrado");
             return "recurso-no-encontrado";
         }
     }
 
-    @GetMapping("/nombre/{nombre}")
-    public String getClienteByNombre(@PathVariable final String nombre, Model model) {
-        ClienteDTO cliente = clienteService.getByNombre(nombre);
-        if (cliente != null) {
+    @GetMapping("/api/cliente/nombre")
+    public String getClienteByNombre(@RequestParam final String nombre, Model model) {
+        try {
+            ClienteDTO cliente = clienteService.getByNombre(nombre);
             logger.info("Cliente encontrado");
             model.addAttribute("cliente", cliente);
             return "cliente";
-        } else {
+        } catch (NotFoundException ex) {
             logger.info("Cliente no encontrado");
             return "recurso-no-encontrado";
         }
     }
 
-    @GetMapping("/crear")
+    @GetMapping("/api/cliente/crear")
     public String showCreateForm(Model model) {
         model.addAttribute("cliente", new ClienteDTO()); // Para mostrar un formulario vacío
         return "crearCliente";
     }
 
-    @PostMapping
+    @PostMapping("/api/cliente")
     @ApiResponse(responseCode = "201")
     public String createCliente(@ModelAttribute @Valid ClienteDTO clienteDTO, Model model) {
         Integer createdId = clienteService.create(clienteDTO);
@@ -83,24 +80,24 @@ public class ClienteController {
         return "clienteCreado";
     }
 
-    @GetMapping("/editar/{id}")
-    public String showUpdateForm(@PathVariable(name = "id") final Integer id, Model model) {
+    @GetMapping("/api/cliente/editar")
+    public String showUpdateForm(@RequestParam final Integer id, Model model) {
         ClienteDTO cliente = clienteService.get(id);
         model.addAttribute("cliente", cliente);
         return "editarCliente";
     }
 
-    @PutMapping("/{id}")
-    public String updateCliente(@PathVariable(name = "id") final Integer id,
+    @PutMapping("/api/cliente")
+    public String updateCliente(@RequestParam final Integer id,
             @ModelAttribute @Valid ClienteDTO clienteDTO, Model model) {
         clienteService.update(id, clienteDTO);
         model.addAttribute("id", id);
         return "clienteActualizado"; // Nombre de la plantilla Thymeleaf (clienteActualizado.html)
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/cliente")
     @ApiResponse(responseCode = "204")
-    public String deleteCliente(@PathVariable(name = "id") final Integer id, Model model) {
+    public String deleteCliente(@RequestParam final Integer id, Model model) {
         final ReferencedWarning referencedWarning = clienteService.getReferencedWarning(id);
         if (referencedWarning != null) {
             throw new ReferencedException(referencedWarning);
@@ -108,17 +105,17 @@ public class ClienteController {
         clienteService.delete(id);
         return "clienteEliminado";
     }
-    @PostMapping("/guardarcliente")
+
+    @PostMapping("/api/cliente/guardar")
     public String postMethodName(@ModelAttribute ClienteDTO cliente) {
         System.out.println("hola");
         clienteService.create(cliente);
         return "redirect:/api/clientes";
     }
 
-    @GetMapping("/pedidos/detalle")
+    @GetMapping("/api/cliente/pedidos/detalle")
     public String getMethodName(@RequestParam String param) {
         return new String();
     }
-    
-    
+
 }

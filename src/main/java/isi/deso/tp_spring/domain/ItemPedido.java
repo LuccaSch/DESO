@@ -1,5 +1,7 @@
 package isi.deso.tp_spring.domain;
 
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-
 
 @Entity
 @Getter
@@ -31,5 +32,9 @@ public class ItemPedido {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_menu_id")
+    private ItemMenu itemMenu;
 
 }

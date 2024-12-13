@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <form th:action="@{/api/clientes/guardarcliente}" method="post">
+    <form th:action="@{/api/cliente/guardar}" method="post">
 
         <label>id:</label>
         <input type="number" name="id">
@@ -46,7 +46,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Recorremos la lista de clientes -->
                     <tr th:each="cliente : ${clientes}">
                         <td th:text="${cliente.id}"></td>
                         <td th:text="${cliente.nombre}"></td>
@@ -55,10 +54,9 @@
                         <td th:text="${cliente.direccion}"></td>
                         <td th:text="${cliente.coordenada}"></td>
                         <td>
-                            <!-- Acciones -->
-                            <a th:href="@{/api/clientes/{id}(id=${cliente.id})}">Ver</a>
-                            <a th:href="@{/api/clientes/editar/{id}(id=${cliente.id})}">Editar</a>
-                            <a th:href="@{/api/clientes/eliminar/{id}(id=${cliente.id})}" onclick="return confirm('¿Estás seguro de eliminar este cliente?');">Eliminar</a>
+                            <a th:href="@{/api/cliente}">Ver</a>
+                            <a th:href="@{/api/cliente/editar}">Editar</a>
+                            <a th:href="@{/api/cliente/eliminar}" onclick="return confirm('¿Estás seguro de eliminar este cliente?');">Eliminar</a>
                         </td>
                     </tr>
                 </tbody>

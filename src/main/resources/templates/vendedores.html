@@ -40,17 +40,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Recorremos la lista de vendedores -->
                     <tr th:each="vendedor : ${vendedores}">
                         <td th:text="${vendedor.id}"></td>
                         <td th:text="${vendedor.nombre}"></td>
                         <td th:text="${vendedor.direccion}"></td>
                         <td th:text="${vendedor.coordenada}"></td>
                         <td>
-                            <!-- Acciones -->
-                            <a th:href="@{/api/vendedores/{id}(id=${vendedor.id})}">Ver</a>
-                            <a th:href="@{/api/vendedores/editar/{id}(id=${vendedor.id})}">Editar</a>
-                            <a th:href="@{/api/vendedores/eliminar/{id}(id=${vendedor.id})}" onclick="return confirm('¿Estás seguro de eliminar este vendedor?');">Eliminar</a>
+                            <a th:href="@{/api/vendedor}">Ver</a>
+                            <a th:href="@{/api/vendedor/editar}">Editar</a>
+                            <a th:href="@{/api/vendedor/eliminar}" onclick="return confirm('¿Estás seguro de eliminar este vendedor?');">Eliminar</a>
                         </td>
                     </tr>
                 </tbody>

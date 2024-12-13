@@ -11,13 +11,13 @@
         <label>id:</label>
         <input type="number" name="id">
         <label>estado pedido:</label>
-        <input type="text" name="estadopedido">
+        <input type="text" name="estadoPedido">
         <label>cliente:</label>
-        <input type="number" name="idcliente">
+        <input type="number" name="idCliente">
         <label>precio total:</label>
-        <input type="number" name="preciototal">
+        <input type="number" name="precioTotal">
         <label>contexto pago:</label>
-        <input type="number" name="contextopago">
+        <input type="number" name="contextoPago">
         <button type="submit" >Guardar</button>
         </form> <br>
         
@@ -43,17 +43,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Recorremos la lista de pedidoes -->
                     <tr th:each="pedido : ${pedidos}">
                         <td th:text="${pedido.id}"></td>
-                        <td th:text="${pedido.estadopedido}"></td>
-                        <td th:text="${pedido.idcliente}"></td>
-                        <td th:text="${pedido.preciototal}"></td>
+                        <td th:text="${pedido.estadoPedido}"></td>
+                        <td th:text="${pedido.idCliente}"></td>
+                        <td th:text="${pedido.precioTotal}"></td>
                         <td>
-                            <!-- Acciones -->
-                            <a th:href="@{/api/pedidos/{id}(id=${pedido.id})}">Ver</a>
-                            <a th:href="@{/api/pedidos/editar/{id}(id=${pedido.id})}">Editar</a>
-                            <a th:href="@{/api/pedidos/eliminar/{id}(id=${pedido.id})}" onclick="return confirm('¿Estás seguro de eliminar este pedido?');">Eliminar</a>
+                            <a th:href="@{/api/pedido}">Ver</a>
+                            <a th:href="@{/api/pedido/editar}">Editar</a>
+                            <a th:href="@{/api/pedido/eliminar}" onclick="return confirm('¿Estás seguro de eliminar este pedido?');">Eliminar</a>
                         </td>
                     </tr>
                 </tbody>

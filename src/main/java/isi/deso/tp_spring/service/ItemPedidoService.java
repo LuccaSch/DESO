@@ -1,8 +1,10 @@
 package isi.deso.tp_spring.service;
 
+import isi.deso.tp_spring.domain.ItemMenu;
 import isi.deso.tp_spring.domain.ItemPedido;
 import isi.deso.tp_spring.domain.Pedido;
 import isi.deso.tp_spring.model.ItemPedidoDTO;
+import isi.deso.tp_spring.repos.ItemMenuRepository;
 import isi.deso.tp_spring.repos.ItemPedidoRepository;
 import isi.deso.tp_spring.repos.PedidoRepository;
 import isi.deso.tp_spring.util.NotFoundException;
@@ -15,11 +17,13 @@ public class ItemPedidoService {
 
     private final ItemPedidoRepository itemPedidoRepository;
     private final PedidoRepository pedidoRepository;
+    private final ItemMenuRepository itemMenuRepository;
 
     public ItemPedidoService(final ItemPedidoRepository itemPedidoRepository,
-            final PedidoRepository pedidoRepository) {
+            final PedidoRepository pedidoRepository, final ItemMenuRepository itemMenuRepository) {
         this.itemPedidoRepository = itemPedidoRepository;
         this.pedidoRepository = pedidoRepository;
+        this.itemMenuRepository = itemMenuRepository;
     }
 
     public List<ItemPedidoDTO> findAll() {
@@ -56,15 +60,21 @@ public class ItemPedidoService {
         itemPedidoDTO.setCantidad(itemPedido.getCantidad());
         itemPedidoDTO.setPrecio(itemPedido.getPrecio());
         itemPedidoDTO.setPedido(itemPedido.getPedido() == null ? null : itemPedido.getPedido().getId());
+        itemPedidoDTO.setItemMenu(itemPedido.getItemMenu() == null ? null : itemPedido.getItemMenu().getId());
         return itemPedidoDTO;
     }
 
     private ItemPedido mapToEntity(final ItemPedidoDTO itemPedidoDTO, final ItemPedido itemPedido) {
         itemPedido.setCantidad(itemPedidoDTO.getCantidad());
         itemPedido.setPrecio(itemPedidoDTO.getPrecio());
-        final Pedido pedido = itemPedidoDTO.getPedido() == null ? null : pedidoRepository.findById(itemPedidoDTO.getPedido())
-                .orElseThrow(() -> new NotFoundException("pedido not found"));
+        final Pedido pedido = itemPedidoDTO.getPedido() == null ? null
+                : pedidoRepository.findById(itemPedidoDTO.getPedido())
+                        .orElseThrow(() -> new NotFoundException("pedido not found"));
         itemPedido.setPedido(pedido);
+        final ItemMenu itemMenu = itemPedido.getItemMenu() == null ? null
+                : itemMenuRepository.findById(itemPedidoDTO.getItemMenu())
+                        .orElseThrow(() -> new NotFoundException("itemMenu not found"));
+        itemPedido.setItemMenu(itemMenu);
         return itemPedido;
     }
 
