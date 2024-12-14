@@ -10,7 +10,7 @@ public class PedidoDTO {
 
     private Integer id;
 
-    private EstadoPedido estadoPedido;
+    private Integer estadoPedido;
 
     private Double precioTotal;
 

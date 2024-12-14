@@ -11,7 +11,6 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Entity
 @Getter
 @Setter
@@ -28,7 +27,7 @@ public class Vendedor {
     @Column
     private String direccion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coordenada_id")
     private Coordenada coordenada;
 

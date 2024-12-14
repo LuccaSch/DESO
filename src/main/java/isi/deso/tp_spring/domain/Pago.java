@@ -1,7 +1,10 @@
 package isi.deso.tp_spring.domain;
 
+import isi.deso.tp_spring.model.TipoEstrategia;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,7 +22,8 @@ public class Pago {
     private Integer id;
 
     @Column
-    private String tipoEstrategia;
+    @Enumerated(EnumType.ORDINAL)
+    private TipoEstrategia tipoEstrategia;
 
     // TODO ver si es necesario agregar los idEfectivos, etc.
 }

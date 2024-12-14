@@ -50,6 +50,8 @@ public class ItemMenuService {
     }
 
     public void delete(final Integer id) {
+
+        // TODO: completar. Setear a null en las relaciones
         itemMenuRepository.deleteById(id);
     }
 

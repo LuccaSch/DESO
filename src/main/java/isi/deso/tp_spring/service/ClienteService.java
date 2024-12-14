@@ -61,6 +61,8 @@ public class ClienteService {
     }
 
     public void delete(final Integer id) {
+
+        // TODO: completar. Setear a null en las relaciones
         clienteRepository.deleteById(id);
     }
 

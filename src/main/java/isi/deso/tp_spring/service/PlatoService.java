@@ -18,8 +18,8 @@ public class PlatoService {
     }
 
     public List<PlatoDTO> findAll() {
-        final List<Plato> platoes = platoRepository.findAll(Sort.by("id"));
-        return platoes.stream()
+        final List<Plato> platos = platoRepository.findAll(Sort.by("id"));
+        return platos.stream()
                 .map(plato -> mapToDTO(plato, new PlatoDTO()))
                 .toList();
     }

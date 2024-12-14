@@ -28,8 +28,8 @@ public class ContextoPagoService {
     }
 
     public List<ContextoPagoDTO> findAll() {
-        final List<ContextoPago> contextoPagoes = contextoPagoRepository.findAll(Sort.by("id"));
-        return contextoPagoes.stream()
+        final List<ContextoPago> contextoPagos = contextoPagoRepository.findAll(Sort.by("id"));
+        return contextoPagos.stream()
                 .map(contextoPago -> mapToDTO(contextoPago, new ContextoPagoDTO()))
                 .toList();
     }

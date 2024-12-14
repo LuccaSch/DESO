@@ -18,8 +18,8 @@ public class EfectivoService {
     }
 
     public List<EfectivoDTO> findAll() {
-        final List<Efectivo> efectivoes = efectivoRepository.findAll(Sort.by("id"));
-        return efectivoes.stream()
+        final List<Efectivo> efectivos = efectivoRepository.findAll(Sort.by("id"));
+        return efectivos.stream()
                 .map(efectivo -> mapToDTO(efectivo, new EfectivoDTO()))
                 .toList();
     }

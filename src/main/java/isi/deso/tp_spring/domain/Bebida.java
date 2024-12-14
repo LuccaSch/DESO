@@ -1,6 +1,7 @@
 package isi.deso.tp_spring.domain;
 
 import isi.deso.tp_spring.model.Tamano;
+import isi.deso.tp_spring.model.TipoBebida;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,10 +21,10 @@ public class Bebida extends ItemMenu {
     private Integer graduacionAlcoholica;
 
     @Column
-    private Integer tipoBebida;
+    private TipoBebida tipoBebida;
 
     @Column
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private Tamano tamano;
 
 }

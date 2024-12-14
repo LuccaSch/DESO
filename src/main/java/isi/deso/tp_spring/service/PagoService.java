@@ -3,6 +3,7 @@ package isi.deso.tp_spring.service;
 import isi.deso.tp_spring.domain.ContextoPago;
 import isi.deso.tp_spring.domain.Pago;
 import isi.deso.tp_spring.model.PagoDTO;
+import isi.deso.tp_spring.model.TipoEstrategia;
 import isi.deso.tp_spring.repos.ContextoPagoRepository;
 import isi.deso.tp_spring.repos.PagoRepository;
 import isi.deso.tp_spring.util.NotFoundException;
@@ -24,8 +25,8 @@ public class PagoService {
     }
 
     public List<PagoDTO> findAll() {
-        final List<Pago> pagoes = pagoRepository.findAll(Sort.by("id"));
-        return pagoes.stream()
+        final List<Pago> pagos = pagoRepository.findAll(Sort.by("id"));
+        return pagos.stream()
                 .map(pago -> mapToDTO(pago, new PagoDTO()))
                 .toList();
     }
@@ -54,12 +55,12 @@ public class PagoService {
     }
 
     public PagoDTO mapToDTO(final Pago pago, final PagoDTO pagoDTO) {
-        pagoDTO.setTipoEstrategia(pago.getTipoEstrategia());
+        pagoDTO.setTipoEstrategia(pago.getTipoEstrategia().toInteger());
         return pagoDTO;
     }
 
     public Pago mapToEntity(final PagoDTO pagoDTO, final Pago pago) {
-        pago.setTipoEstrategia(pagoDTO.getTipoEstrategia());
+        pago.setTipoEstrategia(TipoEstrategia.fromInteger(pagoDTO.getTipoEstrategia()));
         return pago;
     }
 

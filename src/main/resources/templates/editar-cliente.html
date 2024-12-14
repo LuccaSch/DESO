@@ -14,8 +14,8 @@
     </header>
     
     <main>
-        <form th:action="@{/api/cliente}" method="post">
-            <input type="hidden" name="_method" value="put"/> <!-- Para soporte PUT con Spring -->
+        <form th:action="@{/api/clientes}" method="post">
+            <input type="hidden" name="_method" value="put"/>
             <div>
                 <label for="id">ID:</label>
                 <input type="text" id="id" name="id" th:value="${cliente.id}" readonly>

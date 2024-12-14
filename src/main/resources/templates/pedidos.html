@@ -2,24 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de pedidoes</title>
+    <title>Lista de pedidos</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <form th:action="@{/api/pedido}" method="post">
-
-        <label>id:</label>
-        <input type="number" name="id">
-        <label>estado pedido:</label>
-        <input type="text" name="estadoPedido">
-        <label>cliente:</label>
-        <input type="number" name="idCliente">
-        <label>precio total:</label>
-        <input type="number" name="precioTotal">
-        <label>contexto pago:</label>
-        <input type="number" name="contextoPago">
-        <button type="submit" >Guardar</button>
-        </form> <br>
+    <section>
+        <h2>Buscar Pedido</h2>
+        <form th:action="@{/api/pedidos/id}" method="get">
+            <label for="pedidoId">Buscar por Id:</label>
+            <input type="text" id="pedidoId" name="id" placeholder="Id" required>
+            <button type="submit">Buscar</button>
+        </form>
+        <form th:action="@{/api/pedidos/estadoPedido}" method="get">
+            <label for="pedidoEstadoPedido">Buscar por Nombre:</label>
+            <input type="text" id="pedidoEstadoPedido" name="estadoPedido" placeholder="EstadoPedido" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+    <br>
         
     <header>
         <h1>Lista de Pedidos</h1>
@@ -30,29 +30,29 @@
 
     <main>
         <section>
-            <h2>pedidoes</h2>
+            <h2>pedidos</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Estado Pedido</th>
-                        <th>ID Cliente</th>
+                        <th>Id</th>
+                        <th>EstadoPedido</th>
+                        <th>IdCliente</th>
                         <th>Precio</th>
-                        <th>Contexto Pago</th>
-                        <th>Acciones</th>
+                        <th>ContextoPago</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="pedido : ${pedidos}">
                         <td th:text="${pedido.id}"></td>
                         <td th:text="${pedido.estadoPedido}"></td>
-                        <td th:text="${pedido.idCliente}"></td>
+                        <td th:text="${pedido.cliente}"></td>
                         <td th:text="${pedido.precioTotal}"></td>
-                        <td>
-                            <a th:href="@{/api/pedido}">Ver</a>
-                            <a th:href="@{/api/pedido/editar}">Editar</a>
-                            <a th:href="@{/api/pedido/eliminar}" onclick="return confirm('¿Estás seguro de eliminar este pedido?');">Eliminar</a>
-                        </td>
+                        <td th:text="${pedido.contextoPago}"></td>
+<!--                        <td>
+                            <a th:href="@{/api/pedidos/id}">Ver</a>
+                            <a th:href="@{/api/pedidos/editar}">Editar</a>
+                            <a th:href="@{/api/pedidos/eliminar}" onclick="return confirm('¿Estás seguro de eliminar este pedido?');">Eliminar</a>
+                        </td>-->
                     </tr>
                 </tbody>
             </table>

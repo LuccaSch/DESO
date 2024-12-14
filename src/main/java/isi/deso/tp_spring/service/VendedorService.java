@@ -1,11 +1,5 @@
 package isi.deso.tp_spring.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
 import isi.deso.tp_spring.domain.Coordenada;
 import isi.deso.tp_spring.domain.ItemMenu;
 import isi.deso.tp_spring.domain.Vendedor;
@@ -15,6 +9,10 @@ import isi.deso.tp_spring.repos.ItemMenuRepository;
 import isi.deso.tp_spring.repos.VendedorRepository;
 import isi.deso.tp_spring.util.NotFoundException;
 import isi.deso.tp_spring.util.ReferencedWarning;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 @Service
 public class VendedorService {
@@ -52,7 +50,7 @@ public class VendedorService {
 
     public VendedorDTO getByNombre(final String nombre) {
         return vendedorRepository.findByNombre(nombre)
-                .map(cliente -> mapToDTO(cliente, new VendedorDTO()))
+                .map(vendedor -> mapToDTO(vendedor, new VendedorDTO()))
                 .orElseThrow(NotFoundException::new);
     }
 
@@ -70,6 +68,8 @@ public class VendedorService {
     }
 
     public void delete(final Integer id) {
+
+        // TODO: completar. Setear a null en las relaciones
         vendedorRepository.deleteById(id);
     }
 

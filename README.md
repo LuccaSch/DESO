@@ -25,6 +25,8 @@ Start your application with the following command:
 ./mvnw spring-boot:run
 ```
 
+You can use ```./mvnw``` or ```./mvn``` either.
+
 If required, a Docker image can be created with the Spring Boot plugin. Add `SPRING_PROFILES_ACTIVE=production` as
 environment variable when running the container.
 
@@ -35,7 +37,17 @@ environment variable when running the container.
 ## Interactive Documentation Generation Swagger UI
 
 ```
-For interactive http transactions use [SwaggerUI](http://localhost:8080/swagger-ui/index.html)
+For interactive http transactions use [SwaggerUI](localhost:8080/swagger-ui/index.html#)
+```
+
+## App Ports
+
+```
+For phpMyAdmin, use port 8081 (localhost:8081/)
+```
+
+```
+For App UI, use port 8080 (localhost:8080/)
 ```
 
 ## Further readings

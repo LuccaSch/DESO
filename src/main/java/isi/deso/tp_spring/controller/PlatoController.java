@@ -28,7 +28,7 @@ public class PlatoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PlatoDTO>> getAllPlatoes() {
+    public ResponseEntity<List<PlatoDTO>> getAllPlatos() {
         return ResponseEntity.ok(platoService.findAll());
     }
 

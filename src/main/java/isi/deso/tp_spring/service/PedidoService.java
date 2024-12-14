@@ -1,12 +1,5 @@
 package isi.deso.tp_spring.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
 import isi.deso.tp_spring.domain.Cliente;
 import isi.deso.tp_spring.domain.ContextoPago;
 import isi.deso.tp_spring.domain.ItemPedido;
@@ -20,6 +13,11 @@ import isi.deso.tp_spring.repos.ItemPedidoRepository;
 import isi.deso.tp_spring.repos.PedidoRepository;
 import isi.deso.tp_spring.util.NotFoundException;
 import isi.deso.tp_spring.util.ReferencedWarning;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PedidoService {
@@ -43,8 +41,8 @@ public class PedidoService {
     }
 
     public List<PedidoDTO> findAll() {
-        final List<Pedido> pedidoes = pedidoRepository.findAll(Sort.by("id"));
-        return pedidoes.stream()
+        final List<Pedido> pedidos = pedidoRepository.findAll(Sort.by("id"));
+        return pedidos.stream()
                 .map(pedido -> mapToDTO(pedido, new PedidoDTO()))
                 .toList();
     }
@@ -94,6 +92,12 @@ public class PedidoService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    public PedidoDTO getByEstadoPedido(final Integer estadoPedido) {
+        return pedidoRepository.findByEstadoPedido(estadoPedido)
+                .map(pedido -> mapToDTO(pedido, new PedidoDTO()))
+                .orElseThrow(NotFoundException::new);
+    }
+
     public Integer create(final PedidoDTO pedidoDTO) {
         final Pedido pedido = new Pedido();
         mapToEntity(pedidoDTO, pedido);
@@ -108,12 +112,14 @@ public class PedidoService {
     }
 
     public void delete(final Integer id) {
+
+        // TODO: completar. Setear a null en las relaciones
         pedidoRepository.deleteById(id);
     }
 
     public PedidoDTO mapToDTO(final Pedido pedido, final PedidoDTO pedidoDTO) {
         pedidoDTO.setId(pedido.getId());
-        pedidoDTO.setEstadoPedido(pedido.getEstadoPedido());
+        pedidoDTO.setEstadoPedido(pedido.getEstadoPedido().toInteger());
         pedidoDTO.setPrecioTotal(pedido.getPrecioTotal());
         pedidoDTO.setCliente(pedido.getCliente() == null ? null : pedido.getCliente().getId());
         pedidoDTO.setContextoPago(pedido.getContextoPago() == null ? null : pedido.getContextoPago().getId());
@@ -122,7 +128,7 @@ public class PedidoService {
 
     public Pedido mapToEntity(final PedidoDTO pedidoDTO, final Pedido pedido) {
         pedido.setId(pedidoDTO.getId());
-        pedido.setEstadoPedido(pedidoDTO.getEstadoPedido());
+        pedido.setEstadoPedido(EstadoPedido.fromInteger(pedidoDTO.getEstadoPedido()));
         pedido.setPrecioTotal(pedidoDTO.getPrecioTotal());
         final Cliente cliente = pedidoDTO.getCliente() == null ? null
                 : clienteRepository.findById(pedidoDTO.getCliente())

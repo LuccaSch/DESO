@@ -27,8 +27,8 @@ public class ItemPedidoService {
     }
 
     public List<ItemPedidoDTO> findAll() {
-        final List<ItemPedido> itemPedidoes = itemPedidoRepository.findAll(Sort.by("id"));
-        return itemPedidoes.stream()
+        final List<ItemPedido> itemPedidos = itemPedidoRepository.findAll(Sort.by("id"));
+        return itemPedidos.stream()
                 .map(itemPedido -> mapToDTO(itemPedido, new ItemPedidoDTO()))
                 .toList();
     }

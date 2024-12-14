@@ -1,39 +1,33 @@
 package isi.deso.tp_spring.controller;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import isi.deso.tp_spring.domain.ItemPedido;
+import isi.deso.tp_spring.model.ClienteDTO;
+import isi.deso.tp_spring.model.EstadoPedido;
+import isi.deso.tp_spring.model.ItemMenuDTO;
+import isi.deso.tp_spring.model.ItemPedidoDTO;
 import isi.deso.tp_spring.model.PedidoDTO;
 import isi.deso.tp_spring.model.VendedorDTO;
 import isi.deso.tp_spring.service.ItemMenuService;
 import isi.deso.tp_spring.service.PedidoService;
 import isi.deso.tp_spring.service.VendedorService;
 import isi.deso.tp_spring.util.NotFoundException;
-import isi.deso.tp_spring.util.ReferencedException;
-import isi.deso.tp_spring.util.ReferencedWarning;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.slf4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import isi.deso.tp_spring.domain.ItemMenu;
-import isi.deso.tp_spring.domain.ItemPedido;
-import isi.deso.tp_spring.model.EstadoPedido;
-import isi.deso.tp_spring.model.ItemMenuDTO;
-import isi.deso.tp_spring.model.ItemPedidoDTO;
-import isi.deso.tp_spring.model.PedidoDTO;
-import isi.deso.tp_spring.service.PedidoService;
-import isi.deso.tp_spring.util.ReferencedException;
-import isi.deso.tp_spring.util.ReferencedWarning;
-import jakarta.validation.Valid;
 
 @Controller
 public class PedidoController {
@@ -58,8 +52,8 @@ public class PedidoController {
         return "pedidos";
     }
 
-    @GetMapping("/api/pedido")
-    public String getPedido(@RequestParam final Integer id, Model model) {
+    @GetMapping("/api/pedidos/id")
+    public String getPedido(@RequestParam("id") final Integer id, Model model) {
         try {
             PedidoDTO pedido = pedidoService.get(id);
             logger.info("Pedido encontrado");
@@ -71,46 +65,87 @@ public class PedidoController {
         }
     }
 
-    @PostMapping("/api/pedido")
-    @ApiResponse(responseCode = "201")
-    public String createPedido(@ModelAttribute @Valid final PedidoDTO pedidoDTO, Model model,
-            RedirectAttributes redirectAttributes) {
-        Integer createdId = pedidoService.create(pedidoDTO);
-        model.addAttribute("createdId", createdId);
-        redirectAttributes.addFlashAttribute("successMessage", "¡Creado con éxito!");
-        return "redirect:/api/pedidos";
-    }
-
-    @PutMapping("/api/pedido")
-    @ApiResponse(responseCode = "200")
-    public String updatePedido(@RequestParam final Integer id,
-            @ModelAttribute @Valid final PedidoDTO pedidoDTO, Model model, RedirectAttributes redirectAttributes) {
-        pedidoService.update(id, pedidoDTO);
-        model.addAttribute("id", id);
-        redirectAttributes.addFlashAttribute("successMessage", "¡Actualizado con éxito!");
-        return "redirect:/api/pedidos";
-    }
-
-    @GetMapping("/api/pedido/eliminar")
-    @ApiResponse(responseCode = "204")
-    public String deletePedido(@RequestParam final Integer id, Model model, RedirectAttributes redirectAttributes) {
-        final ReferencedWarning referencedWarning = pedidoService.getReferencedWarning(id);
-        if (referencedWarning != null) {
-            throw new ReferencedException(referencedWarning);
+    @GetMapping("/api/pedidos/estadoPedido")
+    public String getPedidoByEstadoPedido(@RequestParam("estadoPedido") final Integer estadoPedido, Model model) {
+        try {
+            PedidoDTO pedido = pedidoService.getByEstadoPedido(estadoPedido);
+            logger.info("Pedido encontrado");
+            model.addAttribute("pedido", pedido);
+            return "pedido";
+        } catch (NotFoundException ex) {
+            logger.info("Pedido no encontrado");
+            return "recurso-no-encontrado";
         }
-        pedidoService.delete(id);
-        redirectAttributes.addFlashAttribute("successMessage", "¡Eliminado con éxito!");
-        return "redirect:/api/pedidos";
     }
 
-    @GetMapping("/api/pedido/detalle")
+    @PostMapping("/api/pedidos")
+    @ApiResponse(responseCode = "201")
+    @ResponseBody
+    public ResponseEntity<Integer> createPedido(@RequestBody @Valid PedidoDTO pedidoDTO) {
+        Integer createdId = pedidoService.create(pedidoDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
+    }
+
+    // @PostMapping("/api/pedido")
+    // @ApiResponse(responseCode = "201")
+    // public String createPedido(@ModelAttribute @Valid final PedidoDTO pedidoDTO,
+    // Model model,
+    // RedirectAttributes redirectAttributes) {
+    // Integer createdId = pedidoService.create(pedidoDTO);
+    // model.addAttribute("createdId", createdId);
+    // redirectAttributes.addFlashAttribute("successMessage", "¡Creado con éxito!");
+    // return "redirect:/api/pedidos";
+    // }
+    @PutMapping("/api/pedidos/{id}")
+    @ApiResponse(responseCode = "200")
+    @ResponseBody
+    public ResponseEntity<Integer> updatePedido(@PathVariable(name = "id") final Integer id,
+            @RequestBody @Valid final PedidoDTO pedidoDTO) {
+        pedidoService.update(id, pedidoDTO);
+        return ResponseEntity.ok(id);
+    }
+
+    // @PutMapping("/api/pedidos")
+    // @ApiResponse(responseCode = "200")
+    // public String updatePedido(@RequestParam final Integer id,
+    // @ModelAttribute @Valid final PedidoDTO pedidoDTO, Model model,
+    // RedirectAttributes redirectAttributes) {
+    // pedidoService.update(id, pedidoDTO);
+    // model.addAttribute("id", id);
+    // redirectAttributes.addFlashAttribute("successMessage", "¡Actualizado con
+    // éxito!");
+    // return "redirect:/api/pedidos";
+    // }
+    @DeleteMapping("/api/pedidos/{id}")
+    @ApiResponse(responseCode = "204")
+    @ResponseBody
+    public ResponseEntity<Void> deletePedido(@PathVariable(name = "id") final Integer id) {
+        pedidoService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // @GetMapping("/api/pedidos/eliminar")
+    // @ApiResponse(responseCode = "204")
+    // public String deletePedido(@RequestParam final Integer id, Model model,
+    // RedirectAttributes redirectAttributes) {
+    // final ReferencedWarning referencedWarning =
+    // pedidoService.getReferencedWarning(id);
+    // if (referencedWarning != null) {
+    // throw new ReferencedException(referencedWarning);
+    // }
+    // pedidoService.delete(id);
+    // redirectAttributes.addFlashAttribute("successMessage", "¡Eliminado con
+    // éxito!");
+    // return "redirect:/api/pedidos";
+    // }
+    @GetMapping("/api/pedidos/detalle")
     public String showAllsItemsPedido(@RequestParam Integer id, Model model) {
         List<ItemPedido> itemsPedido = pedidoService.getItemsPedido(id);
         model.addAttribute("lista-items-pedido", itemsPedido);
         return "lista-items-pedido";
     }
 
-    @GetMapping("/api/pedido/estado")
+    @GetMapping("/api/pedidos/estado")
     public String showEstadoPedido(@RequestParam Integer id, Model model) {
         try {
             EstadoPedido estadoPedido = pedidoService.getEstadoPedido(id);
@@ -123,7 +158,7 @@ public class PedidoController {
         }
     }
 
-    @PutMapping("/api/pedido/editar")
+    @PutMapping("/api/pedidos/editar")
     public String updatePedidoPorVista(@RequestParam final Integer id, Model model,
             RedirectAttributes redirectAttributes) {
         PedidoDTO pedido = pedidoService.get(id);

@@ -18,8 +18,8 @@ public class MercadoPagoService {
     }
 
     public List<MercadoPagoDTO> findAll() {
-        final List<MercadoPago> mercadoPagoes = mercadoPagoRepository.findAll(Sort.by("id"));
-        return mercadoPagoes.stream()
+        final List<MercadoPago> mercadoPagos = mercadoPagoRepository.findAll(Sort.by("id"));
+        return mercadoPagos.stream()
                 .map(mercadoPago -> mapToDTO(mercadoPago, new MercadoPagoDTO()))
                 .toList();
     }

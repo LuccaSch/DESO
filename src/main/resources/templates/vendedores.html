@@ -9,30 +9,18 @@
 
     <section>
         <h2>Buscar Vendedor</h2>
-        <form th:action="@{/api/vendedor}" method="get">
+        <form th:action="@{/api/vendedores/id}" method="get">
             <label for="vendedorId">Buscar por Id:</label>
-            <input type="text" id="vendedorId" name="id" placeholder="Id">
+            <input type="text" id="vendedorId" name="id" placeholder="Id" required>
             <button type="submit">Buscar</button>
         </form>
-        <form th:action="@{/api/vendedor/nombre}" method="get">
+        <form th:action="@{/api/vendedores/nombre}" method="get">
             <label for="vendedorNombre">Buscar por Nombre:</label>
-            <input type="text" id="vendedorNombre" name="nombre" placeholder="Nombre">
+            <input type="text" id="vendedorNombre" name="nombre" placeholder="Nombre" required>
             <button type="submit">Buscar</button>
         </form>
     </section>
-
-    <form th:action="@{/api/vendedor/guardar}" method="post">
-
-        <label>id:</label>
-        <input type="number" name="id">
-        <label>nombre:</label>
-        <input type="text" name="nombre">
-        <label>direccion:</label>
-        <input type="text" name="direccion">
-        <label>coordenada:</label>
-        <input type="number" name="coordenada">
-        <button type="submit" >Guardar</button>
-        </form> <br>
+    <br>
         
     <header>
         <h1>Lista de Vendedores</h1>
@@ -43,7 +31,6 @@
 
     <main>
 
-        <!-- Mostrar el mensaje flash si existe -->
         <div th:if="${successMessage}" class="alert success">
             <p th:text="${successMessage}"></p>
         </div>
@@ -54,26 +41,23 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Id</th>
                         <th>Nombre</th>
                         <th>Direccion</th>
                         <th>Coordenada</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Recorremos la lista de vendedores -->
                     <tr th:each="vendedor : ${vendedores}">
                         <td th:text="${vendedor.id}"></td>
                         <td th:text="${vendedor.nombre}"></td>
                         <td th:text="${vendedor.direccion}"></td>
                         <td th:text="${vendedor.coordenada}"></td>
-                        <td>
-                            <!-- Acciones -->
-                            <a th:href="@{/api/vendedor}">Ver</a>
-                            <a th:href="@{/api/vendedor/editar}">Editar</a>
-                            <a th:href="@{/api/vendedor/eliminar}" onclick="return confirm('¿Estás seguro de eliminar este vendedor?');">Eliminar</a>
-                        </td>
+<!--                        <td>
+                            <a th:href="@{/api/vendedores/id}">Ver</a>
+                            <a th:href="@{/api/vendedores/editar}">Editar</a>
+                            <a th:href="@{/api/vendedores/eliminar}" onclick="return confirm('¿Estás seguro de eliminar este vendedor?');">Eliminar</a>
+                        </td>-->
                     </tr>
                 </tbody>
             </table>
