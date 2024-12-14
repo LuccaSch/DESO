@@ -2,6 +2,7 @@ package isi.deso.tp_spring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import isi.deso.tp_spring.model.ItemMenuDTO;
+import isi.deso.tp_spring.model.PedidoDTO;
 import isi.deso.tp_spring.service.ItemMenuService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/api/itemMenus")
 public class ItemMenuController {
 
     Logger logger = org.slf4j.LoggerFactory.getLogger(ItemMenuController.class);
@@ -29,28 +30,26 @@ public class ItemMenuController {
         this.itemMenuService = itemMenuService;
     }
 
-    @GetMapping
+    @GetMapping("/api/itemMenus")
     public String getAllItemMenus(Model model) {
         List<ItemMenuDTO> itemMenus = itemMenuService.findAll();
         model.addAttribute("itemMenus", itemMenus);
         return "itemMenuList";
     }
 
-    @GetMapping("/{id}")
-    public String getItemMenu(@PathVariable(name = "id") final Integer id, Model model) {
-        ItemMenuDTO itemMenu = itemMenuService.get(id);
-        if (itemMenu != null) {
-            logger.info("Item menú encontrado");
-            model.addAttribute("itemMenuDetail", itemMenu);
-            return "itemMenu";
-        } else {
-            logger.info("Item menú no encontrado");
-            return "recurso-no-encontrado";
-        }
-
+    @GetMapping("/api/itemMenus/id")
+    public ResponseEntity<ItemMenuDTO> getItemMenu(@RequestParam final Integer id) {
+        ItemMenuDTO itemMenuDTO = itemMenuService.get(id);
+        return ResponseEntity.ok(itemMenuDTO);
     }
 
-    @GetMapping("/editar/{id}")
+    @GetMapping("/api/itemMenus/precio")
+    public ResponseEntity<ItemMenuDTO> getItemMenuByPrecio(@RequestParam final Double precio) {
+        ItemMenuDTO itemMenuDTO = itemMenuService.getByPrecio(precio);
+        return ResponseEntity.ok(itemMenuDTO);
+    }
+
+    @GetMapping("/api/itemMenus/editar/{id}")
     public String showEditForm(@PathVariable(name = "id") final Integer id, Model model) {
         ItemMenuDTO itemMenu = itemMenuService.get(id);
         model.addAttribute("itemMenu", itemMenu);

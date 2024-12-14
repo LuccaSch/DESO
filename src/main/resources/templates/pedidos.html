@@ -62,6 +62,52 @@
     <footer>
         <p>&copy; UTN FRSF DS TP</p>
     </footer>
+    <style>
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            animation: slide-up 1s ease-out, fade-out 3s 2s forwards;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fade-out {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                visibility: hidden; /* Oculta completamente el elemento */
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse; 
+        }
+
+        th, td {
+            border: 1px solid black; 
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </body>
 </html>
 

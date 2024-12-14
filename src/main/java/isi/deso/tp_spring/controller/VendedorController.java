@@ -1,6 +1,7 @@
 package isi.deso.tp_spring.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import isi.deso.tp_spring.model.ClienteDTO;
 import isi.deso.tp_spring.model.ItemMenuDTO;
 import isi.deso.tp_spring.model.VendedorDTO;
 import isi.deso.tp_spring.service.ItemMenuService;
@@ -43,29 +44,15 @@ public class VendedorController {
     }
 
     @GetMapping("/api/vendedores/id")
-    public String getVendedor(@RequestParam final Integer id, Model model) {
-        try {
-            VendedorDTO vendedor = vendedorService.get(id);
-            logger.info("Vendedor encontrado");
-            model.addAttribute("vendedor", vendedor);
-            return "vendedor";
-        } catch (NotFoundException ex) {
-            logger.info("Vendedor no encontrado");
-            return "recurso-no-encontrado";
-        }
+    public ResponseEntity<VendedorDTO> getVendedor(@RequestParam final Integer id) {
+        VendedorDTO vendedorDTO = vendedorService.get(id);
+        return ResponseEntity.ok(vendedorDTO);
     }
 
     @GetMapping("/api/vendedores/nombre")
-    public String getVendedorByNombre(@RequestParam final String nombre, Model model) {
-        try {
-            VendedorDTO vendedor = vendedorService.getByNombre(nombre);
-            logger.info("Vendedor encontrado");
-            model.addAttribute("vendedor", vendedor);
-            return "vendedor";
-        } catch (NotFoundException ex) {
-            logger.info("Vendedor no encontrado");
-            return "recurso-no-encontrado";
-        }
+    public ResponseEntity<List<VendedorDTO>> getVendedorByNombre(@RequestParam final String nombre) {
+        List<VendedorDTO> vendedoresDTO = vendedorService.getByNombre(nombre);
+        return ResponseEntity.ok(vendedoresDTO);
     }
 
     @PostMapping("/api/vendedores")

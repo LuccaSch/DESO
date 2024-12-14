@@ -53,29 +53,15 @@ public class PedidoController {
     }
 
     @GetMapping("/api/pedidos/id")
-    public String getPedido(@RequestParam("id") final Integer id, Model model) {
-        try {
-            PedidoDTO pedido = pedidoService.get(id);
-            logger.info("Pedido encontrado");
-            model.addAttribute("pedido", pedido);
-            return "pedido";
-        } catch (NotFoundException ex) {
-            logger.info("Pedido no encontrado");
-            return "recurso-no-encontrado";
-        }
+    public ResponseEntity<PedidoDTO> getPedido(@RequestParam final Integer id) {
+        PedidoDTO pedidoDTO = pedidoService.get(id);
+        return ResponseEntity.ok(pedidoDTO);
     }
 
     @GetMapping("/api/pedidos/estadoPedido")
-    public String getPedidoByEstadoPedido(@RequestParam("estadoPedido") final Integer estadoPedido, Model model) {
-        try {
-            PedidoDTO pedido = pedidoService.getByEstadoPedido(estadoPedido);
-            logger.info("Pedido encontrado");
-            model.addAttribute("pedido", pedido);
-            return "pedido";
-        } catch (NotFoundException ex) {
-            logger.info("Pedido no encontrado");
-            return "recurso-no-encontrado";
-        }
+    public ResponseEntity<PedidoDTO> getPedidoByEstadoPedido(@RequestParam final Integer estadoPedido) {
+        PedidoDTO pedidoDTO = pedidoService.getByEstadoPedido(estadoPedido);
+        return ResponseEntity.ok(pedidoDTO);
     }
 
     @PostMapping("/api/pedidos")

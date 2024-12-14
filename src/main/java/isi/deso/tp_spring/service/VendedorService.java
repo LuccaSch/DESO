@@ -1,8 +1,11 @@
 package isi.deso.tp_spring.service;
 
+import isi.deso.tp_spring.domain.Cliente;
 import isi.deso.tp_spring.domain.Coordenada;
 import isi.deso.tp_spring.domain.ItemMenu;
+import isi.deso.tp_spring.domain.Pedido;
 import isi.deso.tp_spring.domain.Vendedor;
+import isi.deso.tp_spring.model.ClienteDTO;
 import isi.deso.tp_spring.model.VendedorDTO;
 import isi.deso.tp_spring.repos.CoordenadaRepository;
 import isi.deso.tp_spring.repos.ItemMenuRepository;
@@ -48,10 +51,11 @@ public class VendedorService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public VendedorDTO getByNombre(final String nombre) {
-        return vendedorRepository.findByNombre(nombre)
+    public List<VendedorDTO> getByNombre(final String nombre) {
+        return vendedorRepository.findByNombreStartingWithIgnoreCase(nombre)
+                .stream()
                 .map(vendedor -> mapToDTO(vendedor, new VendedorDTO()))
-                .orElseThrow(NotFoundException::new);
+                .toList();
     }
 
     public Integer create(final VendedorDTO vendedorDTO) {
@@ -69,11 +73,11 @@ public class VendedorService {
 
     public void delete(final Integer id) {
 
-        // TODO: completar. Setear a null en las relaciones
         vendedorRepository.deleteById(id);
     }
 
     public VendedorDTO mapToDTO(final Vendedor vendedor, final VendedorDTO vendedorDTO) {
+        vendedorDTO.setId(vendedor.getId());
         vendedorDTO.setNombre(vendedor.getNombre());
         vendedorDTO.setDireccion(vendedor.getDireccion());
         vendedorDTO.setCoordenada(vendedor.getCoordenada() == null ? null : vendedor.getCoordenada().getId());
@@ -81,6 +85,7 @@ public class VendedorService {
     }
 
     public Vendedor mapToEntity(final VendedorDTO vendedorDTO, final Vendedor vendedor) {
+        vendedor.setId(vendedorDTO.getId());
         vendedor.setNombre(vendedorDTO.getNombre());
         vendedor.setDireccion(vendedorDTO.getDireccion());
         final Coordenada coordenada = vendedorDTO.getCoordenada() == null ? null

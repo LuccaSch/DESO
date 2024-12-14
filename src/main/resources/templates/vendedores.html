@@ -7,21 +7,69 @@
 </head>
 <body>
 
-    <section>
+    <section id="buscar-vendedor">
         <h2>Buscar Vendedor</h2>
-        <form th:action="@{/api/vendedores/id}" method="get">
-            <label for="vendedorId">Buscar por Id:</label>
-            <input type="text" id="vendedorId" name="id" placeholder="Id" required>
-            <button type="submit">Buscar</button>
-        </form>
-        <form th:action="@{/api/vendedores/nombre}" method="get">
-            <label for="vendedorNombre">Buscar por Nombre:</label>
-            <input type="text" id="vendedorNombre" name="nombre" placeholder="Nombre" required>
-            <button type="submit">Buscar</button>
-        </form>
+        
+        <label for="vendedorId">Buscar por Id:</label>
+        <input type="text" id="vendedorId" name="id" placeholder="Id">
+        <div id="resultadoPorId"></div>
+        <br>
+
+        <label for="vendedorNombre">Buscar por Nombre:</label>
+        <input type="text" id="vendedorNombre" name="nombre" placeholder="Nombre">
+        <ul id="resultadosPorNombre"></ul>
     </section>
     <br>
-        
+
+    <script>
+        document.getElementById("vendedorId").addEventListener("input", function () {
+            const id = this.value;
+            if (id) {
+                fetch(`/api/vendedores/id?id=${id}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Vendedor no encontrado");
+                        }
+                        return response.json();
+                    })
+                    .then(vendedor => {
+                        const resultado = `
+                            <p><strong>Id:</strong> ${vendedor.id}</p>
+                            <p><strong>Nombre:</strong> ${vendedor.nombre}</p>
+                            <p><strong>Direccion:</strong> ${vendedor.direccion}</p>
+                            <p><strong>Coordenada:</strong> ${vendedor.coordenada}</p>
+                        `;
+                        document.getElementById("resultadoPorId").innerHTML = resultado;
+                    })
+                    .catch(error => {
+                        document.getElementById("resultadoPorId").innerHTML = "<p>No se encontró ningún vendedor con ese ID.</p>";
+                    });
+            } else {
+                document.getElementById("resultadoPorId").innerHTML = "";
+            }
+        });
+
+        document.getElementById("vendedorNombre").addEventListener("input", function () {
+            const nombre = this.value;
+            if (nombre) {
+                fetch(`/api/vendedores/nombre?nombre=${nombre}`)
+                    .then(response => response.json())
+                    .then(vendedores => {
+                        let resultados = "";
+                        vendedores.forEach(vendedor => {
+                            resultados += `<li>${vendedor.id} - ${vendedor.nombre}</li>`;
+                        });
+                        document.getElementById("resultadosPorNombre").innerHTML = resultados;
+                    })
+                    .catch(error => {
+                        document.getElementById("resultadosPorNombre").innerHTML = "<li>No se encontraron vendedores.</li>";
+                    });
+            } else {
+                document.getElementById("resultadosPorNombre").innerHTML = "";
+            }
+        });
+    </script>
+
     <header>
         <h1>Lista de Vendedores</h1>
         <nav>
@@ -29,13 +77,12 @@
         </nav>
     </header>
 
+    
     <main>
-
         <div th:if="${successMessage}" class="alert success">
             <p th:text="${successMessage}"></p>
         </div>
 
-        </section>
         <section>
             <h2>Vendedores</h2>
             <table>
@@ -53,16 +100,12 @@
                         <td th:text="${vendedor.nombre}"></td>
                         <td th:text="${vendedor.direccion}"></td>
                         <td th:text="${vendedor.coordenada}"></td>
-<!--                        <td>
-                            <a th:href="@{/api/vendedores/id}">Ver</a>
-                            <a th:href="@{/api/vendedores/editar}">Editar</a>
-                            <a th:href="@{/api/vendedores/eliminar}" onclick="return confirm('¿Estás seguro de eliminar este vendedor?');">Eliminar</a>
-                        </td>-->
                     </tr>
                 </tbody>
             </table>
         </section>
     </main>
+
 
     <footer>
         <p>&copy; UTN FRSF DS TP</p>
@@ -97,6 +140,21 @@
                 opacity: 0;
                 visibility: hidden; /* Oculta completamente el elemento */
             }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse; 
+        }
+
+        th, td {
+            border: 1px solid black; 
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 

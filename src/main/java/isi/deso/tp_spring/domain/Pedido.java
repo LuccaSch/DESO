@@ -34,11 +34,11 @@ public class Pedido {
     @Column
     private Double precioTotal;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", orphanRemoval = true)
     private List<ItemPedido> itemPedidos;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id", nullable = true)
     private Cliente cliente;
 
     @OneToOne(fetch = FetchType.EAGER)

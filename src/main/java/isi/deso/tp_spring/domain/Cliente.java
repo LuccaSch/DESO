@@ -39,7 +39,7 @@ public class Cliente {
     @JoinColumn(name = "coordenada_id")
     private Coordenada coordenada;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", orphanRemoval = true)
     private List<Pedido> pedidos;
 
 }

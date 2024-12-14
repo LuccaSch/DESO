@@ -112,8 +112,16 @@ public class PedidoService {
     }
 
     public void delete(final Integer id) {
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        List<ItemPedido> itemPedidos = pedido.getItemPedidos();
 
-        // TODO: completar. Setear a null en las relaciones
+        for (ItemPedido itemPedido : itemPedidos) {
+            itemPedido.setPedido(null);
+        }
+
+        itemPedidoRepository.saveAll(itemPedidos);
+
         pedidoRepository.deleteById(id);
     }
 

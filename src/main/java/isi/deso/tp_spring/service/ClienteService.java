@@ -36,15 +36,17 @@ public class ClienteService {
     }
 
     public ClienteDTO get(final Integer id) {
-        return clienteRepository.findById(id)
+        return clienteRepository
+                .findById(id)
                 .map(cliente -> mapToDTO(cliente, new ClienteDTO()))
                 .orElseThrow(NotFoundException::new);
     }
 
-    public ClienteDTO getByNombre(final String nombre) {
-        return clienteRepository.findByNombre(nombre)
+    public List<ClienteDTO> getByNombre(final String nombre) {
+        return clienteRepository.findByNombreStartingWithIgnoreCase(nombre)
+                .stream()
                 .map(cliente -> mapToDTO(cliente, new ClienteDTO()))
-                .orElseThrow(NotFoundException::new);
+                .toList();
     }
 
     public Integer create(final ClienteDTO clienteDTO) {
@@ -61,8 +63,15 @@ public class ClienteService {
     }
 
     public void delete(final Integer id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        List<Pedido> pedidos = cliente.getPedidos();
 
-        // TODO: completar. Setear a null en las relaciones
+        for (Pedido pedido : pedidos) {
+            pedido.setCliente(null);
+        }
+
+        pedidoRepository.saveAll(pedidos);
         clienteRepository.deleteById(id);
     }
 

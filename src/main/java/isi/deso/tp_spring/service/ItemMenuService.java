@@ -42,6 +42,12 @@ public class ItemMenuService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    public ItemMenuDTO getByPrecio(final Double precio) {
+        return itemMenuRepository.findByPrecio(precio)
+                .map(ItemMenu -> mapToDTO(ItemMenu, new ItemMenuDTO()))
+                .orElseThrow(NotFoundException::new);
+    }
+
     public void update(final Integer id, final ItemMenuDTO ItemMenuDTO) {
         final ItemMenu ItemMenu = itemMenuRepository.findById(id)
                 .orElseThrow(NotFoundException::new);

@@ -39,30 +39,43 @@ public class ClienteController {
         return "clientes";
     }
 
+    // @GetMapping("/api/clientes/id")
+    // public String getCliente(@RequestParam final Integer id, Model model) {
+    // try {
+    // List<ClienteDTO> clientes = clienteService.get(id);
+    // logger.info("Clientes encontrado");
+    // model.addAttribute("clientes", clientes);
+    // return "clientes";
+    // } catch (NotFoundException ex) {
+    // logger.info("Cliente no encontrado");
+    // return "recurso-no-encontrado";
+    // }
+    // }
+
+    // @GetMapping("/api/clientes/nombre")
+    // public String getClienteByNombre(@RequestParam final String nombre, Model
+    // model) {
+    // try {
+    // List<ClienteDTO> clientes = clienteService.getByNombre(nombre);
+    // logger.info("Clientes encontrado");
+    // model.addAttribute("clientes", clientes);
+    // return "clientes";
+    // } catch (NotFoundException ex) {
+    // logger.info("Clientes no encontrado");
+    // return "recurso-no-encontrado";
+    // }
+    // }
+
     @GetMapping("/api/clientes/id")
-    public String getCliente(@RequestParam final Integer id, Model model) {
-        try {
-            ClienteDTO cliente = clienteService.get(id);
-            logger.info("Cliente encontrado");
-            model.addAttribute("cliente", cliente);
-            return "cliente";
-        } catch (NotFoundException ex) {
-            logger.info("Cliente no encontrado");
-            return "recurso-no-encontrado";
-        }
+    public ResponseEntity<ClienteDTO> getCliente(@RequestParam final Integer id) {
+        ClienteDTO cliente = clienteService.get(id);
+        return ResponseEntity.ok(cliente);
     }
 
     @GetMapping("/api/clientes/nombre")
-    public String getClienteByNombre(@RequestParam final String nombre, Model model) {
-        try {
-            ClienteDTO cliente = clienteService.getByNombre(nombre);
-            logger.info("Cliente encontrado");
-            model.addAttribute("cliente", cliente);
-            return "cliente";
-        } catch (NotFoundException ex) {
-            logger.info("Cliente no encontrado");
-            return "recurso-no-encontrado";
-        }
+    public ResponseEntity<List<ClienteDTO>> getClienteByNombre(@RequestParam final String nombre) {
+        List<ClienteDTO> clientes = clienteService.getByNombre(nombre);
+        return ResponseEntity.ok(clientes);
     }
 
     @PostMapping("/api/clientes")

@@ -19,12 +19,10 @@ import org.springframework.web.servlet.HandlerMapping;
 /**
  * Validate that the cuit value isn't taken yet.
  */
-@Target({FIELD, METHOD, ANNOTATION_TYPE})
+@Target({ FIELD, METHOD, ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(
-        validatedBy = ClienteCuitUnique.ClienteCuitUniqueValidator.class
-)
+@Constraint(validatedBy = ClienteCuitUnique.ClienteCuitUniqueValidator.class)
 public @interface ClienteCuitUnique {
 
     String message() default "{Exists.cliente.cuit}";
@@ -51,10 +49,11 @@ public @interface ClienteCuitUnique {
                 return true;
             }
             @SuppressWarnings("unchecked")
-            final Map<String, String> pathVariables
-                    = ((Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
+            final Map<String, String> pathVariables = ((Map<String, String>) request
+                    .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
             final String currentId = pathVariables.get("id");
-            if (currentId != null && value.equalsIgnoreCase(clienteService.get(Integer.parseInt(currentId)).getCuit())) {
+            if (currentId != null
+                    && value.equalsIgnoreCase(clienteService.get(Integer.parseInt(currentId)).getCuit())) {
                 // value hasn't changed
                 return true;
             }

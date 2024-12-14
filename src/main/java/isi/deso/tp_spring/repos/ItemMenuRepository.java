@@ -6,6 +6,7 @@ import isi.deso.tp_spring.domain.Vendedor;
 import isi.deso.tp_spring.model.ItemMenuDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,6 @@ public interface ItemMenuRepository extends JpaRepository<ItemMenu, Integer> {
     ItemMenu findFirstByVendedor(Vendedor vendedor);
 
     List<ItemMenuDTO> findByVendedor(Vendedor idVendedor);
+
+    Optional<ItemMenu> findByPrecio(Double precio);
 }
