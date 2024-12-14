@@ -30,33 +30,33 @@ public class ItemMenuController {
         this.itemMenuService = itemMenuService;
     }
 
-    @GetMapping("/api/itemMenus")
+    @GetMapping("/api/itemsMenu")
     public String getAllItemMenus(Model model) {
-        List<ItemMenuDTO> itemMenus = itemMenuService.findAll();
-        model.addAttribute("itemMenus", itemMenus);
-        return "itemMenuList";
+        List<ItemMenuDTO> itemsMenuDTO = itemMenuService.findAll();
+        model.addAttribute("itemsMenu", itemsMenuDTO);
+        return "items-menu";
     }
 
-    @GetMapping("/api/itemMenus/id")
+    @GetMapping("/api/itemsMenu/id")
     public ResponseEntity<ItemMenuDTO> getItemMenu(@RequestParam final Integer id) {
         ItemMenuDTO itemMenuDTO = itemMenuService.get(id);
         return ResponseEntity.ok(itemMenuDTO);
     }
 
-    @GetMapping("/api/itemMenus/precio")
+    @GetMapping("/api/itemsMenu/precio")
     public ResponseEntity<ItemMenuDTO> getItemMenuByPrecio(@RequestParam final Double precio) {
         ItemMenuDTO itemMenuDTO = itemMenuService.getByPrecio(precio);
         return ResponseEntity.ok(itemMenuDTO);
     }
 
-    @GetMapping("/api/itemMenus/editar/{id}")
+    @GetMapping("/api/itemsMenu/editar/{id}")
     public String showEditForm(@PathVariable(name = "id") final Integer id, Model model) {
         ItemMenuDTO itemMenu = itemMenuService.get(id);
         model.addAttribute("itemMenu", itemMenu);
         return "itemMenuEdit";
     }
 
-    // @PostMapping("/api/itemMenus")
+    // @PostMapping("/api/itemsMenu")
     // @ApiResponse(responseCode = "201")
     // @ResponseBody
     // public ResponseEntity<Integer> createItemMenu(@RequestBody @Valid ItemMenuDTO
@@ -64,7 +64,7 @@ public class ItemMenuController {
     // Integer createdId = itemMenuService.create(itemMenuDTO);
     // return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     // }
-    @PutMapping("/api/itemMenus/{id}")
+    @PutMapping("/api/itemsMenu/{id}")
     @ApiResponse(responseCode = "200")
     @ResponseBody
     public ResponseEntity<Integer> updateItemMenu(@PathVariable(name = "id") final Integer id,
@@ -79,7 +79,7 @@ public class ItemMenuController {
     // itemMenuService.update(id, itemMenuDTO);
     // return "redirect:/ItemMenus";
     // }
-    @DeleteMapping("/api/itemMenus/{id}")
+    @DeleteMapping("/api/itemsMenu/{id}")
     @ApiResponse(responseCode = "204")
     @ResponseBody
     public ResponseEntity<Void> deleteItemMenu(@PathVariable(name = "id") final Integer id) {

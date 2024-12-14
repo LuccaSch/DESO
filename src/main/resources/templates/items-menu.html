@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ItemsMenu</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>ItemsMenu</h1>
+        <nav>
+            <a href="/">Volver al Inicio</a>
+        </nav>
+    </header>
+
+    <section id="buscar-item-menu">
+        <h2>Buscar ItemMenu</h2>
+
+        <label for="itemMenuId">Buscar por Id:</label>
+        <input type="number" id="itemMenuId" name="id" placeholder="Id" required>
+        <div id="resultadoPorId"></div>
+        <br>
+
+        <label for="itemMenuPrecio">Buscar por Precio:</label>
+        <input type="number" id="itemMenuPrecio" name="precio" placeholder="Precio" step="0.01" required>
+        <ul id="resultadosPorPrecio"></ul>
+    </section>
+
+    <script>
+        document.getElementById("itemMenuId").addEventListener("input", function () {
+            const id = this.value;
+            if (id) {
+                fetch(`/api/itemMenus/id?id=${id}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Item no encontrado");
+                        }
+                        return response.json();
+                    })
+                    .then(item => {
+                        if (item) {
+                            const resultado = `
+                                <p><strong>Id:</strong> ${item.id}</p>
+                                <p><strong>Nombre:</strong> ${item.nombre}</p>
+                                <p><strong>Descripcion:</strong> ${item.descripcion}</p>
+                                <p><strong>Precio:</strong> ${item.precio}</p>
+                                <p><strong>Peso:</strong> ${item.peso}</p>
+                                <p><strong>Categoria:</strong> ${item.categoria}</p>
+                                <p><strong>Vendedor:</strong> ${item.vendedor}</p>
+                            `;
+                            document.getElementById("resultadoPorId").innerHTML = resultado;
+                        } else {
+                            document.getElementById("resultadoPorId").innerHTML = "<p>No se encontró ningún item con ese id.</p>";
+                        }
+                    })
+                    .catch(error => {
+                        document.getElementById("resultadoPorId").innerHTML = "<p>No se encontró ningún item con ese id.</p>";
+                    });
+            } else {
+                document.getElementById("resultadoPorId").innerHTML = "";
+            }
+        });
+        
+        document.getElementByPrecio("itemMenuPrecio").addEventListener("input", function () {
+            const precio = this.value;
+            if (precio) {
+                fetch(`/api/itemMenus/precio?precio=${precio}`)
+                    .then(response => response.json())
+                    .then(items => {
+                        let resultados = "";
+                        if (Array.isArray(items) && items.length > 0) {
+                            items.forEach(item => {
+                                resultados += `
+                                    <li>
+                                        <strong>Id:</strong> ${item.id},
+                                        <strong>Nombre:</strong> ${item.nombre},
+                                        <strong>Precio:</strong> ${item.precio}
+                                    </li>
+                                `;
+                            });
+                        } else {
+                            resultados = "<li>No se encontraron items con ese precio.</li>";
+                        }
+                        document.getElementById("resultadosPorPrecio").innerHTML = resultados;
+                    })
+                    .catch(error => {
+                        document.getElementById("resultadosPorPrecio").innerHTML = "<li>No se encontraron items con ese precio.</li>";
+                    });
+            } else {
+                document.getElementById("resultadosPorPrecio").innerHTML = "";
+            }
+        });
+        
+    </script>
+
+    <main>
+        <section>
+            <h2>ItemsMenu</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>Peso</th>
+                        <th>Categoria</th>
+                        <th>Vendedor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${itemsMenu}">
+                        <td th:text="${item.id}"></td>
+                        <td th:text="${item.nombre}"></td>
+                        <td th:text="${item.descripcion}"></td>
+                        <td th:text="${item.precio}"></td>
+                        <td th:text="${item.peso}"></td>
+                        <td th:text="${item.categoria}"></td>
+                        <td th:text="${item.vendedor}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; UTN FRSF DS TP items-menu.html</p>
+    </footer>
+
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</body>
+</html>

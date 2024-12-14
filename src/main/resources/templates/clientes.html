@@ -2,20 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Clientes</title>
+    <title>Clientes</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+
+    <header>
+        <h1>Clientes</h1>
+        <nav>
+            <a href="/">Volver al Inicio</a>
+        </nav>
+    </header>
+
     <section id="buscar-cliente">
         <h2>Buscar Cliente</h2>
         
         <label for="clienteId">Buscar por Id:</label>
-        <input type="text" id="clienteId" name="id" placeholder="Id">
+        <input type="number" id="clienteId" name="id" placeholder="Id" required>
         <div id="resultadoPorId"></div>
         <br>
 
         <label for="clienteNombre">Buscar por Nombre:</label>
-        <input type="text" id="clienteNombre" name="nombre" placeholder="Nombre">
+        <input type="text" id="clienteNombre" name="nombre" placeholder="Nombre" required>
         <ul id="resultadosPorNombre"></ul>
     </section>
 
@@ -31,57 +39,55 @@
                         return response.json();
                     })
                     .then(cliente => {
-                        const resultado = `
-                            <p><strong>Id:</strong> ${cliente.id}</p>
-                            <p><strong>Nombre:</strong> ${cliente.nombre}</p>
-                            <p><strong>CUIT:</strong> ${cliente.cuit}</p>
-                            <p><strong>Email:</strong> ${cliente.email}</p>
-                            <p><strong>Direccion:</strong> ${cliente.direccion}</p>
-                            <p><strong>Coordenada:</strong> ${cliente.coordenada}</p>
-                        `;
-                        document.getElementById("resultadoPorId").innerHTML = resultado;
+                        if (cliente) {
+                            const resultado = `
+                                <p><strong>Id:</strong> ${cliente.id}</p>
+                                <p><strong>Nombre:</strong> ${cliente.nombre}</p>
+                                <p><strong>CUIT:</strong> ${cliente.cuit}</p>
+                                <p><strong>Email:</strong> ${cliente.email}</p>
+                                <p><strong>Direccion:</strong> ${cliente.direccion}</p>
+                                <p><strong>Coordenada:</strong> ${cliente.coordenada}</p>
+                            `;
+                            document.getElementById("resultadoPorId").innerHTML = resultado;
+                        } else {
+                            document.getElementById("resultadoPorId").innerHTML = "<p>No se encontró ningún cliente con ese id.</p>";
+                        }
                     })
                     .catch(error => {
-                        document.getElementById("resultadoPorId").innerHTML = "<p>No se encontró ningún cliente con ese ID.</p>";
+                        document.getElementById("resultadoPorId").innerHTML = "<p>No se encontró ningún cliente con ese id.</p>";
                     });
             } else {
                 document.getElementById("resultadoPorId").innerHTML = "";
             }
         });
-
-        document.getElementById("clienteNombre").addEventListener("input", function () {
+        
+        document.getElementByNombre("clienteNombre").addEventListener("input", function () {
             const nombre = this.value;
             if (nombre) {
                 fetch(`/api/clientes/nombre?nombre=${nombre}`)
                     .then(response => response.json())
                     .then(clientes => {
                         let resultados = "";
-                        clientes.forEach(cliente => {
-                            resultados += `<li>${cliente.id} - ${cliente.nombre}</li>`;
-                        });
+                        if (Array.isArray(clientes) && clientes.length > 0) {
+                            clientes.forEach(cliente => {
+                                resultados += `<li>${cliente.id} - ${cliente.nombre}</li>`;
+                            });
+                        } else {
+                            resultados = "<p>No se encontró ningún cliente con ese nombre.</p>";
+                        }
                         document.getElementById("resultadosPorNombre").innerHTML = resultados;
                     })
                     .catch(error => {
-                        document.getElementById("resultadosPorNombre").innerHTML = "<li>No se encontraron clientes.</li>";
+                        document.getElementById("resultadosPorNombre").innerHTML = "<p>No se encontró ningún cliente con ese nombre.</p>";
                     });
             } else {
                 document.getElementById("resultadosPorNombre").innerHTML = "";
             }
         });
+        
     </script>
 
-    <header>
-        <h1>Lista de Clientes</h1>
-        <nav>
-            <a href="/">Volver al Inicio</a>
-        </nav>
-    </header>
-
     <main>
-        <div th:if="${successMessage}" class="alert success">
-            <p th:text="${successMessage}"></p>
-        </div>
-
         <section>
             <h2>Clientes</h2>
             <table>
@@ -110,7 +116,7 @@
     </main>
 
     <footer>
-        <p>&copy; UTN FRSF DS TP</p>
+        <p>&copy; UTN FRSF DS TP clientes.html</p>
     </footer>
 
     <style>

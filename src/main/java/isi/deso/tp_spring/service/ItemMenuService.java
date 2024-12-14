@@ -73,6 +73,7 @@ public class ItemMenuService {
     // }
 
     public ItemMenuDTO mapToDTO(final ItemMenu ItemMenu, final ItemMenuDTO ItemMenuDTO) {
+        ItemMenuDTO.setId(ItemMenu.getId());
         ItemMenuDTO.setNombre(ItemMenu.getNombre());
         ItemMenuDTO.setDescripcion(ItemMenu.getDescripcion());
         ItemMenuDTO.setPrecio(ItemMenu.getPrecio());
@@ -83,6 +84,7 @@ public class ItemMenuService {
     }
 
     public ItemMenu mapToEntity(final ItemMenuDTO ItemMenuDTO, final ItemMenu ItemMenu) {
+        ItemMenu.setId(ItemMenuDTO.getId());
         ItemMenu.setNombre(ItemMenuDTO.getNombre());
         ItemMenu.setDescripcion(ItemMenuDTO.getDescripcion());
         ItemMenu.setPrecio(ItemMenuDTO.getPrecio());

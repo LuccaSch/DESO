@@ -2,42 +2,103 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de pedidos</title>
+    <title>Pedidos</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <section>
-        <h2>Buscar Pedido</h2>
-        <form th:action="@{/api/pedidos/id}" method="get">
-            <label for="pedidoId">Buscar por Id:</label>
-            <input type="text" id="pedidoId" name="id" placeholder="Id" required>
-            <button type="submit">Buscar</button>
-        </form>
-        <form th:action="@{/api/pedidos/estadoPedido}" method="get">
-            <label for="pedidoEstadoPedido">Buscar por Nombre:</label>
-            <input type="text" id="pedidoEstadoPedido" name="estadoPedido" placeholder="EstadoPedido" required>
-            <button type="submit">Buscar</button>
-        </form>
-    </section>
-    <br>
-        
     <header>
-        <h1>Lista de Pedidos</h1>
+        <h1>Pedidos</h1>
         <nav>
             <a href="/">Volver al Inicio</a>
         </nav>
     </header>
 
+    <section id="buscar-pedido">
+        <h2>Buscar Pedido</h2>
+
+        <label for="pedidoId">Buscar por Id:</label>
+        <input type="number" id="buscarPedidoId" placeholder="Id" required>
+        <div id="resultadoPorId"></div>
+        <br>
+
+        <label for="estadoPedido">Buscar por Estado:</label>
+        <input type="number" id="estadoPedido" placeholder="EstadoPedido" required>
+        <ul id="resultadosPorEstado"></ul>
+    </section>
+
+    <script>
+        document.getElementById("buscarPedidoId").addEventListener("input", function () {
+            const pedidoId = this.value;
+            if (pedidoId) {
+                fetch(`/api/pedidos/id?id=${pedidoId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Pedido no encontrado");
+                        }
+                        return response.json();
+                    })
+                    .then(pedido => {
+                        if (pedido) {
+                            const resultado = `
+                                <p><strong>Id:</strong> ${pedido.id}</p>
+                                <p><strong>Estado Pedido:</strong> ${pedido.estadoPedido}</p>
+                                <p><strong>Cliente:</strong> ${pedido.cliente}</p>
+                                <p><strong>Precio Total:</strong> ${pedido.precioTotal}</p>
+                                <p><strong>Contexto Pago:</strong> ${pedido.contextoPago}</p>
+                            `;
+                            document.getElementById("resultadoPorId").innerHTML = resultado;
+                        } else {
+                            document.getElementById("resultadoPorId").innerHTML = "<p>No se encontró ningún pedido con ese id.</p>";
+                        }
+                    })
+                    .catch(error => {
+                        document.getElementById("resultadoPorId").innerHTML = "<p>No se encontró ningún pedido con ese id.</p>";
+                    });
+            } else {
+                document.getElementById("resultadoPorId").innerHTML = "";
+            }
+        });        
+
+        document.getElementByEstadoPedido("estadoPedido").addEventListener("input", function () {
+            const estadoPedido = this.value;
+            if (estadoPedido) {
+                fetch(`/api/pedidos/estadoPedido?estadoPedido=${estadoPedido}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const resultados = document.getElementById("resultadosPorEstado");
+                        if (Array.isArray(data) && data.length > 0) {
+                            resultados.innerHTML = data.map(pedido => `
+                                <li>
+                                    <strong>Id:</strong> ${pedido.id},
+                                    <strong>Estado:</strong> ${pedido.estadoPedido},
+                                    <strong>Cliente:</strong> ${pedido.cliente},
+                                    <strong>Precio:</strong> ${pedido.precioTotal}
+                                </li>
+                            `).join('');
+                        } else {
+                            resultados.innerHTML = "<p>No se encontró ningún pedido con ese estado.</p>";
+                        }
+                    })
+                    .catch(error => {
+                        document.getElementById("resultadosPorEstado").innerHTML = "<p>No se encontró ningún pedido con ese estado.</p>";
+                    });
+            } else {
+                document.getElementById("resultadosPorEstado").innerHTML = "";
+            }
+        });
+       
+       
+    </script>
+
     <main>
         <section>
-            <h2>pedidos</h2>
+            <h2>Pedidos</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>EstadoPedido</th>
-                        <th>IdCliente</th>
-                        <th>Precio</th>
+                        <th>PrecioTotal</th>
                         <th>ContextoPago</th>
                     </tr>
                 </thead>
@@ -45,14 +106,8 @@
                     <tr th:each="pedido : ${pedidos}">
                         <td th:text="${pedido.id}"></td>
                         <td th:text="${pedido.estadoPedido}"></td>
-                        <td th:text="${pedido.cliente}"></td>
                         <td th:text="${pedido.precioTotal}"></td>
                         <td th:text="${pedido.contextoPago}"></td>
-<!--                        <td>
-                            <a th:href="@{/api/pedidos/id}">Ver</a>
-                            <a th:href="@{/api/pedidos/editar}">Editar</a>
-                            <a th:href="@{/api/pedidos/eliminar}" onclick="return confirm('¿Estás seguro de eliminar este pedido?');">Eliminar</a>
-                        </td>-->
                     </tr>
                 </tbody>
             </table>
@@ -60,46 +115,27 @@
     </main>
 
     <footer>
-        <p>&copy; UTN FRSF DS TP</p>
+        <p>&copy; UTN FRSF DS TP pedidos.html</p>
     </footer>
+
+
     <style>
-        .alert.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            animation: slide-up 1s ease-out, fade-out 3s 2s forwards;
+        ul {
+            list-style-type: none;
+            padding: 0;
         }
 
-        @keyframes slide-up {
-            from {
-                opacity: 0;
-                transform: translateY(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes fade-out {
-            from {
-                opacity: 1;
-            }
-            to {
-                opacity: 0;
-                visibility: hidden; /* Oculta completamente el elemento */
-            }
+        li {
+            margin-bottom: 5px;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse; 
+            border-collapse: collapse;
         }
 
         th, td {
-            border: 1px solid black; 
+            border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
@@ -110,4 +146,3 @@
     </style>
 </body>
 </html>
-
