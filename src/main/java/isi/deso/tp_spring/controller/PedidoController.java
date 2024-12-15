@@ -59,9 +59,9 @@ public class PedidoController {
     }
 
     @GetMapping("/api/pedidos/estadoPedido")
-    public ResponseEntity<PedidoDTO> getPedidoByEstadoPedido(@RequestParam final Integer estadoPedido) {
-        PedidoDTO pedidoDTO = pedidoService.getByEstadoPedido(estadoPedido);
-        return ResponseEntity.ok(pedidoDTO);
+    public ResponseEntity<List<PedidoDTO>> getPedidoByEstadoPedido(@RequestParam final Integer estadoPedido) {
+        List<PedidoDTO> pedidosDTO = pedidoService.getByEstadoPedido(estadoPedido);
+        return ResponseEntity.ok(pedidosDTO);
     }
 
     @PostMapping("/api/pedidos")
@@ -72,16 +72,6 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     }
 
-    // @PostMapping("/api/pedido")
-    // @ApiResponse(responseCode = "201")
-    // public String createPedido(@ModelAttribute @Valid final PedidoDTO pedidoDTO,
-    // Model model,
-    // RedirectAttributes redirectAttributes) {
-    // Integer createdId = pedidoService.create(pedidoDTO);
-    // model.addAttribute("createdId", createdId);
-    // redirectAttributes.addFlashAttribute("successMessage", "¡Creado con éxito!");
-    // return "redirect:/api/pedidos";
-    // }
     @PutMapping("/api/pedidos/{id}")
     @ApiResponse(responseCode = "200")
     @ResponseBody
@@ -91,17 +81,6 @@ public class PedidoController {
         return ResponseEntity.ok(id);
     }
 
-    // @PutMapping("/api/pedidos")
-    // @ApiResponse(responseCode = "200")
-    // public String updatePedido(@RequestParam final Integer id,
-    // @ModelAttribute @Valid final PedidoDTO pedidoDTO, Model model,
-    // RedirectAttributes redirectAttributes) {
-    // pedidoService.update(id, pedidoDTO);
-    // model.addAttribute("id", id);
-    // redirectAttributes.addFlashAttribute("successMessage", "¡Actualizado con
-    // éxito!");
-    // return "redirect:/api/pedidos";
-    // }
     @DeleteMapping("/api/pedidos/{id}")
     @ApiResponse(responseCode = "204")
     @ResponseBody
@@ -110,20 +89,6 @@ public class PedidoController {
         return ResponseEntity.noContent().build();
     }
 
-    // @GetMapping("/api/pedidos/eliminar")
-    // @ApiResponse(responseCode = "204")
-    // public String deletePedido(@RequestParam final Integer id, Model model,
-    // RedirectAttributes redirectAttributes) {
-    // final ReferencedWarning referencedWarning =
-    // pedidoService.getReferencedWarning(id);
-    // if (referencedWarning != null) {
-    // throw new ReferencedException(referencedWarning);
-    // }
-    // pedidoService.delete(id);
-    // redirectAttributes.addFlashAttribute("successMessage", "¡Eliminado con
-    // éxito!");
-    // return "redirect:/api/pedidos";
-    // }
     @GetMapping("/api/pedidos/detalle")
     public String showAllsItemsPedido(@RequestParam Integer id, Model model) {
         List<ItemPedido> itemsPedido = pedidoService.getItemsPedido(id);

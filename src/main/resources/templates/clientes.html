@@ -61,7 +61,7 @@
             }
         });
         
-        document.getElementByNombre("clienteNombre").addEventListener("input", function () {
+        document.getElementById("clienteNombre").addEventListener("input", function () {
             const nombre = this.value;
             if (nombre) {
                 fetch(`/api/clientes/nombre?nombre=${nombre}`)

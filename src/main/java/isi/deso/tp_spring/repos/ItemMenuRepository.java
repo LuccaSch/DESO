@@ -18,7 +18,7 @@ public interface ItemMenuRepository extends JpaRepository<ItemMenu, Integer> {
 
     ItemMenu findFirstByVendedor(Vendedor vendedor);
 
-    List<ItemMenuDTO> findByVendedor(Vendedor idVendedor);
+    List<ItemMenu> findByPrecio(Double precio);
 
-    Optional<ItemMenu> findByPrecio(Double precio);
+    List<ItemMenu> findByVendedor(Vendedor vendedor);
 }

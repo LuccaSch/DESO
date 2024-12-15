@@ -31,7 +31,7 @@
         document.getElementById("itemMenuId").addEventListener("input", function () {
             const id = this.value;
             if (id) {
-                fetch(`/api/itemMenus/id?id=${id}`)
+                fetch(`/api/itemsMenu/id?id=${id}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error("Item no encontrado");
@@ -62,10 +62,10 @@
             }
         });
         
-        document.getElementByPrecio("itemMenuPrecio").addEventListener("input", function () {
+        document.getElementById("itemMenuPrecio").addEventListener("input", function () {
             const precio = this.value;
             if (precio) {
-                fetch(`/api/itemMenus/precio?precio=${precio}`)
+                fetch(`/api/itemsMenu/precio?precio=${precio}`)
                     .then(response => response.json())
                     .then(items => {
                         let resultados = "";

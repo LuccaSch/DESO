@@ -59,7 +59,7 @@
                 document.getElementById("resultadoPorId").innerHTML = "";
             }
         });        
-        document.getElementByNombre("vendedorNombre").addEventListener("input", function () {
+        document.getElementById("vendedorNombre").addEventListener("input", function () {
             const nombre = this.value;
             if (nombre) {
                 fetch(`/api/vendedores/nombre?nombre=${nombre}`)
@@ -141,7 +141,7 @@
             }
             to {
                 opacity: 0;
-                visibility: hidden; /* Oculta completamente el elemento */
+                visibility: hidden;
             }
         }
 

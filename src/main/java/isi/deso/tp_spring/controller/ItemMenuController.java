@@ -44,9 +44,9 @@ public class ItemMenuController {
     }
 
     @GetMapping("/api/itemsMenu/precio")
-    public ResponseEntity<ItemMenuDTO> getItemMenuByPrecio(@RequestParam final Double precio) {
-        ItemMenuDTO itemMenuDTO = itemMenuService.getByPrecio(precio);
-        return ResponseEntity.ok(itemMenuDTO);
+    public ResponseEntity<List<ItemMenuDTO>> getItemMenuByPrecio(@RequestParam final Double precio) {
+        List<ItemMenuDTO> itemMenusDTO = itemMenuService.getByPrecio(precio);
+        return ResponseEntity.ok(itemMenusDTO);
     }
 
     @GetMapping("/api/itemsMenu/editar/{id}")
@@ -56,14 +56,6 @@ public class ItemMenuController {
         return "itemMenuEdit";
     }
 
-    // @PostMapping("/api/itemsMenu")
-    // @ApiResponse(responseCode = "201")
-    // @ResponseBody
-    // public ResponseEntity<Integer> createItemMenu(@RequestBody @Valid ItemMenuDTO
-    // itemMenuDTO) {
-    // Integer createdId = itemMenuService.create(itemMenuDTO);
-    // return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
-    // }
     @PutMapping("/api/itemsMenu/{id}")
     @ApiResponse(responseCode = "200")
     @ResponseBody
@@ -73,12 +65,6 @@ public class ItemMenuController {
         return ResponseEntity.ok(id);
     }
 
-    // @PutMapping("/editar/{id}")
-    // public String updateItemMenu(@PathVariable(name = "id") final Integer id,
-    // @ModelAttribute @Valid final ItemMenuDTO itemMenuDTO, Model model) {
-    // itemMenuService.update(id, itemMenuDTO);
-    // return "redirect:/ItemMenus";
-    // }
     @DeleteMapping("/api/itemsMenu/{id}")
     @ApiResponse(responseCode = "204")
     @ResponseBody
@@ -86,10 +72,4 @@ public class ItemMenuController {
         itemMenuService.delete(id);
         return ResponseEntity.noContent().build();
     }
-    //
-    // @DeleteMapping("/eliminar/{id}")
-    // public String deleteItemMenu(@PathVariable(name = "id") final Integer id) {
-    // itemMenuService.delete(id);
-    // return "redirect:/ItemMenus";
-    // }
 }

@@ -63,16 +63,6 @@ public class VendedorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
     }
 
-    // @PostMapping("/api/vendedor/guardar")
-    // @ApiResponse(responseCode = "201")
-    // public String createVendedor(@ModelAttribute @Valid final VendedorDTO
-    // vendedorDTO, Model model,
-    // RedirectAttributes redirectAttributes) {
-    // Integer createdId = vendedorService.create(vendedorDTO);
-    // model.addAttribute("createdId", createdId);
-    // redirectAttributes.addFlashAttribute("successMessage", "¡Creado con éxito!");
-    // return "redirect:/api/vendedores";
-    // }
     @PutMapping("/api/vendedores/{id}")
     @ApiResponse(responseCode = "200")
     @ResponseBody
@@ -82,17 +72,6 @@ public class VendedorController {
         return ResponseEntity.ok(id);
     }
 
-    // @PutMapping("/api/vendedores/editar")
-    // @ApiResponse(responseCode = "200")
-    // public String updateVendedor(@RequestParam final Integer id,
-    // @ModelAttribute @Valid final VendedorDTO vendedorDTO, Model model,
-    // RedirectAttributes redirectAttributes) {
-    // vendedorService.update(id, vendedorDTO);
-    // model.addAttribute("id", id);
-    // redirectAttributes.addFlashAttribute("successMessage", "¡Actualizado con
-    // éxito!");
-    // return "redirect:/api/vendedores";
-    // }
     @DeleteMapping("/api/vendedores/{id}")
     @ApiResponse(responseCode = "204")
     @ResponseBody
@@ -101,21 +80,6 @@ public class VendedorController {
         return ResponseEntity.noContent().build();
     }
 
-    // @GetMapping("/api/vendedores/eliminar/{id}")
-    // @ApiResponse(responseCode = "204")
-    // public String deleteVendedor(@PathVariable(name = "id") final Integer id,
-    // Model model,
-    // RedirectAttributes redirectAttributes) {
-    // final ReferencedWarning referencedWarning =
-    // vendedorService.getReferencedWarning(id);
-    // if (referencedWarning != null) {
-    // throw new ReferencedException(referencedWarning);
-    // }
-    // vendedorService.delete(id);
-    // redirectAttributes.addFlashAttribute("successMessage", "¡Eliminado con
-    // éxito!");
-    // return "redirect:/api/vendedores";
-    // }
     @GetMapping("/api/vendedores/menu")
     public String getMenu(@RequestParam Integer vendedorId, Model model) {
         VendedorDTO vendedor = vendedorService.get(vendedorId);

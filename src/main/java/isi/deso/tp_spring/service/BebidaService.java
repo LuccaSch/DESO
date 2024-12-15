@@ -2,14 +2,18 @@ package isi.deso.tp_spring.service;
 
 import isi.deso.tp_spring.domain.Bebida;
 import isi.deso.tp_spring.model.BebidaDTO;
+import isi.deso.tp_spring.model.Tamano;
 import isi.deso.tp_spring.model.TipoBebida;
 import isi.deso.tp_spring.repos.BebidaRepository;
 import isi.deso.tp_spring.util.NotFoundException;
 import java.util.List;
+
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class BebidaService {
 
     private final BebidaRepository bebidaRepository;
@@ -56,7 +60,7 @@ public class BebidaService {
         bebidaDTO.setVolumen(bebida.getVolumen());
         bebidaDTO.setGraduacionAlcoholica(bebida.getGraduacionAlcoholica());
         bebidaDTO.setTipoBebida(bebida.getTipoBebida().toInteger());
-        bebidaDTO.setTamano(bebida.getTamano());
+        bebidaDTO.setTamano(bebida.getTamano().toInteger());
         return bebidaDTO;
     }
 
@@ -68,7 +72,7 @@ public class BebidaService {
         bebida.setVolumen(bebidaDTO.getVolumen());
         bebida.setGraduacionAlcoholica(bebidaDTO.getGraduacionAlcoholica());
         bebida.setTipoBebida(TipoBebida.fromInteger(bebidaDTO.getTipoBebida()));
-        bebida.setTamano(bebidaDTO.getTamano());
+        bebida.setTamano(Tamano.fromInteger(bebidaDTO.getTamano()));
         return bebida;
     }
 

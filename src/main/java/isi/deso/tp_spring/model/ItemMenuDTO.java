@@ -16,10 +16,8 @@ public class ItemMenuDTO {
     @Size(max = 255)
     private String descripcion;
 
-    @Size(max = 255)
     private Double precio;
 
-    @Size(max = 255)
     private Double peso;
 
     private Integer categoria;

@@ -17,7 +17,7 @@
         <h2>Buscar Pedido</h2>
 
         <label for="pedidoId">Buscar por Id:</label>
-        <input type="number" id="buscarPedidoId" placeholder="Id" required>
+        <input type="number" id="pedidoId" placeholder="Id" required>
         <div id="resultadoPorId"></div>
         <br>
 
@@ -27,7 +27,7 @@
     </section>
 
     <script>
-        document.getElementById("buscarPedidoId").addEventListener("input", function () {
+        document.getElementById("pedidoId").addEventListener("input", function () {
             const pedidoId = this.value;
             if (pedidoId) {
                 fetch(`/api/pedidos/id?id=${pedidoId}`)
@@ -59,7 +59,7 @@
             }
         });        
 
-        document.getElementByEstadoPedido("estadoPedido").addEventListener("input", function () {
+        document.getElementById("estadoPedido").addEventListener("input", function () {
             const estadoPedido = this.value;
             if (estadoPedido) {
                 fetch(`/api/pedidos/estadoPedido?estadoPedido=${estadoPedido}`)

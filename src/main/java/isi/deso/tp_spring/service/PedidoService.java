@@ -18,8 +18,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class PedidoService {
 
     private final PedidoRepository pedidoRepository;
@@ -92,10 +94,14 @@ public class PedidoService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public PedidoDTO getByEstadoPedido(final Integer estadoPedido) {
-        return pedidoRepository.findByEstadoPedido(estadoPedido)
+    public List<PedidoDTO> getByEstadoPedido(final Integer estadoPedido) {
+        List<Pedido> pedidos = pedidoRepository.findByEstadoPedido(EstadoPedido.fromInteger(estadoPedido));
+        if (pedidos.isEmpty()) {
+            throw new NotFoundException();
+        }
+        return pedidos.stream()
                 .map(pedido -> mapToDTO(pedido, new PedidoDTO()))
-                .orElseThrow(NotFoundException::new);
+                .toList();
     }
 
     public Integer create(final PedidoDTO pedidoDTO) {

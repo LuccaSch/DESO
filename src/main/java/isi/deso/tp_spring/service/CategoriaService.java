@@ -8,10 +8,13 @@ import isi.deso.tp_spring.repos.ItemMenuRepository;
 import isi.deso.tp_spring.util.NotFoundException;
 import isi.deso.tp_spring.util.ReferencedWarning;
 import java.util.List;
+
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;

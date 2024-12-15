@@ -24,6 +24,6 @@ public class BebidaDTO {
 
     private Integer tipoBebida;
 
-    private Tamano tamano;
+    private Integer tamano;
 
 }

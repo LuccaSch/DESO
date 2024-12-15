@@ -2,16 +2,14 @@ package isi.deso.tp_spring.domain;
 
 import isi.deso.tp_spring.model.Tamano;
 import isi.deso.tp_spring.model.TipoBebida;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@DiscriminatorValue("0")
 public class Bebida extends ItemMenu {
 
     @Column

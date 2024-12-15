@@ -12,8 +12,10 @@ import isi.deso.tp_spring.util.ReferencedWarning;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
@@ -65,13 +67,15 @@ public class ClienteService {
     public void delete(final Integer id) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
-        List<Pedido> pedidos = cliente.getPedidos();
+        if (cliente.getPedidos() != null && !cliente.getPedidos().isEmpty()) {
+            List<Pedido> pedidos = cliente.getPedidos();
 
-        for (Pedido pedido : pedidos) {
-            pedido.setCliente(null);
+            for (Pedido pedido : pedidos) {
+                pedido.setCliente(null);
+            }
+
+            pedidoRepository.saveAll(pedidos);
         }
-
-        pedidoRepository.saveAll(pedidos);
         clienteRepository.deleteById(id);
     }
 

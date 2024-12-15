@@ -2,6 +2,7 @@ package isi.deso.tp_spring.service;
 
 import java.util.List;
 
+import isi.deso.tp_spring.repos.*;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -9,43 +10,49 @@ import isi.deso.tp_spring.domain.Categoria;
 import isi.deso.tp_spring.domain.ItemMenu;
 import isi.deso.tp_spring.domain.Vendedor;
 import isi.deso.tp_spring.model.ItemMenuDTO;
-import isi.deso.tp_spring.repos.CategoriaRepository;
-import isi.deso.tp_spring.repos.ItemMenuRepository;
-import isi.deso.tp_spring.repos.VendedorRepository;
 import isi.deso.tp_spring.util.NotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ItemMenuService {
 
     private final ItemMenuRepository itemMenuRepository;
+    private final BebidaRepository bebidaRepository;
+    private final PlatoRepository platoRepository;
     private final CategoriaRepository categoriaRepository;
     private final VendedorRepository vendedorRepository;
 
-    public ItemMenuService(final ItemMenuRepository itemMenuRepository,
-            final CategoriaRepository categoriaRepository,
-            final VendedorRepository vendedorRepository) {
+    public ItemMenuService(final ItemMenuRepository itemMenuRepository, BebidaRepository bebidaRepository, PlatoRepository platoRepository,
+                           final CategoriaRepository categoriaRepository,
+                           final VendedorRepository vendedorRepository) {
         this.itemMenuRepository = itemMenuRepository;
+        this.bebidaRepository = bebidaRepository;
+        this.platoRepository = platoRepository;
         this.categoriaRepository = categoriaRepository;
         this.vendedorRepository = vendedorRepository;
     }
 
     public List<ItemMenuDTO> findAll() {
-        final List<ItemMenu> ItemMenus = itemMenuRepository.findAll(Sort.by("id"));
-        return ItemMenus.stream()
-                .map(ItemMenu -> mapToDTO(ItemMenu, new ItemMenuDTO()))
+        return itemMenuRepository.findAll(Sort.by("id")).stream()
+                .map(item -> mapToDTO(item, new ItemMenuDTO()))
                 .toList();
     }
 
     public ItemMenuDTO get(final Integer id) {
         return itemMenuRepository.findById(id)
-                .map(ItemMenu -> mapToDTO(ItemMenu, new ItemMenuDTO()))
+                .map(item -> mapToDTO(item, new ItemMenuDTO()))
                 .orElseThrow(NotFoundException::new);
     }
 
-    public ItemMenuDTO getByPrecio(final Double precio) {
-        return itemMenuRepository.findByPrecio(precio)
-                .map(ItemMenu -> mapToDTO(ItemMenu, new ItemMenuDTO()))
-                .orElseThrow(NotFoundException::new);
+    public List<ItemMenuDTO> getByPrecio(final Double precio) {
+        List<ItemMenu> items = itemMenuRepository.findByPrecio(precio);
+        if (items.isEmpty()) {
+            throw new NotFoundException();
+        }
+        return items.stream()
+                .map(item-> mapToDTO(item, new ItemMenuDTO()))
+                .toList();
     }
 
     public void update(final Integer id, final ItemMenuDTO ItemMenuDTO) {
@@ -57,20 +64,17 @@ public class ItemMenuService {
 
     public void delete(final Integer id) {
 
-        // TODO: completar. Setear a null en las relaciones
         itemMenuRepository.deleteById(id);
     }
 
     public List<ItemMenuDTO> findByIdVendedor(Integer idVendedor) {
         Vendedor vendedor = vendedorRepository.findById(idVendedor).orElseThrow(NotFoundException::new);
-        return itemMenuRepository.findByVendedor(vendedor);
+        return itemMenuRepository.findByVendedor(vendedor)
+                .stream()
+                .map(itemMenu -> mapToDTO(itemMenu, new ItemMenuDTO()))
+                .toList();
     }
 
-    // public List<ItemMenuDTO> getItemsDeVendedor(Integer idVendedor) {
-    // List<ItemMenuDTO> items = findAll();
-    // return items.stream().filter(item ->
-    // item.getVendedor().equals(idVendedor)).toList();
-    // }
 
     public ItemMenuDTO mapToDTO(final ItemMenu ItemMenu, final ItemMenuDTO ItemMenuDTO) {
         ItemMenuDTO.setId(ItemMenu.getId());

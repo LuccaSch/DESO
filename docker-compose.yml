@@ -2,8 +2,8 @@ services:
   mysql:
     image: mysql:9.1
     environment:
-      - MYSQL_DATABASE=tpSpring
-      - MYSQL_ROOT_PASSWORD=P4ssword!
+      - MYSQL_DATABASE=tpE8Impl
+      - MYSQL_ROOT_PASSWORD=tpE8Impl
     ports:
       - 3307:3306
     networks:

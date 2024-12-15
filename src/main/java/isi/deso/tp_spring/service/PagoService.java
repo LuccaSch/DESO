@@ -11,8 +11,10 @@ import isi.deso.tp_spring.util.ReferencedWarning;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class PagoService {
 
     private final PagoRepository pagoRepository;
@@ -55,12 +57,12 @@ public class PagoService {
     }
 
     public PagoDTO mapToDTO(final Pago pago, final PagoDTO pagoDTO) {
-        pagoDTO.setTipoEstrategia(pago.getTipoEstrategia().toInteger());
+
         return pagoDTO;
     }
 
     public Pago mapToEntity(final PagoDTO pagoDTO, final Pago pago) {
-        pago.setTipoEstrategia(TipoEstrategia.fromInteger(pagoDTO.getTipoEstrategia()));
+
         return pago;
     }
 

@@ -9,9 +9,9 @@
         <relativePath /><!-- lookup parent from repository -->
     </parent>
     <groupId>isi.deso</groupId>
-    <artifactId>tpSpring</artifactId>
+    <artifactId>tp-etapa-8-implementacion</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>tpSpring</name>
+    <name>tp-etapa-8-implementacion</name>
 
     <properties>
         <java.version>21</java.version>
