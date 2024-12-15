@@ -64,7 +64,8 @@ For App UI, use port 8080 (localhost:8080/)
 
 ## Class Diagram with PlantUML
 
-![Class Diagram]()
+![Class Diagram](https://github.com/user-attachments/assets/19700a39-50c5-4aee-b45f-411d1856a7cf)
+
 
 ## Further readings
 
