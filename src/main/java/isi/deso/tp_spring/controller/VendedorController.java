@@ -8,6 +8,9 @@ import isi.deso.tp_spring.service.ItemMenuService;
 import isi.deso.tp_spring.service.VendedorService;
 import isi.deso.tp_spring.util.NotFoundException;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -44,13 +47,13 @@ public class VendedorController {
     }
 
     @GetMapping("/api/vendedores/id")
-    public ResponseEntity<VendedorDTO> getVendedor(@RequestParam final Integer id) {
+    public ResponseEntity<VendedorDTO> getVendedor(@RequestParam @NotNull final Integer id) {
         VendedorDTO vendedorDTO = vendedorService.get(id);
         return ResponseEntity.ok(vendedorDTO);
     }
 
     @GetMapping("/api/vendedores/nombre")
-    public ResponseEntity<List<VendedorDTO>> getVendedorByNombre(@RequestParam final String nombre) {
+    public ResponseEntity<List<VendedorDTO>> getVendedorByNombre(@RequestParam @NotBlank final String nombre) {
         List<VendedorDTO> vendedoresDTO = vendedorService.getByNombre(nombre);
         return ResponseEntity.ok(vendedoresDTO);
     }
