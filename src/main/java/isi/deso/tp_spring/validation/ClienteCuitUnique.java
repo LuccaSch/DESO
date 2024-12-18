@@ -22,7 +22,7 @@ import org.springframework.web.servlet.HandlerMapping;
 @Constraint(validatedBy = ClienteCuitUnique.ClienteCuitUniqueValidator.class)
 public @interface ClienteCuitUnique {
 
-    String message() default "{Exists.cliente.cuit}";
+    String message() default "Ya existe un cliente con la misma CUIT.";
 
     Class<?>[] groups() default {};
 
@@ -48,7 +48,8 @@ public @interface ClienteCuitUnique {
             final Map<String, String> pathVariables = ((Map<String, String>) request
                     .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
             final String currentId = pathVariables.get("id");
-            if (currentId != null && value.equalsIgnoreCase(clienteService.get(Integer.parseInt(currentId)).getCuit())) {
+            if (currentId != null
+                    && value.equalsIgnoreCase(clienteService.get(Integer.parseInt(currentId)).getCuit())) {
                 return true;
             }
             return !clienteService.cuitExists(value);

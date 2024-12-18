@@ -16,15 +16,13 @@ import java.lang.annotation.Target;
 import java.util.Map;
 import org.springframework.web.servlet.HandlerMapping;
 
-@Target({FIELD, METHOD, ANNOTATION_TYPE})
+@Target({ FIELD, METHOD, ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(
-        validatedBy = ContextoPagoPagoUnique.ContextoPagoPagoUniqueValidator.class
-)
+@Constraint(validatedBy = ContextoPagoPagoUnique.ContextoPagoPagoUniqueValidator.class)
 public @interface ContextoPagoPagoUnique {
 
-    String message() default "{Exists.contextoPago.pago}";
+    String message() default "Ya existe ese pago para otro contexto pago.";
 
     Class<?>[] groups() default {};
 
@@ -47,8 +45,8 @@ public @interface ContextoPagoPagoUnique {
                 return true;
             }
             @SuppressWarnings("unchecked")
-            final Map<String, String> pathVariables
-                    = ((Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
+            final Map<String, String> pathVariables = ((Map<String, String>) request
+                    .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
             final String currentId = pathVariables.get("id");
             if (currentId != null && value.equals(contextoPagoService.get(Integer.parseInt(currentId)).getPago())) {
                 return true;

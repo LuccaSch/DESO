@@ -1,8 +1,13 @@
 package isi.deso.tp_spring.service;
 
+import isi.deso.tp_spring.domain.Categoria;
 import isi.deso.tp_spring.domain.Plato;
+import isi.deso.tp_spring.domain.Vendedor;
 import isi.deso.tp_spring.model.PlatoDTO;
+import isi.deso.tp_spring.repos.BebidaRepository;
+import isi.deso.tp_spring.repos.CategoriaRepository;
 import isi.deso.tp_spring.repos.PlatoRepository;
+import isi.deso.tp_spring.repos.VendedorRepository;
 import isi.deso.tp_spring.util.NotFoundException;
 import java.util.List;
 import org.springframework.data.domain.Sort;
@@ -14,9 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class PlatoService {
 
     private final PlatoRepository platoRepository;
+    private final CategoriaRepository categoriaRepository;
+    private final VendedorRepository vendedorRepository;
 
-    public PlatoService(final PlatoRepository platoRepository) {
+    public PlatoService(final PlatoRepository platoRepository, final CategoriaRepository categoriaRepository,
+            final VendedorRepository vendedorRepository) {
         this.platoRepository = platoRepository;
+        this.categoriaRepository = categoriaRepository;
+        this.vendedorRepository = vendedorRepository;
     }
 
     public List<PlatoDTO> findAll() {
@@ -54,6 +64,8 @@ public class PlatoService {
         platoDTO.setDescripcion(plato.getDescripcion());
         platoDTO.setPrecio(plato.getPrecio());
         platoDTO.setPeso(plato.getPeso());
+        platoDTO.setCategoria(plato.getCategoria().getId());
+        platoDTO.setVendedor(plato.getVendedor().getId());
         platoDTO.setAptoCeliaco(plato.getAptoCeliaco());
         platoDTO.setAptoVegano(plato.getAptoVegano());
         platoDTO.setCalorias(plato.getCalorias());
@@ -65,6 +77,12 @@ public class PlatoService {
         plato.setDescripcion(platoDTO.getDescripcion());
         plato.setPrecio(platoDTO.getPrecio());
         plato.setPeso(platoDTO.getPeso());
+        final Categoria categoria = categoriaRepository.findById(platoDTO.getCategoria())
+                .orElseThrow(() -> new NotFoundException("categoria not found"));
+        plato.setCategoria(categoria);
+        final Vendedor vendedor = vendedorRepository.findById(platoDTO.getVendedor())
+                .orElseThrow(() -> new NotFoundException("vendedor not found"));
+        plato.setVendedor(vendedor);
         plato.setAptoCeliaco(platoDTO.getAptoCeliaco());
         plato.setAptoVegano(platoDTO.getAptoVegano());
         plato.setCalorias(platoDTO.getCalorias());
