@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 application-local.properties
 *.log
+.DS_Store
 
 ## IntelliJ IDEA
 .idea
